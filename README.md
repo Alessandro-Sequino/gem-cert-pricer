@@ -1,7 +1,7 @@
 # Gem Cert Pricer
 
 **Calcolatore di valore gemme e costo certificati gemmologici**
-Strumento professionale per gemologi e operatori del distretto orafo **Tarì, Campania**.
+Strumento professionale per gemologi e operatori del settore.
 
 → **[Apri l'app] https://alessandro-sequino.github.io/gem-cert-pricer/** ← 
 
