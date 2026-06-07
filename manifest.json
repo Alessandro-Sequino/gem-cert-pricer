@@ -1,0 +1,27 @@
+{
+  "name": "Gem Cert Pricer",
+  "short_name": "Gem Pricer",
+  "description": "Calcolatore valore gemme e costo certificati gemmologici",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#9E7820",
+  "background_color": "#F5F0E8",
+  "lang": "it",
+  "categories": ["business", "finance", "utilities"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

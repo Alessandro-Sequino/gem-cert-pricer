@@ -1,0 +1,24 @@
+# ── Dati personali — NON committare mai ─────────────────────────────────────
+# Il file default-pricing.gcp.json contiene i tariffari reali: rimane locale.
+default-pricing.gcp.json
+*-personal.json
+*-privato.json
+my-pricing*.json
+tariffario-*.json
+
+# Pattern generico: qualsiasi .gcp.json tranne il campione pubblico
+*.gcp.json
+!sample-pricing.gcp.json
+
+# ── Editor e OS ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Node / npm ───────────────────────────────────────────────────────────────
+node_modules/
+package-lock.json
