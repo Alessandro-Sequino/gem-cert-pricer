@@ -1131,44 +1131,84 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
   box-shadow: 0 0 0 3px rgba(158,120,32,.12), inset 0 1px 2px rgba(28,24,20,.06);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   MOBILE RESPONSIVE  (≤ 768px)
-   Strategia: sidebar → bottom tab bar, layout fluido,
-   touch targets ≥ 44px, tabelle scrollabili
-   ═══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — professional rewrite
+   Principi: bottom tab bar, touch targets ≥ 48px, font ≥ 15px,
+             layout verticale, scroll orizzontale tabelle, header minimale
+   Breakpoint primario: ≤ 768px  |  stretto: ≤ 420px
+   ══════════════════════════════════════════════════════════════════════════════ */
 
+/* ── VARIABILI MOBILE ── */
 @media (max-width: 768px) {
-
-  /* ── Body & scroll ── */
-  body { font-size: 14px; }
-  main {
-    padding: 16px 14px 90px;   /* spazio per bottom nav */
-    overflow-y: auto;
+  :root {
+    --tab-h: 64px;      /* altezza bottom tab bar */
+    --hdr-h: 50px;      /* altezza header mobile  */
   }
 
-  /* ── Header compatto ── */
+  /* ── RESET BASE ── */
+  * { -webkit-tap-highlight-color: rgba(158,120,32,.15); }
+
+  body {
+    font-size: 15px;
+    overscroll-behavior: none;
+  }
+
+  /* ══════════════════════════════
+     HEADER — solo logo + lingua
+     ══════════════════════════════ */
   header {
+    height: var(--hdr-h);
     padding: 0 14px;
-    height: 52px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 300;
   }
-  .logo-wordmark { display: none; }   /* nasconde subtitle */
-  .logo-brand { font-size: 15px; }
-  .ha { gap: 6px; }
-  .hbadge { display: none; }          /* nasconde badge versione */
 
-  /* ── Layout: rimuove sidebar, impila verticalmente ── */
+  /* Nasconde sotto-titolo e tutti i button header eccetto lang */
+  .logo-sub,
+  .ha > button:not(#lang-btn),
+  .ha > span:not(#data-profile-badge),
+  #data-profile-badge { display: none !important; }
+
+  /* Badge lingua compatto */
+  #lang-btn {
+    min-height: 36px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 20px;
+  }
+
+  /* Logo gem un po' più piccolo */
+  .logo-gem { width: 26px; height: 26px; }
+  .logo-text { font-size: 15px; }
+
+  /* ══════════════════════════════
+     LAYOUT — colonna, header+main+nav
+     ══════════════════════════════ */
   .layout {
     flex-direction: column;
     height: auto;
-    min-height: calc(100vh - 52px);
+    margin-top: var(--hdr-h);
+    min-height: calc(100vh - var(--hdr-h));
   }
 
-  /* ── Nav → bottom tab bar fisso ── */
+  main {
+    flex: 1;
+    padding: 18px 14px calc(var(--tab-h) + 24px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ══════════════════════════════
+     BOTTOM TAB BAR
+     ══════════════════════════════ */
   nav {
     position: fixed;
     bottom: 0; left: 0; right: 0;
+    height: var(--tab-h);
     width: 100%;
-    height: 62px;
     flex-direction: row;
     align-items: stretch;
     padding: 0;
@@ -1177,112 +1217,316 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     border-top: 1px solid var(--border);
     overflow-x: auto;
     overflow-y: hidden;
-    z-index: 200;
+    z-index: 300;
+    box-shadow: 0 -4px 20px rgba(0,0,0,.10);
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    box-shadow: 0 -2px 12px rgba(0,0,0,.12);
+    background: var(--surface);
   }
   nav::-webkit-scrollbar { display: none; }
 
-  /* Separa azioni (clear, reset) dalla nav principale */
-  nav .sep { display: none; }
+  /* Etichette sezione "Strumenti" / "Riferimento" */
+  .nav-lbl, .sep { display: none !important; }
 
+  /* Singolo tab */
   .nav-item {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    padding: 6px 10px 4px;
-    min-width: 58px;
-    flex-shrink: 0;
+    gap: 2px;
+    min-width: 64px;
+    flex: 1;
+    padding: 6px 4px 10px;
     border-left: none;
-    border-top: 2px solid transparent;
-    font-size: 9.5px;
+    border-top: 3px solid transparent;
+    border-radius: 0;
+    font-size: 10px;
     font-weight: 500;
-    letter-spacing: .02em;
+    letter-spacing: 0;
+    transition: background .12s, color .12s;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+
+  /* Tab attivo */
   .nav-item.active {
     border-left-color: transparent;
     border-top-color: var(--gold);
+    background: var(--gold-l);
   }
-  /* Azioni (Clear, Reset) — più piccole in fondo */
-  .nav-item:not([data-page]) {
-    min-width: 44px;
-    font-size: 8.5px;
-    opacity: .7;
-  }
+
+  /* Azioni (pulsanti senza data-page) — nascoste per ora */
+  .nav-item:not([data-page]) { display: none; }
+
+  /* Icone tab */
   .nav-ico {
+    font-size: 20px;
     width: auto;
-    font-size: 17px;
     opacity: 1;
+    line-height: 1;
   }
-  .nav-ico svg, .nav-ico i { width: 18px; height: 18px; }
-  .nav-lbl { display: none; }   /* nasconde sezione-label "Tools" ecc. */
-
-  /* ── Pagine: no overflow nascosto ── */
-  .page.active { overflow-x: hidden; }
-
-  /* ── Page header ── */
-  .ph { padding: 0 0 14px; }
-  .phr { flex-direction: column; gap: 8px; }
-  .pa { flex-wrap: wrap; }
-  .ph h1 { font-size: 18px; }
-
-  /* ── Card / grid ── */
-  .fg { grid-template-columns: 1fr !important; }
-  .metrics { grid-template-columns: repeat(2, 1fr) !important; }
-  .calc-wrap { grid-template-columns: 1fr !important; }
-  .scan-metrics { grid-template-columns: repeat(2, 1fr) !important; }
-
-  /* ── Tabelle: scroll orizzontale ── */
-  .table-wrap, .tbl-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 8px;
+  .nav-ico i, .nav-ico svg {
+    width: 20px; height: 20px;
   }
-  table { min-width: 520px; }
 
-  /* ── Input / bottoni touch-friendly ── */
+  /* ══════════════════════════════
+     TIPOGRAFIA
+     ══════════════════════════════ */
+  .ph h1 { font-size: 19px; }
+  .ph p   { font-size: 13px; }
+  .card-t { font-size: 11px; }
+  .metric-v { font-size: 20px; }
+  .metric-l { font-size: 11px; }
+
+  /* ══════════════════════════════
+     TOUCH TARGETS — ≥ 48px
+     ══════════════════════════════ */
   input[type="number"],
   input[type="text"],
-  select,
-  textarea {
-    min-height: 40px;
-    font-size: 14px;
+  input[type="search"],
+  select {
+    min-height: 46px;
+    font-size: 15px;
+    padding: 10px 12px;
+    border-radius: 8px;
   }
-  .btn, button.btn {
+
+  textarea { font-size: 14px; min-height: 140px; }
+
+  .btn {
+    min-height: 44px;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 10px;
+  }
+  .btn-sm {
     min-height: 38px;
     font-size: 13px;
     padding: 8px 14px;
   }
-  .btn-sm { min-height: 32px; font-size: 12px; }
+  .btn-ico { min-height: 40px; min-width: 40px; width: 40px; height: 40px; }
 
-  /* ── Calcolatore: slider più alto ── */
-  input[type="range"] { height: 28px; }
+  /* Radio pill — più alte, testo leggibile */
+  .rpill, .scan-pill {
+    min-height: 42px;
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 22px;
+  }
 
-  /* ── Metric cards ── */
-  .metric { padding: 12px; }
-  .metric-v { font-size: 19px; }
+  /* Slider — più spesso */
+  input[type="range"] {
+    height: 32px;
+    cursor: pointer;
+  }
+  .ct-row { gap: 10px; }
+  .ct-row input[type="number"] { width: 78px; min-height: 46px; }
 
-  /* ── Scan pills (Sciolto/Montato) più larghe ── */
-  .scan-pills { flex-wrap: wrap; gap: 5px; }
-  .scan-pill { padding: 6px 12px; font-size: 12px; }
+  /* ══════════════════════════════
+     CARDS
+     ══════════════════════════════ */
+  .card {
+    padding: 16px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+  }
+  .cfield { margin-bottom: 14px; }
+  .cfield label {
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
 
-  /* ── Formula editor ── */
-  .cfe-editor { font-size: 13px; }
+  /* ══════════════════════════════
+     PAGE HEADER
+     ══════════════════════════════ */
+  .ph { margin-bottom: 16px; }
+  .phr { flex-direction: column; gap: 10px; }
+  .pa { flex-wrap: wrap; gap: 7px; }
 
-  /* ── Toast position ── */
-  .toast { bottom: 74px; }
+  /* ══════════════════════════════
+     GRIGLIE → colonna singola
+     ══════════════════════════════ */
+  .fg        { grid-template-columns: 1fr !important; gap: 0; }
+  .calc-wrap { grid-template-columns: 1fr !important; }
+  .metrics   { grid-template-columns: repeat(2, 1fr) !important; gap: 9px; }
+  .scan-metrics { grid-template-columns: repeat(2, 1fr) !important; }
+  .cfe-preview  { grid-template-columns: 1fr !important; gap: 8px; }
+  .scan-params-grid { grid-template-columns: 1fr !important; }
+
+  /* ══════════════════════════════
+     TABELLE — scroll orizzontale
+     ══════════════════════════════ */
+  .table-wrap, .tw {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  table { min-width: 500px; font-size: 12.5px; }
+  thead th { padding: 10px 8px; font-size: 9.5px; }
+  tbody td  { padding: 8px; }
+
+  /* ══════════════════════════════
+     CALCOLATORE — mobile-first
+     ══════════════════════════════ */
+  .calc-left, .calc-right { gap: 12px; }
+
+  /* Summary card: rapporto grande e ben visibile */
+  #c-summary-card {
+    border-radius: 16px;
+    padding: 18px 16px;
+  }
+
+  /* Tier rows più spaziosi */
+  .tier-row { padding: 10px 4px; }
+
+  /* Pietre secondarie — griglia adattata */
+  .stone-row {
+    grid-template-columns: 1fr 52px 60px auto;
+    gap: 5px;
+  }
+
+  /* ══════════════════════════════
+     SCAN
+     ══════════════════════════════ */
+  .scan-params { border-radius: 14px; padding: 16px 14px; }
+  .scan-sort-bar { flex-wrap: wrap; gap: 8px; }
+  .scan-sort-bar select { width: 100%; }
+  #sc-srch { width: 100%; }
+
+  /* ══════════════════════════════
+     FORMULA PAGE
+     ══════════════════════════════ */
+  .fmode-bar { flex-wrap: wrap; }
+  .fmode-btn { min-height: 40px; font-size: 13px; flex: 1; }
+  .sfe-tmpl-btn { min-height: 40px; }
+
+  /* ══════════════════════════════
+     STATUS BAR — nascosta su mobile
+     ══════════════════════════════ */
+  .sb { display: none; }
+
+  /* ══════════════════════════════
+     TOAST — sopra il tab bar
+     ══════════════════════════════ */
+  .toast { bottom: calc(var(--tab-h) + 12px); left: 14px; right: 14px; text-align: center; }
+
+  /* ══════════════════════════════
+     NO-DATA BANNER
+     ══════════════════════════════ */
+  #no-data-banner { flex-wrap: wrap; padding: 10px 14px; }
 }
 
-/* ── Breakpoint stretto (≤ 420px) ── */
+/* ═══════════════════════════════
+   BREAKPOINT STRETTO ≤ 420px
+   ═══════════════════════════════ */
 @media (max-width: 420px) {
-  .metrics { grid-template-columns: 1fr 1fr !important; }
-  .nav-item { min-width: 50px; font-size: 8.5px; padding: 6px 6px 4px; }
+  :root { --tab-h: 60px; }
+
+  body { font-size: 14px; }
   main { padding-left: 10px; padding-right: 10px; }
-  .ph h1 { font-size: 16px; }
-  table { min-width: 440px; }
+
+  .nav-item { min-width: 54px; font-size: 9.5px; }
+  .nav-ico  { font-size: 19px; }
+
+  .ph h1 { font-size: 17px; }
+  .metrics { grid-template-columns: repeat(2,1fr) !important; }
+
+  .rpill, .scan-pill { padding: 9px 12px; font-size: 13px; }
+
+  input[type="number"], select { min-height: 44px; }
+
+  table { min-width: 420px; font-size: 12px; }
+  thead th { font-size: 9px; padding: 8px 6px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   MOBILE DETAIL — polish visivo, active states, transizioni
+   ══════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Transizione pagina — fade leggero */
+  .page { opacity: 0; transition: opacity .18s ease; }
+  .page.active { opacity: 1; }
+
+  /* Active state su pulsanti (feedback tocco) */
+  .btn:active, .nav-item:active {
+    transform: scale(.96);
+    transition: transform .08s;
+  }
+  .rpill:active, .scan-pill:active { transform: scale(.94); }
+
+  /* Card hover → nessun effetto su mobile (evita flash) */
+  .card:hover { box-shadow: var(--shadow-sm); }
+
+  /* Summary card calcolatore: rapporto prominente */
+  #c-summary-card .calc-ratio-big,
+  #c-summary-card [style*="font-size:38px"] {
+    font-size: 44px !important;
+  }
+
+  /* Gemma info box: più alta, leggibile */
+  .gem-info {
+    font-size: 13px;
+    line-height: 1.9;
+    padding: 11px 13px;
+  }
+
+  /* Formula bar mode — compatta su mobile */
+  .fmode-bar { width: 100%; }
+  .fmode-btn { padding: 9px 10px; font-size: 12.5px; }
+
+  /* Scan sort bar */
+  .scan-sort-bar label { display: none; }
+
+  /* Badge qualità nella card titolo */
+  .badge { font-size: 11px; padding: 3px 9px; }
+
+  /* Calcolo detail rows: testo più grande */
+  .det-row { font-size: 13px; padding: 9px 0; }
+  .cert-row { font-size: 13px; padding: 8px 0; }
+
+  /* Nav — scroll indicator (ombra a destra se overflow) */
+  nav::after {
+    content: '';
+    position: sticky;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    flex-shrink: 0;
+    background: linear-gradient(to right, transparent, var(--surface));
+    pointer-events: none;
+  }
+
+  /* Titolo pagina mobile nell'header */
+  #mobile-page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    letter-spacing: .01em;
+  }
+
+  /* Metriche scan — card più compatte */
+  .metric { padding: 11px 12px; border-radius: 10px; }
+
+  /* Scan params — colori sezione */
+  .scan-params {
+    border-left: 3px solid var(--gold-m);
+  }
+
+  /* Tabella scan: nasconde colonne meno importanti su mobile stretto */
+  /* val_gem e val_met → nascosti su ≤ 420px (mostrato solo totale) */
+}
+
+@media (max-width: 420px) {
+  /* Nasconde val.pietra e val.metallo sullo schermo più stretto */
+  .scan-hide-mobile { display: none !important; }
+
+  /* Font metrics ancora più compatti */
+  .metric-v { font-size: 18px; }
+  .metric-l { font-size: 10.5px; }
 }
 </style>
 </head>
@@ -1300,7 +1544,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
         <span id="data-profile-badge" class="hbadge" style="cursor:pointer"
       onclick="goPage('data',document.querySelector('[data-page=data]'))"
       title="Gestisci dati personali" data-i18n="lbl_data_nav">⬆️ Dati</span>
-    <button class="btn btn-sm" id="lang-btn" onclick="toggleLang()" title="Switch language / Cambia lingua"
+    <button class="btn btn-sm" id="lang-btn" onclick="toggleLang()" aria-label="Cambia lingua / Switch language" title="Switch language / Cambia lingua"
       style="font-weight:600;letter-spacing:.03em;min-width:42px">🇮🇹 IT</button>
     <button class="btn btn-sm" onclick="importDataFile()"
       title="Carica file dati personali (.gcp.json)" data-i18n="btn_import_data" data-i18n="btn_import_data">&#8679; Importa dati</button>
@@ -1408,7 +1652,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
             <div class="cfield">
               <label data-i18n="lbl_weight_ct">Peso (ct)</label>
               <div class="ct-row">
-                <input type="number" id="c-ct" min="0.01" max="200" step="0.01" value="1.00"
+                <input type="number" inputmode="decimal" autocomplete="off" id="c-ct" min="0.01" max="200" step="0.01" value="1.00"
                   oninput="document.getElementById('c-ct-sl').value=this.value;syncRangeFill(document.getElementById('c-ct-sl'));calcUpdate()">
                 <input type="range" id="c-ct-sl" min="0.1" max="20" step="0.05" value="1"
                   oninput="document.getElementById('c-ct').value=parseFloat(this.value).toFixed(2);calcUpdate()">
@@ -1450,7 +1694,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
               </div>
               <div class="cfield">
                 <label data-i18n="lbl_metal_g">Grammi metallo</label>
-                <input type="number" id="c-mg" min="0" step="0.1" value="3.5" oninput="calcUpdate()">
+                <input type="number" inputmode="decimal" autocomplete="off" id="c-mg" min="0" step="0.1" value="3.5" oninput="calcUpdate()">
               </div>
             </div>
 
@@ -1607,28 +1851,28 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
             <div class="card-t" data-i18n="card_extra">Servizi aggiuntivi</div>
             <div class="fr">
               <label data-i18n="lbl_laser">Laser &lt;1 ct</label>
-              <div class="fiw"><input type="number" id="xl_sm" value="1.5" min="0" step="0.5" onchange="saveFormula()"><span class="unit">€</span></div>
+              <div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="xl_sm" value="1.5" min="0" step="0.5" onchange="saveFormula()"><span class="unit">€</span></div>
             </div>
             <div class="fr">
               <label data-i18n="lbl_laser_lg">Laser ≥1 ct</label>
-              <div class="fiw"><input type="number" id="xl_lg" value="22" min="0" step="1" onchange="saveFormula()"><span class="unit">€</span></div>
+              <div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="xl_lg" value="22" min="0" step="1" onchange="saveFormula()"><span class="unit">€</span></div>
             </div>
             <div class="fr">
               <label data-i18n="lbl_seal">Seal &lt;1 ct</label>
-              <div class="fiw"><input type="number" id="xs_sm" value="11" min="0" step="1" onchange="saveFormula()"><span class="unit">€</span></div>
+              <div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="xs_sm" value="11" min="0" step="1" onchange="saveFormula()"><span class="unit">€</span></div>
             </div>
             <div class="fr">
               <label data-i18n="lbl_seal_lg">Seal ≥1 ct</label>
-              <div class="fiw"><input type="number" id="xs_lg" value="16" min="0" step="1" onchange="saveFormula()"><span class="unit">€</span></div>
+              <div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="xs_lg" value="16" min="0" step="1" onchange="saveFormula()"><span class="unit">€</span></div>
             </div>
-            <div class="fr"><label data-i18n="lbl_express">Urgenza express</label><div class="fiw"><input type="number" id="xe" value="40" min="0" step="5" onchange="saveFormula()"><span class="unit">%</span></div></div>
-            <div class="fr"><label>Quota pietra aggiuntiva <span style="font-size:10px;color:var(--text-faint)" data-i18n="lbl_comp_gem_note">(composizione gioiello)</span></label><div class="fiw"><input type="number" id="csec" value="25" min="0" step="1" onchange="saveFormula()"><span class="unit">€</span></div></div>
+            <div class="fr"><label data-i18n="lbl_express">Urgenza express</label><div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="xe" value="40" min="0" step="5" onchange="saveFormula()"><span class="unit">%</span></div></div>
+            <div class="fr"><label>Quota pietra aggiuntiva <span style="font-size:10px;color:var(--text-faint)" data-i18n="lbl_comp_gem_note">(composizione gioiello)</span></label><div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="csec" value="25" min="0" step="1" onchange="saveFormula()"><span class="unit">€</span></div></div>
           </div>
           <div class="card">
             <div class="card-t" data-i18n="card_quot">Quote fisse montato</div>
-            <div class="fr"><label data-i18n="lbl_qb">Q. Base (sciolto → montato)</label><div class="fiw"><input type="number" id="qb-fix" value="600" min="0" step="50" onchange="saveFormula()"><span class="unit">€</span></div></div>
-            <div class="fr"><label data-i18n="lbl_qm">Q. Media</label><div class="fiw"><input type="number" id="qm-fix" value="1800" min="0" step="50" onchange="saveFormula()"><span class="unit">€</span></div></div>
-            <div class="fr"><label data-i18n="lbl_qa">Q. Alta</label><div class="fiw"><input type="number" id="qa-fix" value="4000" min="0" step="50" onchange="saveFormula()"><span class="unit">€</span></div></div>
+            <div class="fr"><label data-i18n="lbl_qb">Q. Base (sciolto → montato)</label><div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="qb-fix" value="600" min="0" step="50" onchange="saveFormula()"><span class="unit">€</span></div></div>
+            <div class="fr"><label data-i18n="lbl_qm">Q. Media</label><div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="qm-fix" value="1800" min="0" step="50" onchange="saveFormula()"><span class="unit">€</span></div></div>
+            <div class="fr"><label data-i18n="lbl_qa">Q. Alta</label><div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="qa-fix" value="4000" min="0" step="50" onchange="saveFormula()"><span class="unit">€</span></div></div>
           </div>
           <div class="card">
             <div class="card-t" data-i18n="card_metals">Prezzi metalli (€/g) — aggiornabili</div>
@@ -1640,14 +1884,14 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
         <div>
           <div class="card">
             <div class="card-t" data-i18n="card_kstato">Moltiplicatori stato — pietre sciolte</div>
-            <div class="fr"><label data-i18n="lbl_ksn">Sciolto — naturale</label><div class="fiw"><input type="number" id="ksn" value="1.00" min="0.5" max="3" step="0.05" onchange="saveFormula()"></div></div>
-            <div class="fr"><label data-i18n="lbl_ksl">Sciolto — lab-grown <span style="font-size:10px;color:var(--text-faint)" data-i18n="lbl_lab_discount">(lab-grown −20%)</span></label><div class="fiw"><input type="number" id="ksl" value="0.80" min="0.1" max="3" step="0.05" onchange="saveFormula()"></div></div>
+            <div class="fr"><label data-i18n="lbl_ksn">Sciolto — naturale</label><div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="ksn" value="1.00" min="0.5" max="3" step="0.05" onchange="saveFormula()"></div></div>
+            <div class="fr"><label data-i18n="lbl_ksl">Sciolto — lab-grown <span style="font-size:10px;color:var(--text-faint)" data-i18n="lbl_lab_discount">(lab-grown −20%)</span></label><div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="ksl" value="0.80" min="0.1" max="3" step="0.05" onchange="saveFormula()"></div></div>
             <div class="fr">
               <label style="flex-direction:column;align-items:flex-start;gap:2px">
                 K colore (gioiello montato)
                 <span style="font-size:10px;color:var(--text-faint)" data-i18n="lbl_djr_color_desc">Surcharge gemme colorate nel certificato montato</span>
               </label>
-              <div class="fiw"><input type="number" id="djr-kc" value="1.10" min="1.0" max="2.0" step="0.05" onchange="saveFormula()"></div>
+              <div class="fiw"><input type="number" inputmode="decimal" autocomplete="off" id="djr-kc" value="1.10" min="1.0" max="2.0" step="0.05" onchange="saveFormula()"></div>
             </div>
           </div>
           <!-- Matrice gioielli montati -->
@@ -1898,7 +2142,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
           <div class="scan-field">
             <label data-i18n="lbl_carats">Carati (ct)</label>
             <div class="ct-row">
-              <input type="number" id="sc-ct" min="0.01" max="200" step="0.01" value="1.00"
+              <input type="number" inputmode="decimal" autocomplete="off" id="sc-ct" min="0.01" max="200" step="0.01" value="1.00"
                 oninput="document.getElementById('sc-ct-sl').value=this.value;syncRangeFill(document.getElementById('sc-ct-sl'));renderScan()">
               <input type="range" id="sc-ct-sl" min="0.1" max="20" step="0.05" value="1"
                 oninput="document.getElementById('sc-ct').value=parseFloat(this.value).toFixed(2);renderScan()">
@@ -1925,7 +2169,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
           </div>
           <div class="scan-field" id="sc-mg-field" style="display:none">
             <label data-i18n="lbl_metal_g">Grammi metallo</label>
-            <input type="number" id="sc-mg" min="0" step="0.1" value="3.5" oninput="renderScan()">
+            <input type="number" inputmode="decimal" autocomplete="off" id="sc-mg" min="0" step="0.1" value="3.5" oninput="renderScan()">
           </div>
           <div class="scan-field" id="sc-tipo-field" style="display:none">
             <label data-i18n="lbl_jewel_type">Tipo gioiello</label>
@@ -1990,7 +2234,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
             <tr>
               <th style="width:135px" class="sort-th" onclick="scanSortClick('nome',this)">Gemma</th>
               <th style="width:80px" class="sort-th" data-i18n="lbl_col_cat" onclick="scanSortClick('cat',this)">Categoria</th>
-              <th style="width:80px" class="tr sort-th" data-i18n="lbl_th_val_stone" onclick="scanSortClick('val_gem',this)">Val. pietra</th>
+              <th style="width:80px" class="tr sort-th" data-i18n="lbl_th_val_stone" onclick="scanSortClick('val_gem',this)" class="scan-hide-mobile">Val. pietra</th>
               <th style="width:80px" class="tr sort-th" onclick="scanSortClick('val_met',this)">Val. metallo</th>
               <th style="width:85px" class="tr sort-th" onclick="scanSortClick('val',this)">Val. totale</th>
               <th style="width:80px" class="tr sort-th" data-i18n="lbl_col_cert" onclick="scanSortClick('cert',this)">Costo cert.</th>
@@ -3485,9 +3729,9 @@ function renderSecondaryStones() {
           <option value="media" ${s.qual==='media'?'selected':''}>Media</option>
           <option value="alta" ${s.qual==='alta'?'selected':''}>Alta</option>
         </select>
-        <input type="number" value="${s.ct}" min="0.01" step="0.01" style="text-align:right;font-size:11px"
+        <input type="number" inputmode="decimal" autocomplete="off" value="${s.ct}" min="0.01" step="0.01" style="text-align:right;font-size:11px"
           onchange="updSS(${s.id},'ct',parseFloat(this.value)||0.01);renderSecondaryStones()">
-        <input type="number" value="${qty}" min="1" step="1" style="text-align:right;font-size:11px"
+        <input type="number" inputmode="decimal" autocomplete="off" value="${qty}" min="1" step="1" style="text-align:right;font-size:11px"
           onchange="updSS(${s.id},'qty',parseInt(this.value)||1);renderSecondaryStones()" title="Quantità pezzi identici">
         <button class="btn-ico btn-d" onclick="removeSecondaryStone(${s.id})" title="${t('btn_remove')}">✕</button>
       </div>`;
@@ -3570,10 +3814,10 @@ function renderCat() {
     return `<tr data-id="${it.id}">
       <td><div style="display:flex;align-items:center;gap:4px"><select style="width:125px" onchange="upd(${it.id},'gem',this.value)">${selGem(it.gem)}</select>${secLabel}</div></td>
       <td><select style="width:60px;font-size:11px" onchange="upd(${it.id},'qual',this.value)">${selQual(it.qual)}</select></td>
-      <td><input type="number" value="${it.ct}" min="0.01" step="0.01" style="width:54px" onchange="upd(${it.id},'ct',parseFloat(this.value)||0)"></td>
+      <td><input type="number" inputmode="decimal" autocomplete="off" value="${it.ct}" min="0.01" step="0.01" style="width:54px" onchange="upd(${it.id},'ct',parseFloat(this.value)||0)"></td>
       <td><select style="width:68px" onchange="updStato(${it.id},this.value)">${selStato(it.stato)}</select></td>
       <td><select style="width:98px" ${it.stato==='sciolto'?'disabled':''} onchange="upd(${it.id},'metallo',this.value)">${selMet(it.metallo)}</select></td>
-      <td><input type="number" value="${it.mg}" min="0" step="0.1" style="width:46px" ${it.stato==='sciolto'?'disabled':''} onchange="upd(${it.id},'mg',parseFloat(this.value)||0)"></td>
+      <td><input type="number" inputmode="decimal" autocomplete="off" value="${it.mg}" min="0" step="0.1" style="width:46px" ${it.stato==='sciolto'?'disabled':''} onchange="upd(${it.id},'mg',parseFloat(this.value)||0)"></td>
       <td class="tc" style="white-space:nowrap">
         <input type="checkbox" ${it.laser?'checked':''} onchange="upd(${it.id},'laser',this.checked)" title="Laser">
         <input type="checkbox" ${it.seal?'checked':''} onchange="upd(${it.id},'seal',this.checked)" title="Seal" style="margin-left:5px">
@@ -3665,7 +3909,7 @@ function renderMetalPrices() {
       <div class="fr">
         <label>${k}</label>
         <div class="fiw">
-          <input type="number" value="${metalPrices[k]}" min="0" step="0.5" style="width:74px"
+          <input type="number" inputmode="decimal" autocomplete="off" value="${metalPrices[k]}" min="0" step="0.5" style="width:74px"
             onchange="metalPrices['${k}']=parseFloat(this.value)||0;saveMeta();calcUpdate()">
           <span class="unit">€/g</span>
         </div>
@@ -4475,7 +4719,7 @@ function renderDJRMatrix() {
     ${DJR_MATRIX.map((row,ri) => `<tr style="border-top:1px solid var(--border)">
       <td style="${rowHdr}">${row.l}</td>
       ${row.p.map((val,ci)=>`<td style="${colStyle}">
-        <input type="number" value="${val}" min="1" step="1"
+        <input type="number" inputmode="decimal" autocomplete="off" value="${val}" min="1" step="1"
           style="width:46px;text-align:right;font-size:10px;font-family:'DM Mono',monospace"
           onchange="DJR_MATRIX[${ri}].p[${ci}]=parseInt(this.value)||${val};saveFormula()">
       </td>`).join('')}
@@ -4531,7 +4775,7 @@ function renderFormula() {
         const isLast = i === tiers.length - 1;
         const maxCell = isLast
           ? `<span style="font-size:10px;color:var(--text-faint);padding:2px 3px">∞</span>`
-          : `<input type="number" value="${tier.max}" min="0.01" step="0.01" style="width:84px;text-align:right;font-size:11px;padding:2px 4px"
+          : `<input type="number" inputmode="decimal" autocomplete="off" value="${tier.max}" min="0.01" step="0.01" style="width:84px;text-align:right;font-size:11px;padding:2px 4px"
                onchange="${tiersArr}[${i}].max=parseFloat(this.value)||${tier.max};saveFormula()">`;
         const removeBtn = isLast
           ? `<span></span>`
@@ -4541,7 +4785,7 @@ function renderFormula() {
           ${maxCell}
           ${CLIENT_TYPES.map(ct => {
             const val = PRICE_TABLE[cat.key][ct][i] ?? 0;
-            return `<input type="number" value="${val}" min="0" step="1" style="text-align:right;font-size:11px;padding:2px 4px"
+            return `<input type="number" inputmode="decimal" autocomplete="off" value="${val}" min="0" step="1" style="text-align:right;font-size:11px;padding:2px 4px"
               onchange="PRICE_TABLE['${cat.key}']['${ct}'][${i}]=parseInt(this.value)||0;saveFormula()">`;
           }).join('')}
           ${removeBtn}
@@ -4578,7 +4822,7 @@ function renderFormula() {
         ${CLIENT_TYPES.map(ctype => {
           const val = (obj[cat.key] || {})[ctype] || 0;
           const step = varName === 'K_MONTATO' ? '0.01' : '1';
-          return `<input type="number" value="${val}" min="0" step="${step}" style="text-align:right;font-size:10.5px;padding:2px 4px" onchange="${varName}['${cat.key}']['${ctype}']=parseFloat(this.value)||0;saveFormula()">`;
+          return `<input type="number" inputmode="decimal" autocomplete="off" value="${val}" min="0" step="${step}" style="text-align:right;font-size:10.5px;padding:2px 4px" onchange="${varName}['${cat.key}']['${ctype}']=parseFloat(this.value)||0;saveFormula()">`;
         }).join('')}
       </div>`).join('');
       return hdr + colHdr + rows;
@@ -4595,7 +4839,7 @@ function renderFormula() {
         : (prev === null ? `≤ ${t.max} ct` : `${parseFloat((prev+0.01).toFixed(2))}–${t.max} ct`);
       return `<div style="display:grid;grid-template-columns:90px repeat(3,1fr);gap:4px;padding:2px 0;border-bottom:1px solid var(--border)">
         <span style="font-size:10px;color:var(--text-muted)">${lbl}</span>
-        ${CLIENT_TYPES.map(ctype => `<input type="number" value="${t[ctype]||0}" min="0" step="1" style="text-align:right;font-size:10.5px;padding:2px 4px" onchange="CONTORNO_TIERS[${i}]['${ctype}']=parseFloat(this.value)||0;saveFormula()">`).join('')}
+        ${CLIENT_TYPES.map(ctype => `<input type="number" inputmode="decimal" autocomplete="off" value="${t[ctype]||0}" min="0" step="1" style="text-align:right;font-size:10.5px;padding:2px 4px" onchange="CONTORNO_TIERS[${i}]['${ctype}']=parseFloat(this.value)||0;saveFormula()">`).join('')}
       </div>`;
     }).join('');
     ktdiv.innerHTML =
@@ -4798,7 +5042,7 @@ function renderScanStones() {
           <option value="media" ${s.qual==='media'?'selected':''}>Media</option>
           <option value="alta" ${s.qual==='alta'?'selected':''}>Alta</option>
         </select>
-        <input type="number" value="${s.ct}" min="0.01" step="0.01" style="text-align:right;font-size:11px"
+        <input type="number" inputmode="decimal" autocomplete="off" value="${s.ct}" min="0.01" step="0.01" style="text-align:right;font-size:11px"
           onchange="updScSS(${s.id},'ct',parseFloat(this.value)||0.01)">
         <button class="btn-ico btn-d" onclick="removeScanStone(${s.id})" title="${t('btn_remove')}">✕</button>
       </div>`).join('');
@@ -5779,6 +6023,128 @@ document.addEventListener('keydown', e => {
     }
   }
 });
+
+// ════════════════════════════════════════════════════════════════════════════════
+//  MOBILE UX — inizializzazione adattiva
+// ════════════════════════════════════════════════════════════════════════════════
+(function initMobileUX() {
+  const isMobile = () => window.innerWidth <= 768;
+
+  // ── 1. inputmode per tastiera numerica corretta su mobile ──────────────────
+  function setInputModes() {
+    document.querySelectorAll('input[type="number"]').forEach(el => {
+      el.setAttribute('inputmode', 'decimal');
+      el.setAttribute('pattern', '[0-9]*[.,]?[0-9]*');
+    });
+  }
+
+  // ── 2. Prevent double-tap zoom su pulsanti ─────────────────────────────────
+  document.addEventListener('touchend', e => {
+    if (e.target.closest('button, .btn, .rpill, .scan-pill, .nav-item')) {
+      e.preventDefault();
+      e.target.click();
+    }
+  }, {passive: false});
+
+  // ── 3. Page title nell'header su mobile ────────────────────────────────────
+  const PAGE_TITLES = {
+    calc:    '⬡ Calcolatore',
+    cat:     '☰ Catalogo',
+    tariffe: '₮ Tariffe',
+    formula: 'ƒ Formula',
+    anal:    '▦ Analisi',
+    db:      '◈ Database',
+    scan:    '⊞ Scansione',
+    data:    '⬆️ Dati',
+  };
+
+  function updateMobileTitle(pageId) {
+    if (!isMobile()) return;
+    let titleEl = document.getElementById('mobile-page-title');
+    if (!titleEl) {
+      titleEl = document.createElement('span');
+      titleEl.id = 'mobile-page-title';
+      titleEl.style.cssText = 'font-size:14px;font-weight:600;color:var(--text);margin-left:10px;';
+      const logo = document.querySelector('.logo-wordmark');
+      if (logo) logo.parentNode.insertBefore(titleEl, logo.nextSibling);
+    }
+    titleEl.textContent = PAGE_TITLES[pageId] || '';
+  }
+
+  // ── 4. Osserva cambio pagina attiva via MutationObserver ─────────────────
+  const observer = new MutationObserver(mutations => {
+    for (const m of mutations) {
+      if (m.target.classList?.contains('active') && m.target.id?.startsWith('page-')) {
+        const pageId = m.target.id.replace('page-', '');
+        updateMobileTitle(pageId);
+        if (isMobile()) {
+          const mainEl = document.querySelector('main');
+          if (mainEl) mainEl.scrollTo({top: 0, behavior: 'auto'});
+        }
+        break;
+      }
+    }
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.page').forEach(p =>
+      observer.observe(p, {attributes: true, attributeFilter: ['class']}));
+  });
+
+  // ── 5. Tab attivo iniziale ─────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    setInputModes();
+    updateMobileTitle('calc');
+
+    // Etichette tab bar — versioni corte per il mobile
+    const LABELS = {
+      calc:    'Calcola',
+      cat:     'Catalogo',
+      tariffe: 'Tariffe',
+      formula: 'Formula',
+      anal:    'Analisi',
+      db:      'Database',
+      scan:    'Scan',
+      data:    'Dati',
+    };
+    if (isMobile()) {
+      document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
+        const page = btn.dataset.page;
+        const ico  = btn.querySelector('.nav-ico');
+        const lbl  = LABELS[page];
+        if (lbl && ico) {
+          // Rimuove testo esistente dopo l'icona e aggiunge label mobile
+          btn.innerHTML = ico.outerHTML + '<span style="display:block;line-height:1">' + lbl + '</span>';
+        }
+      });
+    }
+  });
+
+  // ── 6. Swipe orizzontale tra le pagine (optional accelerator) ──────────────
+  let _touchStartX = 0, _touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    _touchStartX = e.touches[0].clientX;
+    _touchStartY = e.touches[0].clientY;
+  }, {passive: true});
+
+  document.addEventListener('touchend', e => {
+    if (!isMobile()) return;
+    const dx = e.changedTouches[0].clientX - _touchStartX;
+    const dy = e.changedTouches[0].clientY - _touchStartY;
+    // Solo swipe orizzontale deciso (>80px, angolo <30°)
+    if (Math.abs(dx) < 80 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
+    // Non attivare su elementi scrollabili
+    if (e.target.closest('.tw, .table-wrap, nav, input, select, textarea, .scan-params')) return;
+    const pages = ['calc','cat','tariffe','formula','anal','db','scan','data'];
+    const active = document.querySelector('.page.active')?.id?.replace('page-','');
+    const idx = pages.indexOf(active);
+    if (idx < 0) return;
+    const next = dx < 0 ? pages[idx+1] : pages[idx-1];
+    if (!next) return;
+    const btn = document.querySelector('[data-page="'+next+'"]');
+    if (btn) window.goPage(next, btn);
+  }, {passive: true});
+
+})();
 
 </script>
 </body>
