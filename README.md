@@ -76,29 +76,6 @@ L'app funziona come **PWA (Progressive Web App)**: nessuno store, installazione 
 
 ---
 
-## 🚀 Deploy su GitHub Pages
-
-```bash
-# Il repository contiene già index.html — GitHub Pages lo serve automaticamente.
-# Vai su: Settings → Pages → Source: Deploy from branch → main → / (root)
-# Dopo 1-2 minuti l'app è online al link indicato da GitHub.
-```
-
-File pubblicati nel repository:
-
-```
-index.html              ← app completa (zero dipendenze esterne tranne Chart.js CDN)
-sample-pricing.gcp.json ← template vuoto per documentazione
-manifest.json           ← configurazione PWA
-.gitignore              ← esclude i file privati
-README.md               ← questo file
-```
-
-> **Non pubblicare mai `default-pricing.gcp.json`** — contiene i tuoi prezzi reali.
-> È già escluso dal `.gitignore`.
-
----
-
 ## 📐 Formula certificato
 
 ```
@@ -129,4 +106,3 @@ DJR (Diamond/Jewellery Report — gioiello montato)
 
 Creato da **Alessandro Sequino**
 Database prezzi: distretto orafo Tarì 2025, Campania
-Riferimento certificazione:
