@@ -711,21 +711,14 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
 .stone-row:last-child { border-bottom:none; }
 .stone-row select, .stone-row input { font-size:11.5px; }
 
-/* Summary card nel calcolatore */
-.calc-summary {
-  background: var(--gold-l);
-  border: 1px solid rgba(158,120,32,.18);
-  border-radius: var(--r);
-  padding: 12px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+/* Micro-label "eyebrow" — etichetta maiuscola minuta ricorrente */
+.u-eyebrow {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-faint);
 }
-.calc-summary-row { display:flex; justify-content:space-between; align-items:baseline; }
-.calc-summary-label { font-size:11px; color: var(--gold); font-weight:500; }
-.calc-summary-value { font-family:'DM Mono',monospace; font-size:13px; font-weight:700; color:var(--gold); }
-.calc-ratio-big { font-size: 28px; font-family:'DM Mono',monospace; font-weight:700; text-align:center; padding:6px 0 2px; }
-.calc-ratio-label { font-size:11px; color:var(--text-muted); text-align:center; margin-bottom:4px; }
 
 .cfield { margin-bottom: 12px; }
 .cfield label {
@@ -2385,7 +2378,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
             <tr>
               <th style="width:135px" class="sort-th" onclick="scanSortClick('nome',this)">Gemma</th>
               <th style="width:80px" class="sort-th" data-i18n="lbl_col_cat" onclick="scanSortClick('cat',this)">Categoria</th>
-              <th style="width:80px" class="tr sort-th" data-i18n="lbl_th_val_stone" onclick="scanSortClick('val_gem',this)" class="scan-hide-mobile">Val. pietra</th>
+              <th style="width:80px" class="tr sort-th" data-i18n="lbl_th_val_stone" onclick="scanSortClick('val_gem',this)">Val. pietra</th>
               <th style="width:80px" class="tr sort-th" onclick="scanSortClick('val_met',this)">Val. metallo</th>
               <th style="width:85px" class="tr sort-th" onclick="scanSortClick('val',this)">Val. totale</th>
               <th style="width:80px" class="tr sort-th" data-i18n="lbl_col_cert" onclick="scanSortClick('cert',this)">Costo cert.</th>
@@ -3867,10 +3860,10 @@ function renderSecondaryStones() {
 
   list.innerHTML =
     `<div style="display:grid;grid-template-columns:1fr 46px 55px 50px auto;gap:5px;padding:3px 0 5px;border-bottom:1px solid var(--border);margin-bottom:3px">
-      <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)">Gemma</span>
-      <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)">Qual.</span>
-      <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)">ct/pz</span>
-      <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)">Qtà</span>
+      <span class="u-eyebrow">Gemma</span>
+      <span class="u-eyebrow">Qual.</span>
+      <span class="u-eyebrow">ct/pz</span>
+      <span class="u-eyebrow">Qtà</span>
       <span></span>
     </div>` +
     secondaryStones.map(s => {
@@ -5184,9 +5177,9 @@ function renderScanStones() {
 
   list.innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 55px 62px auto;gap:6px;padding:3px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px">
-      <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)">Gemma</span>
-      <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)">Qual.</span>
-      <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint)">ct</span>
+      <span class="u-eyebrow">Gemma</span>
+      <span class="u-eyebrow">Qual.</span>
+      <span class="u-eyebrow">ct</span>
       <span></span>
     </div>` +
     scanSecStones.map(s => `
