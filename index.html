@@ -2657,6 +2657,13 @@ const TR = {
     lbl_k_formula:     'Costo = Cert_sciolto × K + forfait contorno',
     lbl_tennis_desc:   'TENNIS FACTOR — €/ct peso totale pietre',
     lbl_tennis_formula:'Costo = peso_tot_ct × fattore + servizi aggiuntivi',
+    lbl_tennis_table_hdr: '🎾 Tariffe Tennis (€ forfait per fascia peso tot.)',
+    lbl_tennis_note:   'Forfait fisso per fascia di peso totale (non €/ct), per categoria × tipologia cliente.',
+    lbl_tennis_breakdown: 'forfait per fascia di peso totale × categoria × tipologia cliente',
+    lbl_max_ct_tot:    'Max ct tot.',
+    lbl_max_ct:        'Max ct',
+    lbl_perct_title:   'Prezzo €/ct: il valore inserito è moltiplicato per il peso reale',
+    toast_min_tier:    'Minimo 1 fascia + ∞ richiesti',
     lbl_contour_hdr:  'Forfait contorno',
     // Formula panel — variabili e preset
     lbl_formula_mode_s:'✨ Formula semplice',
@@ -2980,6 +2987,13 @@ const TR = {
     lbl_k_formula:     'Cost = Loose_cert × K + contour forfait',
     lbl_tennis_desc:   'TENNIS FACTOR — €/ct total stone weight',
     lbl_tennis_formula:'Cost = tot_weight_ct × factor + additional services',
+    lbl_tennis_table_hdr: '🎾 Tennis rates (flat € per total-weight tier)',
+    lbl_tennis_note:   'Flat fee per total-weight tier (not €/ct), by category × client type.',
+    lbl_tennis_breakdown: 'flat fee per total-weight tier × category × client type',
+    lbl_max_ct_tot:    'Max ct tot.',
+    lbl_max_ct:        'Max ct',
+    lbl_perct_title:   '€/ct pricing: the value entered is multiplied by the actual weight',
+    toast_min_tier:    'At least 1 tier + ∞ required',
     lbl_contour_hdr:  'Contour forfait',
     // Formula panel — variables and presets
     lbl_formula_mode_s:'✨ Simple formula',
@@ -3133,25 +3147,25 @@ const GEM_DB = [
   {nome:"Zaffiro Lab-Grown",         cat:"Sintetiche/Lab",      qb:4,  qm:15,  qa:30,    tratt:"Verneuil/flux",       dur:9,   note:"Comune in serie",            tc:"zaffiro_lab"},
   {nome:"Smeraldo",                  cat:"Preziose classiche",  qb:200,  qm:1500,  qa:6000,  tratt:"Olio/resina",         dur:7.5, note:"Colombia top grade",         tc:"smeraldo"},
   {nome:"Smeraldo Lab-Grown",        cat:"Sintetiche/Lab",      qb:30,  qm:100,  qa:175,   tratt:"Idrotermale/flux",    dur:7.5, note:"In crescita nel settore",        tc:"smeraldo_lab"},
-  {nome:"Alexandrite",               cat:"Pietre di colore",    qb:400,  qm:2500,  qa:10000, tratt:"Raro non trattato",   dur:8.5, note:"Effetto alexandrite top",    tc:"alessandrite"},
+  {nome:"Alexandrite",               cat:"Preziose classiche",    qb:400,  qm:2500,  qa:10000, tratt:"Raro non trattato",   dur:8.5, note:"Effetto alexandrite top",    tc:"alessandrite"},
   {nome:"Alexandrite Lab-Grown",     cat:"Sintetiche/Lab",      qb:20,  qm:80,  qa:125,   tratt:"Pulled/flux",         dur:8.5, note:"Molto richiesta",            tc:"alessandrite_lab"},
   // ── PIETRE DI COLORE ─────────────────────────────────────────────────────────
   {nome:"Acquamarina",               cat:"Pietre di colore",    qb:30,  qm:120,  qa:350,   tratt:"Riscaldamento",       dur:7.5, note:"Santa Maria top",            tc:"acquamarina"},
   {nome:"Morganite",                 cat:"Pietre di colore",    qb:15,  qm:60,  qa:125,   tratt:"Riscaldamento",       dur:7.5, note:"Rosa-pesca, tendenza",       tc:"altro"},
   {nome:"Tanzanite",                 cat:"Pietre di colore",    qb:80,  qm:300,  qa:900,   tratt:"Riscaldamento",       dur:6.5, note:"Monoprovenienza Tanzania",   tc:"tanzanite"},
-  {nome:"Tsavorite",                 cat:"Pietre di colore",    qb:150,  qm:600,  qa:2000,  tratt:"Non trattato",        dur:7,   note:"Rara, verde brillante",      tc:"granato"},
-  {nome:"Demantoid",                 cat:"Pietre di colore",    qb:200,  qm:900,  qa:3000,  tratt:"Raro non trattato",   dur:6.5, note:"Horsetail inclusion",        tc:"granato"},
-  {nome:"Spessartite",               cat:"Pietre di colore",    qb:60,  qm:250,  qa:600,   tratt:"Non trattato",        dur:7,   note:"Arancio intenso",            tc:"granato"},
+  {nome:"Tsavorite",                 cat:"Preziose classiche",    qb:150,  qm:600,  qa:2000,  tratt:"Non trattato",        dur:7,   note:"Rara, verde brillante",      tc:"granato"},
+  {nome:"Demantoid",                 cat:"Preziose classiche",    qb:200,  qm:900,  qa:3000,  tratt:"Raro non trattato",   dur:6.5, note:"Horsetail inclusion",        tc:"granato"},
+  {nome:"Spessartite",               cat:"Preziose classiche",    qb:60,  qm:250,  qa:600,   tratt:"Non trattato",        dur:7,   note:"Arancio intenso",            tc:"granato"},
   {nome:"Rodolite",                  cat:"Pietre di colore",    qb:20,  qm:80,  qa:175,   tratt:"Non trattato",        dur:7,   note:"Rosa-viola, accessibile",    tc:"granato"},
-  {nome:"Tormalina Paraiba",         cat:"Pietre di colore",    qb:500,  qm:3000,  qa:12500, tratt:"Riscaldamento",       dur:7.5, note:"Neon blu-verde, rarissima",  tc:"altro"},
+  {nome:"Tormalina Paraiba",         cat:"Preziose classiche",    qb:500,  qm:3000,  qa:12500, tratt:"Riscaldamento",       dur:7.5, note:"Neon blu-verde, rarissima",  tc:"altro"},
   {nome:"Tormalina Multicolor",      cat:"Pietre di colore",    qb:20,  qm:80,  qa:250,   tratt:"Raro trattato",       dur:7.5, note:"Verdelite, indicolite",      tc:"altro"},
-  {nome:"Tormalina Indicolite",      cat:"Pietre di colore",    qb:30,  qm:150,  qa:500,   tratt:"Riscaldamento",       dur:7.5, note:"Blu-verde intenso",          tc:"altro"},
-  {nome:"Topazio Imperiale",         cat:"Pietre di colore",    qb:40,  qm:150,  qa:400,   tratt:"Irradiazione",        dur:8,   note:"Pêche/arancio naturale",     tc:"altro"},
+  {nome:"Tormalina Indicolite",      cat:"Preziose classiche",    qb:30,  qm:150,  qa:500,   tratt:"Riscaldamento",       dur:7.5, note:"Blu-verde intenso",          tc:"altro"},
+  {nome:"Topazio Imperiale",         cat:"Preziose classiche",    qb:40,  qm:150,  qa:400,   tratt:"Irradiazione",        dur:8,   note:"Pêche/arancio naturale",     tc:"altro"},
   {nome:"Topazio Blue Swiss",        cat:"Pietre di colore",    qb:5,  qm:15,  qa:20,    tratt:"Irradiazione+risc.",  dur:8,   note:"Molto comune",               tc:"altro"},
   {nome:"Ametista",                  cat:"Pietre di colore",    qb:3,  qm:12,  qa:30,    tratt:"Riscaldamento",       dur:7,   note:"Siberian top viola",         tc:"ametista"},
   {nome:"Citrino",                   cat:"Pietre di colore",    qb:2,  qm:8,  qa:15,    tratt:"Riscaldamento",       dur:7,   note:"Ampia disponibilità",        tc:"altro"},
   {nome:"Ametrina",                  cat:"Pietre di colore",    qb:3,  qm:10,  qa:17,    tratt:"Naturale",            dur:7,   note:"Bolivia, bicolore",          tc:"altro"},
-  {nome:"Spinello",                  cat:"Pietre di colore",    qb:80,  qm:400,  qa:1750,  tratt:"Raro trattato",       dur:8,   note:"Rosso/rosa, tendenza forte", tc:"altro"},
+  {nome:"Spinello",                  cat:"Preziose classiche",    qb:80,  qm:400,  qa:1750,  tratt:"Raro trattato",       dur:8,   note:"Rosso/rosa, tendenza forte", tc:"altro"},
   {nome:"Peridoto",                  cat:"Pietre di colore",    qb:10,  qm:40,  qa:100,   tratt:"Non trattato",        dur:6.5, note:"Verde oliva",                tc:"altro"},
   {nome:"Zircone Naturale",          cat:"Pietre di colore",    qb:15,  qm:60,  qa:150,   tratt:"Riscaldamento",       dur:7.5, note:"Non confondere con CZ",      tc:"altro"},
   {nome:"Crisoberillo",              cat:"Pietre di colore",    qb:30,  qm:120,  qa:300,   tratt:"Non trattato",        dur:8.5, note:"Cat's eye raro",             tc:"altro"},
@@ -3235,11 +3249,12 @@ const TP = [
 // ═══════════════════════════════════════════════════════════════════════════════
 //  TARIFFARIO — 5 CATEGORIE × 3 TIPOLOGIE CLIENTE × FASCE DI PESO
 // ═══════════════════════════════════════════════════════════════════════════════
-//   diam  → diamante naturale             (11 fasce, PRICE_TIERS_DIAM)
-//   prec  → preziose naturali (R/S/Z/Al)  (6 fasce, PRICE_TIERS_COLOR)
-//   color → colore semi-preziose          (6 fasce, PRICE_TIERS_COLOR)
-//   org   → organiche (perle, corallo…)   (6 fasce, PRICE_TIERS_COLOR)
-//   sint  → sintetiche / lab-grown        (6 fasce, PRICE_TIERS_COLOR)
+//   diam  → diamante naturale             (PRICE_TIERS_DIAM)
+//   prec  → preziose naturali (R/S/Z/Al)  (PRICE_TIERS_PREC)
+//   color → colore semi-preziose          (PRICE_TIERS_COLOR)
+//   org   → organiche (perle, corallo…)   (PRICE_TIERS_ORG)
+//   sint  → sintetiche / lab-grown        (PRICE_TIERS_SINT)
+//   (fasce ora indipendenti per categoria; vedi tiersForCat)
 
 function tcToPriceCat(tc) {
   if (tc === 'diamante_nat') return 'diam';
@@ -3256,10 +3271,32 @@ let PRICE_TIERS_DIAM = [
   {max:Infinity},
 ];
 
-// Fasce di peso — PIETRE DI COLORE (6 fasce, confini editabili)
-let PRICE_TIERS_COLOR = [
+// Fasce di peso — categorie non-diamante (6 fasce di default, ora INDIPENDENTI per categoria)
+// Ogni categoria ha il proprio array, sul modello di PRICE_TIERS_DIAM.
+const _DEFAULT_COLOR_TIERS = () => [
   {max:0.49}, {max:0.99}, {max:2.99}, {max:4.99}, {max:9.99},
   {max:Infinity},
+];
+let PRICE_TIERS_PREC  = _DEFAULT_COLOR_TIERS();
+let PRICE_TIERS_COLOR = _DEFAULT_COLOR_TIERS();
+let PRICE_TIERS_ORG   = _DEFAULT_COLOR_TIERS();
+let PRICE_TIERS_SINT  = _DEFAULT_COLOR_TIERS();
+
+// Restituisce l'array fasce corretto per la categoria pricing
+function tiersForCat(cat) {
+  switch (cat) {
+    case 'diam':  return PRICE_TIERS_DIAM;
+    case 'prec':  return PRICE_TIERS_PREC;
+    case 'color': return PRICE_TIERS_COLOR;
+    case 'org':   return PRICE_TIERS_ORG;
+    case 'sint':  return PRICE_TIERS_SINT;
+    default:      return PRICE_TIERS_COLOR;
+  }
+}
+
+// Fasce di peso — TENNIS (€ forfait per fascia, indipendenti)
+let PRICE_TIERS_TENNIS = [
+  {max:1.00}, {max:2.00}, {max:3.00}, {max:5.00}, {max:10.00}, {max:Infinity},
 ];
 
 function tierLabel(tiers, i) {
@@ -3319,13 +3356,16 @@ function certCostDGR(ct, tc, clientType, laser, seal, exp) {
   if (!ct || ct <= 0) return 0;
   const cat = tcToPriceCat(tc);
   const ctype = clientType || currentClientType || 'base';
-  const tiers = cat === 'diam' ? PRICE_TIERS_DIAM : PRICE_TIERS_COLOR;
+  const tiers = tiersForCat(cat);
   let tierIdx = tiers.length - 1;
   for (let i = 0; i < tiers.length; i++) {
     if (ct <= tiers[i].max) { tierIdx = i; break; }
   }
   const prices = PRICE_TABLE[cat][ctype] || PRICE_TABLE[cat].base;
-  let base = prices[tierIdx] ?? prices[prices.length - 1];
+  const tier = tiers[tierIdx] || {};
+  let base = tier.perCt
+    ? (prices[tierIdx] ?? 0) * ct                          // €/ct × peso reale
+    : (prices[tierIdx] ?? prices[prices.length - 1]);      // forfait fisso
   const large = ct >= 1.0;
   if (laser) base += large ? certParams.xl_lg : certParams.xl_sm;
   if (seal)  base += large ? certParams.xs_lg : certParams.xs_sm;
@@ -3337,16 +3377,20 @@ function certCostDGR(ct, tc, clientType, laser, seal, exp) {
 function certCostDGRBreakdown(ct, tc, clientType) {
   const cat = tcToPriceCat(tc);
   const ctype = clientType || currentClientType || 'base';
-  const tiers = cat === 'diam' ? PRICE_TIERS_DIAM : PRICE_TIERS_COLOR;
+  const tiers = tiersForCat(cat);
   let tierIdx = tiers.length - 1;
   for (let i = 0; i < tiers.length; i++) {
     if (ct <= tiers[i].max) { tierIdx = i; break; }
   }
   const prices = PRICE_TABLE[cat][ctype] || PRICE_TABLE[cat].base;
+  const tier = tiers[tierIdx] || {};
+  const perCt = !!tier.perCt;
+  const rate  = prices[tierIdx] ?? prices[prices.length - 1];
   return {
     cat, ctype, tierIdx,
     label: tierLabel(tiers, tierIdx),
-    base: prices[tierIdx] ?? prices[prices.length - 1],
+    perCt, rate,
+    base: perCt ? (prices[tierIdx] ?? 0) * ct : rate,
   };
 }
 
@@ -3388,7 +3432,7 @@ let DJR_K_COLOR = 1.00;
 //               Cert = cert_sciolto × K_MONTATO[cat][cliente]
 //               + CONTORNO_TIER[fascia_peso_contorno_tot]
 //  • "tennis" → bracciali/collane tennis, tutte pietre equivalenti
-//               Cert = peso_tot_ct × TENNIS_FACTOR[cat][cliente]
+//               Cert = TENNIS_PRICE_TABLE[cat][cliente][fascia_peso_tot]
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Moltiplicatore K per gioielli BASE (applica sul cert. della pietra principale)
@@ -3412,15 +3456,16 @@ let CONTORNO_TIERS = [
   { max: Infinity, base: 0, speciale: 0, large: 0 },
 ];
 
-// Fattore €/ct per TENNIS (applicato al peso totale di tutte le pietre)
-// Varia per categoria gemma × tipologia cliente
-let TENNIS_FACTOR = {
-  diam:  { base: 0, speciale: 0, large: 0 },
-  prec:  { base: 0, speciale: 0, large: 0 },
-  color: { base: 0, speciale: 0, large: 0 },
-  org:   { base: 0, speciale: 0, large: 0 },
-  sint:  { base: 0, speciale: 0, large: 0 },
-};
+// Tariffe TENNIS — € forfait per fascia di peso totale × categoria × tipologia cliente
+// Stessa forma di PRICE_TABLE; le fasce di peso sono in PRICE_TIERS_TENNIS.
+const _DEFAULT_TENNIS_TABLE = () => ({
+  diam:  {base:[0,0,0,0,0,0], speciale:[0,0,0,0,0,0], large:[0,0,0,0,0,0]},
+  prec:  {base:[0,0,0,0,0,0], speciale:[0,0,0,0,0,0], large:[0,0,0,0,0,0]},
+  color: {base:[0,0,0,0,0,0], speciale:[0,0,0,0,0,0], large:[0,0,0,0,0,0]},
+  org:   {base:[0,0,0,0,0,0], speciale:[0,0,0,0,0,0], large:[0,0,0,0,0,0]},
+  sint:  {base:[0,0,0,0,0,0], speciale:[0,0,0,0,0,0], large:[0,0,0,0,0,0]},
+});
+let TENNIS_PRICE_TABLE = _DEFAULT_TENNIS_TABLE();
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  STATO APPLICAZIONE
@@ -3655,19 +3700,23 @@ function calcUpdate() {
     const catDisp = tcToPriceCat(tipoCertDisp);
     const ctypeDisp = currentClientType || 'base';
     if (tipoGioielloDisp === 'tennis') {
-      // ── TENNIS breakdown ──
+      // ── TENNIS breakdown (tier-based, forfait per fascia peso tot.) ──
       const secCtTennis = secondaryStones.reduce((s,st)=>s+(parseFloat(st.ct)||0)*(parseInt(st.qty)||1),0);
       const totalCtTennis = ct + secCtTennis;
-      const factor = (TENNIS_FACTOR[catDisp]||TENNIS_FACTOR.color)[ctypeDisp];
+      let tIdxDisp = PRICE_TIERS_TENNIS.length - 1;
+      for (let i = 0; i < PRICE_TIERS_TENNIS.length; i++) {
+        if (totalCtTennis <= PRICE_TIERS_TENNIS[i].max) { tIdxDisp = i; break; }
+      }
+      const tPricesDisp = (TENNIS_PRICE_TABLE[catDisp]||TENNIS_PRICE_TABLE.color)[ctypeDisp];
+      const tennisForfait = tPricesDisp[tIdxDisp] ?? 0;
       certDetail = `
         <div style="font-size:10.5px;color:var(--text-muted);margin-bottom:8px;padding:6px 9px;background:var(--blue-l);border-radius:var(--r);line-height:1.6">
-          📿 <strong>Tennis</strong>: peso totale pietre × fattore €/ct per categoria × tipologia cliente
+          📿 <strong>Tennis</strong>: ${t('lbl_tennis_breakdown')}
         </div>
         <div class="cert-row"><span class="cert-lbl">Categoria gemma</span><span class="cert-val">${catDisp} · ${CLIENT_LABELS[ctypeDisp]}</span></div>
         <div class="cert-row"><span class="cert-lbl">Peso totale ct (princ. + sec.)</span><span class="cert-val">${totalCtTennis.toFixed(3)} ct</span></div>
         <div class="cert-row"><span class="cert-lbl">N. pietre totale</span><span class="cert-val">${nStones} pz</span></div>
-        <div class="cert-row"><span class="cert-lbl">Fattore Tennis</span><span class="cert-val">${eur(factor,0)}/ct</span></div>
-        <div class="cert-row"><span class="cert-lbl">${totalCtTennis.toFixed(3)} × ${eur(factor,0)}/ct</span><span class="cert-val">${eur(totalCtTennis * factor)}</span></div>
+        <div class="cert-row"><span class="cert-lbl">Fascia peso (${tierLabel(PRICE_TIERS_TENNIS, tIdxDisp)})</span><span class="cert-val">${eur(tennisForfait)}</span></div>
         ${laser?`<div class="cert-row"><span class="cert-lbl">+ Laser</span><span class="cert-val">+ ${eur(totalCtTennis>=1?certParams.xl_lg:certParams.xl_sm,2)}</span></div>`:''}
         ${seal?`<div class="cert-row"><span class="cert-lbl">+ Sealing</span><span class="cert-val">+ ${eur(totalCtTennis>=1?certParams.xs_lg:certParams.xs_sm,2)}</span></div>`:''}
         ${exp?`<div class="cert-row"><span class="cert-lbl">${t('lbl_svc_exp_r')(certParams.xe)}</span><span class="cert-val">× ${(1+certParams.xe/100).toFixed(2)}</span></div>`:''}
@@ -3712,13 +3761,16 @@ function calcUpdate() {
     }[bd?.cat] || '—';
     const ctLabel   = bd ? bd.label : '—';
     const basePrice = bd ? bd.base  : 0;
+    const fasciaValHtml = (bd && bd.perCt)
+      ? `${eur(bd.rate)}/ct × ${parseFloat(ct.toFixed(2))} ct = ${eur(basePrice)}`
+      : `${eur(basePrice)}`;
     certDetail = `
       <div style="font-size:10.5px;color:var(--text-muted);margin-bottom:8px;padding:6px 9px;background:var(--green-l);border-radius:var(--r);line-height:1.6">
         🔬 <strong>Certificato</strong>: report individuale su pietra sciolta.
       </div>
       <div class="cert-row"><span class="cert-lbl">Categoria tariffaria</span><span class="cert-val">${catLabel}</span></div>
       <div class="cert-row"><span class="cert-lbl">Fascia tariffaria</span><span class="cert-val">${CLIENT_LABELS[currentClientType]||currentClientType}</span></div>
-      <div class="cert-row"><span class="cert-lbl">Fascia peso (${ctLabel})</span><span class="cert-val">${eur(basePrice)}</span></div>
+      <div class="cert-row"><span class="cert-lbl">Fascia peso (${ctLabel})${bd&&bd.perCt?' · €/ct':''}</span><span class="cert-val">${fasciaValHtml}</span></div>
       ${laser?`<div class="cert-row"><span class="cert-lbl">+ Laser inscription</span><span class="cert-val">+ ${eur(ct>=1?certParams.xl_lg:certParams.xl_sm,2)}</span></div>`:''}
       ${seal ?`<div class="cert-row"><span class="cert-lbl">+ Sealing</span><span class="cert-val">+ ${eur(ct>=1?certParams.xs_lg:certParams.xs_sm,2)}</span></div>`:''}
       ${exp  ?`<div class="cert-row"><span class="cert-lbl">${t('lbl_svc_exp_r')(certParams.xe)}</span><span class="cert-val">× ${(1+certParams.xe/100).toFixed(2)}</span></div>`:''}
@@ -4071,9 +4123,14 @@ function resetFormula(noConfirm) {
     {max:0.14},{max:0.17},{max:0.22},{max:0.29},{max:0.49},
     {max:0.69},{max:0.89},{max:0.99},{max:1.49},{max:1.99},{max:Infinity},
   ];
-  PRICE_TIERS_COLOR = [
-    {max:0.49},{max:0.99},{max:2.99},{max:4.99},{max:9.99},{max:Infinity},
+  PRICE_TIERS_PREC  = _DEFAULT_COLOR_TIERS();
+  PRICE_TIERS_COLOR = _DEFAULT_COLOR_TIERS();
+  PRICE_TIERS_ORG   = _DEFAULT_COLOR_TIERS();
+  PRICE_TIERS_SINT  = _DEFAULT_COLOR_TIERS();
+  PRICE_TIERS_TENNIS = [
+    {max:1.00},{max:2.00},{max:3.00},{max:5.00},{max:10.00},{max:Infinity},
   ];
+  TENNIS_PRICE_TABLE = _DEFAULT_TENNIS_TABLE();
   // Ripristina prezzi
   PRICE_TABLE = {
     diam: {
@@ -4114,13 +4171,6 @@ function resetFormula(noConfirm) {
   ];
   DJR_K_COLOR = 1.00;
   K_MONTATO = {
-    diam:  { base: 0, speciale: 0, large: 0 },
-    prec:  { base: 0, speciale: 0, large: 0 },
-    color: { base: 0, speciale: 0, large: 0 },
-    org:   { base: 0, speciale: 0, large: 0 },
-    sint:  { base: 0, speciale: 0, large: 0 },
-  };
-  TENNIS_FACTOR = {
     diam:  { base: 0, speciale: 0, large: 0 },
     prec:  { base: 0, speciale: 0, large: 0 },
     color: { base: 0, speciale: 0, large: 0 },
@@ -4184,7 +4234,7 @@ Cert_base  = Cert_sciolto × K_MONTATO[cat][cliente]
              + Laser/Seal + express%
 
 ── Gioiello TENNIS (bracciale/collana) ────────────────
-Cert_tennis= peso_tot_ct × TENNIS_FACTOR[cat][cliente]
+Cert_tennis= TENNIS_PRICE_TABLE[cat][cliente][fascia_peso_tot]
              + Laser/Seal + express%`;
 
 const CUSTOM_FORMULA_DEFAULT =
@@ -4649,8 +4699,14 @@ function certCostTennis(it) {
   const ctype = it.clientType || currentClientType || 'base';
   const secCtTot = (it.stones||[]).reduce((s,st) => s + (parseFloat(st.ct)||0)*(parseInt(st.qty)||1), 0);
   const totalCt = (parseFloat(it.ct)||0) + secCtTot;
-  const factor = (TENNIS_FACTOR[cat] || TENNIS_FACTOR.color)[ctype] || TENNIS_FACTOR.color.base;
-  let cost = totalCt * factor;
+  // Fascia di peso totale → forfait da TENNIS_PRICE_TABLE[cat][ctype][tierIdx]
+  let tIdx = PRICE_TIERS_TENNIS.length - 1;
+  for (let i = 0; i < PRICE_TIERS_TENNIS.length; i++) {
+    if (totalCt <= PRICE_TIERS_TENNIS[i].max) { tIdx = i; break; }
+  }
+  const tPrices = (TENNIS_PRICE_TABLE[cat] || TENNIS_PRICE_TABLE.color)[ctype]
+               || (TENNIS_PRICE_TABLE[cat] || TENNIS_PRICE_TABLE.color).base;
+  let cost = tPrices[tIdx] ?? tPrices[tPrices.length - 1] ?? 0;
   if (it.laser) cost += totalCt >= 1 ? certParams.xl_lg : certParams.xl_sm;
   if (it.seal)  cost += totalCt >= 1 ? certParams.xs_lg : certParams.xs_sm;
   if (it.exp)   cost *= (1 + certParams.xe / 100);
@@ -4879,72 +4935,116 @@ function renderDJRMatrix() {
   </div>`;
 }
 
+// Mappa chiave fascia → array fasce (categorie indipendenti + tennis)
+function _tiersByKey(key) {
+  switch (key) {
+    case 'diam':   return PRICE_TIERS_DIAM;
+    case 'prec':   return PRICE_TIERS_PREC;
+    case 'color':  return PRICE_TIERS_COLOR;
+    case 'org':    return PRICE_TIERS_ORG;
+    case 'sint':   return PRICE_TIERS_SINT;
+    case 'tennis': return PRICE_TIERS_TENNIS;
+    default:       return PRICE_TIERS_COLOR;
+  }
+}
+
 function addWeightTier(tiersKey) {
-  const tiers = tiersKey === 'diam' ? PRICE_TIERS_DIAM : PRICE_TIERS_COLOR;
-  const cats  = tiersKey === 'diam' ? ['diam'] : ['prec','color','org','sint'];
+  const tiers = _tiersByKey(tiersKey);
   const lastIdx = tiers.length - 1;
   const prevMax = lastIdx > 0 ? tiers[lastIdx - 1].max : 0;
   const newMax  = parseFloat((prevMax + 0.50).toFixed(2));
   tiers.splice(lastIdx, 0, {max: newMax});
-  cats.forEach(cat => CLIENT_TYPES.forEach(ct => PRICE_TABLE[cat][ct].splice(lastIdx, 0, 0)));
+  if (tiersKey === 'tennis') {
+    ['diam','prec','color','org','sint'].forEach(cat => CLIENT_TYPES.forEach(ct => TENNIS_PRICE_TABLE[cat][ct].splice(lastIdx, 0, 0)));
+  } else {
+    CLIENT_TYPES.forEach(ct => PRICE_TABLE[tiersKey][ct].splice(lastIdx, 0, 0));
+  }
   saveFormula(); renderFormula(); renderFormulaLiveValues();
 }
 
 function removeWeightTier(tiersKey, idx) {
-  const tiers = tiersKey === 'diam' ? PRICE_TIERS_DIAM : PRICE_TIERS_COLOR;
-  const cats  = tiersKey === 'diam' ? ['diam'] : ['prec','color','org','sint'];
-  if (tiers.length <= 2) { toast('Minimo 1 fascia + ∞ richiesti'); return; }
+  const tiers = _tiersByKey(tiersKey);
+  if (tiers.length <= 2) { toast(t('toast_min_tier')); return; }
   if (idx >= tiers.length - 1) return;
   tiers.splice(idx, 1);
-  cats.forEach(cat => CLIENT_TYPES.forEach(ct => PRICE_TABLE[cat][ct].splice(idx, 1)));
+  if (tiersKey === 'tennis') {
+    ['diam','prec','color','org','sint'].forEach(cat => CLIENT_TYPES.forEach(ct => TENNIS_PRICE_TABLE[cat][ct].splice(idx, 1)));
+  } else {
+    CLIENT_TYPES.forEach(ct => PRICE_TABLE[tiersKey][ct].splice(idx, 1));
+  }
   saveFormula(); renderFormula(); renderFormulaLiveValues();
 }
 
+// Fasce contorno — aggiungi/rimuovi (gioiello base)
+function addContornoTier() {
+  const lastIdx = CONTORNO_TIERS.length - 1;
+  const prevMax = lastIdx > 0 ? (CONTORNO_TIERS[lastIdx - 1].max || 0) : 0;
+  const newMax  = parseFloat((prevMax + 0.50).toFixed(2));
+  CONTORNO_TIERS.splice(lastIdx, 0, {max: newMax, base: 0, speciale: 0, large: 0});
+  saveFormula(); renderFormula();
+}
+function removeContornoTier(idx) {
+  if (CONTORNO_TIERS.length <= 2) { toast(t('toast_min_tier')); return; }
+  if (idx >= CONTORNO_TIERS.length - 1) return;
+  CONTORNO_TIERS.splice(idx, 1);
+  saveFormula(); renderFormula();
+}
+
 function renderFormula() {
+  // Nome variabile JS per ogni chiave fascia (usato negli onchange inline)
+  const TIERS_VAR = {diam:'PRICE_TIERS_DIAM', prec:'PRICE_TIERS_PREC', color:'PRICE_TIERS_COLOR',
+                     org:'PRICE_TIERS_ORG', sint:'PRICE_TIERS_SINT', tennis:'PRICE_TIERS_TENNIS'};
+  const _gridCols = '78px repeat(3,1fr) 32px 24px';
   const fascediv = document.getElementById('fascediv');
   if (fascediv) {
     const catDefs = [
-      {key:'diam',  label:'💎 Diamante naturale',        tiers: PRICE_TIERS_DIAM,  color:'var(--blue)'},
-      {key:'prec',  label:'🔴 Preziose nat. (R/S/Z/Al)', tiers: PRICE_TIERS_COLOR, color:'var(--orange)'},
-      {key:'color', label:'🟢 Colore semi-preziose',     tiers: PRICE_TIERS_COLOR, color:'var(--green)'},
-      {key:'org',   label:'🌊 Organiche',                tiers: PRICE_TIERS_COLOR, color:'var(--blue)'},
-      {key:'sint',  label:'🔬 Sintetiche / Lab-Grown',   tiers: PRICE_TIERS_COLOR, color:'var(--text-muted)'},
+      {key:'diam',  label:'💎 Diamante naturale',        color:'var(--blue)'},
+      {key:'prec',  label:'🔴 Preziose nat. (R/S/Z/Al)', color:'var(--orange)'},
+      {key:'color', label:'🟢 Colore semi-preziose',     color:'var(--green)'},
+      {key:'org',   label:'🌊 Organiche',                color:'var(--blue)'},
+      {key:'sint',  label:'🔬 Sintetiche / Lab-Grown',   color:'var(--text-muted)'},
     ];
     fascediv.innerHTML = catDefs.map(cat => {
-      const tiers = cat.tiers;
-      const tiersKey = cat.key === 'diam' ? 'diam' : 'color';
-      const tiersArr = cat.key === 'diam' ? 'PRICE_TIERS_DIAM' : 'PRICE_TIERS_COLOR';
-      const colHdr = `<div style="display:grid;grid-template-columns:88px repeat(3,1fr) 26px;gap:4px;align-items:center;margin-bottom:5px">
+      const tiers = tiersForCat(cat.key);
+      const tiersKey = cat.key;
+      const tiersArr = TIERS_VAR[cat.key];
+      const colHdr = `<div style="display:grid;grid-template-columns:${_gridCols};gap:4px;align-items:center;margin-bottom:5px">
         <span style="font-size:9px;color:var(--text-faint);font-weight:700;text-transform:uppercase">Max ct</span>
         ${CLIENT_TYPES.map(ct=>`<span style="font-size:9px;color:var(--text-faint);font-weight:700;text-transform:uppercase;text-align:center">${CLIENT_LABELS[ct]}</span>`).join('')}
+        <span style="font-size:8px;color:var(--text-faint);font-weight:700;text-transform:uppercase;text-align:center" title="${t('lbl_perct_title')}">€/ct</span>
         <span></span>
       </div>`;
       const rows = tiers.map((tier, i) => {
         const isLast = i === tiers.length - 1;
+        const isPerCt = !!tier.perCt;
         const maxCell = isLast
           ? `<span style="font-size:10px;color:var(--text-faint);padding:2px 3px">∞</span>`
-          : `<input type="number" inputmode="decimal" autocomplete="off" value="${tier.max}" min="0.01" step="0.01" style="width:84px;text-align:right;font-size:11px;padding:2px 4px"
+          : `<input type="number" inputmode="decimal" autocomplete="off" value="${tier.max}" min="0.01" step="0.01" style="width:74px;text-align:right;font-size:11px;padding:2px 4px"
                onchange="${tiersArr}[${i}].max=parseFloat(this.value)||${tier.max};saveFormula()">`;
+        const perCtCell = `<label style="display:flex;align-items:center;justify-content:center;cursor:pointer" title="${t('lbl_perct_title')}">
+          <input type="checkbox" ${isPerCt?'checked':''} onchange="${tiersArr}[${i}].perCt=this.checked;saveFormula();renderFormula()" style="width:14px;height:14px">
+        </label>`;
         const removeBtn = isLast
           ? `<span></span>`
           : `<button class="btn-ico btn-d" style="font-size:10px;width:22px;height:22px;padding:0"
                onclick="removeWeightTier('${tiersKey}',${i})" title="${t('btn_remove_tier')}">✕</button>`;
-        return `<div style="display:grid;grid-template-columns:88px repeat(3,1fr) 26px;gap:4px;align-items:center;padding:3px 0;border-bottom:1px solid var(--border)">
+        return `<div style="display:grid;grid-template-columns:${_gridCols};gap:4px;align-items:center;padding:3px 0;border-bottom:1px solid var(--border)${isPerCt?';background:var(--gold-l)':''}">
           ${maxCell}
           ${CLIENT_TYPES.map(ct => {
             const val = PRICE_TABLE[cat.key][ct][i] ?? 0;
-            return `<input type="number" inputmode="decimal" autocomplete="off" value="${val}" min="0" step="1" style="text-align:right;font-size:11px;padding:2px 4px"
-              onchange="PRICE_TABLE['${cat.key}']['${ct}'][${i}]=parseInt(this.value)||0;saveFormula()">`;
+            return `<span style="display:flex;align-items:center;gap:1px">
+              <input type="number" inputmode="decimal" autocomplete="off" value="${val}" min="0" step="1" style="flex:1;min-width:0;text-align:right;font-size:11px;padding:2px 4px" title="${isPerCt?t('lbl_perct_title'):''}"
+                onchange="PRICE_TABLE['${cat.key}']['${ct}'][${i}]=parseFloat(this.value)||0;saveFormula()">
+              ${isPerCt?`<span style="font-size:7px;color:var(--gold-deep);white-space:nowrap">€/ct</span>`:''}
+            </span>`;
           }).join('')}
+          ${perCtCell}
           ${removeBtn}
         </div>`;
       }).join('');
-      const sharedNote = cat.key !== 'diam'
-        ? `<div style="font-size:10px;color:var(--text-faint);margin-top:4px">ℹ Confini condivisi tra prec / color / org / sint</div>`
-        : '';
       return `<div style="margin-bottom:18px">
         <div style="font-size:11px;font-weight:700;color:${cat.color};padding:4px 8px;background:${cat.color}18;border-radius:4px;margin-bottom:7px">${cat.label}</div>
-        ${colHdr}${rows}${sharedNote}
+        ${colHdr}${rows}
         <button class="btn btn-sm" style="margin-top:7px;font-size:10.5px"
           onclick="addWeightTier('${tiersKey}')">+ Fascia</button>
       </div>`;
@@ -4975,27 +5075,74 @@ function renderFormula() {
       </div>`).join('');
       return hdr + colHdr + rows;
     };
+    // ── Tariffe TENNIS — tabella a fasce (forfait per fascia peso tot.) ──
+    const tCols = '78px repeat(3,1fr) 24px';
+    const renderTennisCat = (cat) => {
+      const colHdr = `<div style="display:grid;grid-template-columns:${tCols};gap:4px;align-items:center;margin-bottom:4px">
+        <span style="font-size:9px;color:var(--text-faint);font-weight:700;text-transform:uppercase">${t('lbl_max_ct_tot')}</span>
+        ${CLIENT_TYPES.map(ct => `<span style="font-size:9px;color:var(--text-faint);font-weight:700;text-transform:uppercase;text-align:center">${CLIENT_LABELS[ct]}</span>`).join('')}
+        <span></span>
+      </div>`;
+      const rows = PRICE_TIERS_TENNIS.map((tier, i) => {
+        const isLast = i === PRICE_TIERS_TENNIS.length - 1;
+        const maxCell = isLast
+          ? `<span style="font-size:10px;color:var(--text-faint);padding:2px 3px">∞</span>`
+          : `<input type="number" inputmode="decimal" autocomplete="off" value="${tier.max}" min="0.01" step="0.01" style="width:74px;text-align:right;font-size:11px;padding:2px 4px"
+               onchange="PRICE_TIERS_TENNIS[${i}].max=parseFloat(this.value)||${tier.max};saveFormula();renderFormula()">`;
+        const removeBtn = isLast
+          ? `<span></span>`
+          : `<button class="btn-ico btn-d" style="font-size:10px;width:22px;height:22px;padding:0" onclick="removeWeightTier('tennis',${i})" title="${t('btn_remove_tier')}">✕</button>`;
+        return `<div style="display:grid;grid-template-columns:${tCols};gap:4px;align-items:center;padding:2px 0;border-bottom:1px solid var(--border)">
+          ${maxCell}
+          ${CLIENT_TYPES.map(ctype => {
+            const val = (TENNIS_PRICE_TABLE[cat.key]||{})[ctype]?.[i] ?? 0;
+            return `<input type="number" inputmode="decimal" autocomplete="off" value="${val}" min="0" step="1" style="text-align:right;font-size:11px;padding:2px 4px"
+              onchange="TENNIS_PRICE_TABLE['${cat.key}']['${ctype}'][${i}]=parseFloat(this.value)||0;saveFormula()">`;
+          }).join('')}
+          ${removeBtn}
+        </div>`;
+      }).join('');
+      return `<div style="margin-bottom:14px">
+        <div style="font-size:10.5px;font-weight:600;color:var(--text-muted);margin:6px 0 5px">${cat.label}</div>
+        ${colHdr}${rows}
+        <button class="btn btn-sm" style="margin-top:6px;font-size:10.5px" onclick="addWeightTier('tennis')">+ Fascia</button>
+      </div>`;
+    };
+    const tennisSection =
+      `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:14px 0 4px">${t('lbl_tennis_table_hdr')}</div>` +
+      `<div style="font-size:10px;color:var(--text-faint);margin:0 0 8px">${t('lbl_tennis_note')}</div>` +
+      catDefs2.map(renderTennisCat).join('');
+
+    // ── Forfait contorno — fasce personalizzabili (aggiungi/rimuovi) ──
+    const cCols = '78px repeat(3,1fr) 24px';
     const contornoHdr = `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:14px 0 6px">${t('lbl_contour_hdr')} <span style="font-weight:400;color:var(--text-faint)">${t('lbl_contour_sub')}</span></div>`;
-    const contornoColHdr = `<div style="display:grid;grid-template-columns:90px repeat(3,1fr);gap:4px;margin-bottom:4px">
-      <span style="font-size:9px;color:var(--text-faint)">Fascia ct</span>
-      ${CLIENT_TYPES.map(ct => `<span style="font-size:9px;color:var(--text-faint);text-align:center">${CLIENT_LABELS[ct]}</span>`).join('')}
+    const contornoColHdr = `<div style="display:grid;grid-template-columns:${cCols};gap:4px;align-items:center;margin-bottom:4px">
+      <span style="font-size:9px;color:var(--text-faint);font-weight:700;text-transform:uppercase">${t('lbl_max_ct')}</span>
+      ${CLIENT_TYPES.map(ct => `<span style="font-size:9px;color:var(--text-faint);font-weight:700;text-transform:uppercase;text-align:center">${CLIENT_LABELS[ct]}</span>`).join('')}
+      <span></span>
     </div>`;
-    const contornoRows = CONTORNO_TIERS.map((t, i) => {
-      const prev = i > 0 ? CONTORNO_TIERS[i-1].max : null;
-      const lbl = t.max === Infinity
-        ? `≥ ${parseFloat(((prev||0)+0.01).toFixed(2))} ct`
-        : (prev === null ? `≤ ${t.max} ct` : `${parseFloat((prev+0.01).toFixed(2))}–${t.max} ct`);
-      return `<div style="display:grid;grid-template-columns:90px repeat(3,1fr);gap:4px;padding:2px 0;border-bottom:1px solid var(--border)">
-        <span style="font-size:10px;color:var(--text-muted)">${lbl}</span>
-        ${CLIENT_TYPES.map(ctype => `<input type="number" inputmode="decimal" autocomplete="off" value="${t[ctype]||0}" min="0" step="1" style="text-align:right;font-size:10.5px;padding:2px 4px" onchange="CONTORNO_TIERS[${i}]['${ctype}']=parseFloat(this.value)||0;saveFormula()">`).join('')}
+    const contornoRows = CONTORNO_TIERS.map((tier, i) => {
+      const isLast = i === CONTORNO_TIERS.length - 1;
+      const maxCell = isLast
+        ? `<span style="font-size:10px;color:var(--text-faint);padding:2px 3px">∞</span>`
+        : `<input type="number" inputmode="decimal" autocomplete="off" value="${tier.max}" min="0.01" step="0.01" style="width:74px;text-align:right;font-size:11px;padding:2px 4px"
+             onchange="CONTORNO_TIERS[${i}].max=parseFloat(this.value)||${tier.max};saveFormula();renderFormula()">`;
+      const removeBtn = isLast
+        ? `<span></span>`
+        : `<button class="btn-ico btn-d" style="font-size:10px;width:22px;height:22px;padding:0" onclick="removeContornoTier(${i})" title="${t('btn_remove_tier')}">✕</button>`;
+      return `<div style="display:grid;grid-template-columns:${cCols};gap:4px;align-items:center;padding:2px 0;border-bottom:1px solid var(--border)">
+        ${maxCell}
+        ${CLIENT_TYPES.map(ctype => `<input type="number" inputmode="decimal" autocomplete="off" value="${tier[ctype]||0}" min="0" step="1" style="text-align:right;font-size:11px;padding:2px 4px" onchange="CONTORNO_TIERS[${i}]['${ctype}']=parseFloat(this.value)||0;saveFormula()">`).join('')}
+        ${removeBtn}
       </div>`;
     }).join('');
+    const contornoAddBtn = `<button class="btn btn-sm" style="margin-top:6px;font-size:10.5px" onclick="addContornoTier()">+ Fascia</button>`;
+
     ktdiv.innerHTML =
       renderKTable(K_MONTATO, 'K_MONTATO', t('lbl_kmontato_desc'), '(adimensionale)') +
       `<div style="font-size:10px;color:var(--text-faint);margin:4px 0 10px">${t('lbl_k_formula')}</div>` +
-      renderKTable(TENNIS_FACTOR, 'TENNIS_FACTOR', t('lbl_tennis_desc'), '(€/ct)') +
-      `<div style="font-size:10px;color:var(--text-faint);margin:4px 0 10px">${t('lbl_tennis_formula')}</div>` +
-      contornoHdr + contornoColHdr + contornoRows;
+      tennisSection +
+      contornoHdr + contornoColHdr + contornoRows + contornoAddBtn;
   }
   renderDJRMatrix();
   const kc = document.getElementById('djr-kc');
@@ -5506,9 +5653,11 @@ function saveFormula() {
     QUOT.media = _pf('qm-fix', 1800);
     QUOT.alta  = _pf('qa-fix', 4000);
     const f = {
-      PRICE_TIERS_DIAM, PRICE_TIERS_COLOR, PRICE_TABLE,
+      PRICE_TIERS_DIAM, PRICE_TIERS_PREC, PRICE_TIERS_COLOR,
+      PRICE_TIERS_ORG, PRICE_TIERS_SINT, PRICE_TABLE,
+      PRICE_TIERS_TENNIS, TENNIS_PRICE_TABLE,
       DJR_MATRIX, DJR_K_COLOR,
-      K_MONTATO, TENNIS_FACTOR, CONTORNO_TIERS,
+      K_MONTATO, CONTORNO_TIERS,
       xl_sm: certParams.xl_sm, xl_lg: certParams.xl_lg,
       xs_sm: certParams.xs_sm, xs_lg: certParams.xs_lg,
       xe: certParams.xe, csec: certParams.csec,
@@ -5552,7 +5701,15 @@ function loadAll() {
     if (fStr) {
       const f = JSON.parse(fStr);
       if (f.PRICE_TIERS_DIAM)  PRICE_TIERS_DIAM  = f.PRICE_TIERS_DIAM;
+      // Fasce non-diam: per-categoria se presenti, altrimenti retro-compat dal vecchio array condiviso
+      const _legacyColorL = f.PRICE_TIERS_COLOR;
+      const _cloneL = a => a.map(o => ({...o}));
+      if (f.PRICE_TIERS_PREC)  PRICE_TIERS_PREC  = f.PRICE_TIERS_PREC;  else if (_legacyColorL) PRICE_TIERS_PREC  = _cloneL(_legacyColorL);
       if (f.PRICE_TIERS_COLOR) PRICE_TIERS_COLOR = f.PRICE_TIERS_COLOR;
+      if (f.PRICE_TIERS_ORG)   PRICE_TIERS_ORG   = f.PRICE_TIERS_ORG;   else if (_legacyColorL) PRICE_TIERS_ORG   = _cloneL(_legacyColorL);
+      if (f.PRICE_TIERS_SINT)  PRICE_TIERS_SINT  = f.PRICE_TIERS_SINT;  else if (_legacyColorL) PRICE_TIERS_SINT  = _cloneL(_legacyColorL);
+      if (f.PRICE_TIERS_TENNIS) PRICE_TIERS_TENNIS = f.PRICE_TIERS_TENNIS;
+      if (f.TENNIS_PRICE_TABLE) TENNIS_PRICE_TABLE = f.TENNIS_PRICE_TABLE;
       if (f.PRICE_TABLE) {
       // migra chiavi legacy v9-v12: top→prec, semi→color
       if (f.PRICE_TABLE.top   && !f.PRICE_TABLE.prec)  f.PRICE_TABLE.prec  = f.PRICE_TABLE.top;
@@ -5565,7 +5722,6 @@ function loadAll() {
       if (f.DJR_MATRIX)        DJR_MATRIX        = f.DJR_MATRIX;
       if (f.DJR_K_COLOR !== undefined) DJR_K_COLOR = parseFloat(f.DJR_K_COLOR) || 1.10;
       if (f.K_MONTATO)       K_MONTATO       = f.K_MONTATO;
-      if (f.TENNIS_FACTOR)   TENNIS_FACTOR   = f.TENNIS_FACTOR;
       if (f.CONTORNO_TIERS)  CONTORNO_TIERS  = f.CONTORNO_TIERS;
       if (f.xl_sm !== undefined) certParams.xl_sm = parseFloat(f.xl_sm) || 1.5;
       if (f.xl_lg !== undefined) certParams.xl_lg = parseFloat(f.xl_lg) || 22;
@@ -5722,11 +5878,15 @@ function exportPricingData() {
     data: {
       PRICE_TABLE,
       PRICE_TIERS_DIAM,
+      PRICE_TIERS_PREC,
       PRICE_TIERS_COLOR,
+      PRICE_TIERS_ORG,
+      PRICE_TIERS_SINT,
+      PRICE_TIERS_TENNIS,
+      TENNIS_PRICE_TABLE,
       DJR_MATRIX,
       DJR_K_COLOR,
       K_MONTATO,
-      TENNIS_FACTOR,
       CONTORNO_TIERS,
       certParams:  Object.assign({}, certParams),
       QUOT:        Object.assign({}, QUOT),
@@ -5812,7 +5972,18 @@ function applyPricingData(json, meta = {}) {
   }
   // Fasce di peso: null \u2192 Infinity tramite _normMax
   if (d.PRICE_TIERS_DIAM)          PRICE_TIERS_DIAM  = _normMax(d.PRICE_TIERS_DIAM);
-  if (d.PRICE_TIERS_COLOR)         PRICE_TIERS_COLOR = _normMax(d.PRICE_TIERS_COLOR);
+  // Categorie non-diam indipendenti; retro-compat: se il file ha solo PRICE_TIERS_COLOR, copialo in tutte
+  const _legacyColorA = d.PRICE_TIERS_COLOR;
+  if (d.PRICE_TIERS_PREC)  PRICE_TIERS_PREC  = _normMax(d.PRICE_TIERS_PREC);  else if (_legacyColorA) PRICE_TIERS_PREC  = _normMax(_legacyColorA);
+  if (d.PRICE_TIERS_COLOR) PRICE_TIERS_COLOR = _normMax(d.PRICE_TIERS_COLOR);
+  if (d.PRICE_TIERS_ORG)   PRICE_TIERS_ORG   = _normMax(d.PRICE_TIERS_ORG);   else if (_legacyColorA) PRICE_TIERS_ORG   = _normMax(_legacyColorA);
+  if (d.PRICE_TIERS_SINT)  PRICE_TIERS_SINT  = _normMax(d.PRICE_TIERS_SINT);  else if (_legacyColorA) PRICE_TIERS_SINT  = _normMax(_legacyColorA);
+  if (d.PRICE_TIERS_TENNIS) PRICE_TIERS_TENNIS = _normMax(d.PRICE_TIERS_TENNIS);
+  if (d.TENNIS_PRICE_TABLE) {
+    ['diam','prec','color','org','sint'].forEach(cat => {
+      if (d.TENNIS_PRICE_TABLE[cat]) TENNIS_PRICE_TABLE[cat] = d.TENNIS_PRICE_TABLE[cat];
+    });
+  }
   if (d.DJR_MATRIX)                DJR_MATRIX        = _normMax(d.DJR_MATRIX);
   if (d.DJR_K_COLOR !== undefined) DJR_K_COLOR       = parseFloat(d.DJR_K_COLOR) || 1.10;
 
@@ -5821,12 +5992,6 @@ function applyPricingData(json, meta = {}) {
     Object.keys(d.K_MONTATO).forEach(k => {
       if (K_MONTATO[k]) Object.assign(K_MONTATO[k], d.K_MONTATO[k]);
       else K_MONTATO[k] = d.K_MONTATO[k];
-    });
-  }
-  if (d.TENNIS_FACTOR) {
-    Object.keys(d.TENNIS_FACTOR).forEach(k => {
-      if (TENNIS_FACTOR[k]) Object.assign(TENNIS_FACTOR[k], d.TENNIS_FACTOR[k]);
-      else TENNIS_FACTOR[k] = d.TENNIS_FACTOR[k];
     });
   }
   if (d.CONTORNO_TIERS) CONTORNO_TIERS = _normMax(d.CONTORNO_TIERS);
@@ -5997,12 +6162,16 @@ function renderDataConfig() {
     '      "org":   { "base": [...], "speciale": [...], "large": [...] },',
     '      "sint":  { "base": [...], "speciale": [...], "large": [...] }',
     '    },',
-    '    "PRICE_TIERS_DIAM":  [ {"max":0.14}, ..., {"max":1.99}, {"max":null} ],',
-    '    "PRICE_TIERS_COLOR": [ {"max":0.49}, ..., {"max":9.99}, {"max":null} ],',
+    '    "PRICE_TIERS_DIAM":   [ {"max":0.14}, ..., {"max":1.99}, {"max":null} ],',
+    '    "PRICE_TIERS_PREC":   [ {"max":0.49}, ..., {"max":9.99}, {"max":null} ],',
+    '    "PRICE_TIERS_COLOR":  [ {"max":0.49}, ..., {"max":9.99}, {"max":null} ],',
+    '    "PRICE_TIERS_ORG":    [ {"max":0.49}, ..., {"max":9.99}, {"max":null} ],',
+    '    "PRICE_TIERS_SINT":   [ {"max":0.49}, ..., {"max":9.99}, {"max":null} ],',
+    '    "PRICE_TIERS_TENNIS": [ {"max":1.00}, ..., {"max":10.00}, {"max":null} ],',
+    '    "TENNIS_PRICE_TABLE": { "diam":{"base":[...],"speciale":[...],"large":[...]}, ... },',
     '    "DJR_MATRIX": [ {"l":"< 1.00 ct","max":0.99,"p":[0,0,0,0,0,0,0]}, ... ],',
     '    "DJR_K_COLOR": 1.00,',
     '    "K_MONTATO":     { "diam":{"base":0,"speciale":0,"large":0}, ... },',
-    '    "TENNIS_FACTOR": { "diam":{"base":0,"speciale":0,"large":0}, ... },',
     '    "CONTORNO_TIERS": [ {"max":0.10,"base":0,"speciale":0,"large":0}, ... ],',
     '    "certParams": {"xe":40,"xl_sm":1.5,"xl_lg":22,"xs_sm":11,"xs_lg":16,"csec":25},',
     '    "QUOT": {"base":0,"media":0,"alta":0},',
