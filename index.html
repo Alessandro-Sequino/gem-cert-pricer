@@ -279,11 +279,11 @@ nav .nav-lbl:first-child { padding-top: 2px; }
 .nav-item:hover .nav-ico { opacity: 1; }
 .nav-item.active {
   color: var(--gold-deep);
-  border-left-color: var(--gold);
+  border-left-color: var(--gold-deep);
   background: linear-gradient(90deg, var(--gold-l) 0%, rgba(248,240,222,0) 100%);
   font-weight: 600;
 }
-.nav-item.active .nav-ico { opacity: 1; color: var(--gold); }
+.nav-item.active .nav-ico { opacity: 1; color: var(--gold-deep); }
 
 .nav-ico { font-size: 13px; width: 18px; text-align: center; opacity: .65; transition: opacity var(--dur-fast) var(--ease-smooth), color var(--dur-fast) var(--ease-smooth); }
 nav .sep { height: 1px; background: var(--border); margin: 8px 16px; }
@@ -542,10 +542,10 @@ select, input[type="number"], input[type="text"] {
   transition: border-color .15s, box-shadow .15s;
 }
 select:focus, input:focus {
-  border-color: var(--gold);
+  border-color: var(--gold-deep);
   box-shadow: 0 0 0 3px rgba(158,120,32,.12), inset 0 1px 2px rgba(28,24,20,.06);
 }
-input[type="checkbox"] { width: 13px; height: 13px; accent-color: var(--gold); cursor: pointer; }
+input[type="checkbox"] { width: 13px; height: 13px; accent-color: var(--gold-deep); cursor: pointer; }
 input:disabled, select:disabled { opacity: .4; cursor: not-allowed; background: var(--surface2); }
 
 /* ── FORMULA GRID ── */
@@ -580,7 +580,7 @@ input:disabled, select:disabled { opacity: .4; cursor: not-allowed; background: 
 .bg-o  { background: var(--orange-l); color: var(--orange); }
 .bg-r  { background: var(--red-l);    color: var(--red);    }
 .bg-b  { background: var(--blue-l);   color: var(--blue);   }
-.bg-gold { background: var(--gold-l); color: var(--gold);   }
+.bg-gold { background: var(--gold-l); color: var(--gold-deep);   }
 
 /* ── RATIO BAR ── */
 .rbar  { height: 4px; border-radius: 3px; background: var(--border); overflow: hidden; margin-top: 3px; }
@@ -646,7 +646,7 @@ input:disabled, select:disabled { opacity: .4; cursor: not-allowed; background: 
   gap: 5px;
 }
 .sb-creator span {
-  color: var(--gold);
+  color: var(--gold-deep);
   font-weight: 500;
 }
 
@@ -665,13 +665,13 @@ input:disabled, select:disabled { opacity: .4; cursor: not-allowed; background: 
   line-height: 1.7;
 }
 .how-step strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 12.5px; }
-.how-step code   { font-family: 'DM Mono', monospace; color: var(--gold); font-size: 11px; }
+.how-step code   { font-family: 'DM Mono', monospace; color: var(--gold-deep); font-size: 11px; }
 
 /* ── UTILS ── */
 .tr  { text-align: right; }
 .tc  { text-align: center; }
 .fw5 { font-weight: 500; }
-.tg  { color: var(--gold); }
+.tg  { color: var(--gold-deep); }
 .tred  { color: var(--red); }
 .tgrn  { color: var(--green); }
 .tm    { color: var(--text-muted); }
@@ -734,7 +734,7 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
 
 .ct-row { display: flex; gap: 8px; align-items: center; }
 .ct-row input[type="number"] { width: 90px; flex-shrink: 0; }
-.ct-row input[type="range"] { flex: 1; accent-color: var(--gold); cursor: pointer; }
+.ct-row input[type="range"] { flex: 1; accent-color: var(--gold-deep); cursor: pointer; }
 
 .rpills { display: flex; gap: 5px; flex-wrap: wrap; }
 .rpill {
@@ -787,7 +787,7 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
 .pt-qbadge { font-size: 9px; padding: 1px 6px; border-radius: 8px; font-weight: 700; letter-spacing: .04em; }
 .pt-b .pt-qbadge { background: var(--green-l); color: var(--green); }
 .pt-m .pt-qbadge { background: var(--blue-l); color: var(--blue); }
-.pt-a .pt-qbadge { background: var(--gold-l); color: var(--gold); }
+.pt-a .pt-qbadge { background: var(--gold-l); color: var(--gold-deep); }
 
 .pt-val {
   font-size: 20px;
@@ -858,7 +858,7 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
 .sfe-eq {
   font-size: 18px;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--gold-deep);
   font-family: 'DM Mono', monospace;
   line-height: 1;
   flex-shrink: 0;
@@ -876,7 +876,7 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
   transition: border-color .15s, box-shadow .15s;
   letter-spacing: .01em;
 }
-.sfe-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(158,120,32,.12); }
+.sfe-input:focus { border-color: var(--gold-deep); box-shadow: 0 0 0 3px rgba(158,120,32,.12); }
 .sfe-input.sfe-ok  { border-color: var(--green); }
 .sfe-input.sfe-err { border-color: var(--red); }
 .sfe-status { font-size: 11.5px; min-height: 20px; margin: 5px 0 10px; font-family: 'DM Mono', monospace; }
@@ -917,7 +917,7 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
   line-height: 1.75;
   margin-bottom: 12px;
 }
-.sfe-hint code { font-family: 'DM Mono', monospace; color: var(--gold); font-size: 11px; }
+.sfe-hint code { font-family: 'DM Mono', monospace; color: var(--gold-deep); font-size: 11px; }
 
 .cfe-textarea {
   width: 100%;
@@ -935,7 +935,7 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
   transition: border-color .15s;
   tab-size: 2;
 }
-.cfe-textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(158,120,32,.1); }
+.cfe-textarea:focus { border-color: var(--gold-deep); box-shadow: 0 0 0 3px rgba(158,120,32,.1); }
 .cfe-textarea.cfe-ok  { border-color: var(--green); }
 .cfe-textarea.cfe-err { border-color: var(--red); }
 
@@ -969,8 +969,8 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
   cursor: pointer;
   transition: all .12s;
 }
-.cfe-var:hover { background: var(--gold-l); border-color: var(--gold); }
-.cfe-var code { font-family: 'DM Mono', monospace; color: var(--gold); font-weight: 500; font-size: 11px; }
+.cfe-var:hover { background: var(--gold-l); border-color: var(--gold-deep); }
+.cfe-var code { font-family: 'DM Mono', monospace; color: var(--gold-deep); font-weight: 500; font-size: 11px; }
 .cfe-var span { color: var(--text-faint); font-size: 10.5px; }
 
 .cfe-preview {
@@ -1047,7 +1047,7 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
 .scan-field input, .scan-field select { width: 100%; }
 .scan-field .ct-row { display: flex; gap: 6px; align-items: center; }
 .scan-field .ct-row input[type="number"] { width: 72px; flex-shrink: 0; }
-.scan-field .ct-row input[type="range"] { flex: 1; accent-color: var(--gold); }
+.scan-field .ct-row input[type="range"] { flex: 1; accent-color: var(--gold-deep); }
 
 .scan-pills { display: flex; gap: 5px; flex-wrap: wrap; }
 .scan-pill {
@@ -1063,7 +1063,7 @@ hr.dv  { border: none; border-top: 1px solid var(--border); margin: 13px 0; }
   transition: all .15s;
 }
 .scan-pill:hover { background: var(--surface2); }
-.scan-pill:has(input:checked) { background: var(--gold-l); border-color: rgba(158,120,32,.35); color: var(--gold); font-weight: 600; }
+.scan-pill:has(input:checked) { background: var(--gold-l); border-color: rgba(158,120,32,.35); color: var(--gold-deep); font-weight: 600; }
 .scan-pill input { display: none; }
 
 .scan-meta {
@@ -1351,7 +1351,7 @@ input[type="range"]::-moz-range-thumb {
   /* Tab attivo */
   .nav-item.active {
     border-left-color: transparent;
-    border-top-color: var(--gold);
+    border-top-color: var(--gold-deep);
     background: var(--gold-l);
   }
 
@@ -1639,7 +1639,7 @@ input[type="range"]::-moz-range-thumb {
 }
 /* Gli input conservano anche il bordo oro al focus */
 input:focus-visible, select:focus-visible, textarea:focus-visible {
-  border-color: var(--gold);
+  border-color: var(--gold-deep);
 }
 
 /* Skip-link — visibile solo quando riceve focus */
@@ -2124,7 +2124,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
             <!-- Pannello Avanzata (editor JS) -->
             <div id="cfe-cst-panel" style="display:none">
               <p style="font-size:11.5px;color:var(--text-muted);margin-bottom:10px">
-                Modalità avanzata — scrivi una funzione JavaScript completa. Il valore restituito (<code style="font-family:'DM Mono',monospace;color:var(--gold)">return …</code>) sarà il <strong data-i18n="lbl_cost_eur_desc">costo del certificato in €</strong>. Per la maggior parte dei casi usa la modalità <strong>✨ Semplice</strong>.
+                Modalità avanzata — scrivi una funzione JavaScript completa. Il valore restituito (<code style="font-family:'DM Mono',monospace;color:var(--gold-deep)">return …</code>) sarà il <strong data-i18n="lbl_cost_eur_desc">costo del certificato in €</strong>. Per la maggior parte dei casi usa la modalità <strong>✨ Semplice</strong>.
               </p>
               <div style="font-size:9.5px;font-weight:700;letter-spacing:.07em;color:var(--text-faint);text-transform:uppercase;margin-bottom:6px" data-i18n="lbl_vars">Variabili disponibili</div>
               <div class="cfe-vars" id="cfe-vars"></div>
@@ -2177,7 +2177,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
             <hr class="dv">
             <div style="font-size:11.5px;color:var(--text-muted);line-height:1.85">
               <strong style="color:var(--text);display:block;margin-bottom:3px">✨ Semplice</strong>
-              Un'espressione come Excel — es. <code style="font-family:'DM Mono',monospace;color:var(--gold);font-size:10.5px">base_cert * 0.9</code>. Sconto, soglie, condizioni.
+              Un'espressione come Excel — es. <code style="font-family:'DM Mono',monospace;color:var(--gold-deep);font-size:10.5px">base_cert * 0.9</code>. Sconto, soglie, condizioni.
             </div>
             <hr class="dv">
             <div style="font-size:11.5px;color:var(--text-muted);line-height:1.85">
@@ -3899,7 +3899,7 @@ function renderSecondaryStones() {
   const badge = document.getElementById('c-comp-badge');
   if (badge) {
     badge.textContent = `${totalSecQty} pietr${totalSecQty===1?'a':'e'} sec. (${totalSecCt.toFixed(2)} ct)`;
-    badge.style.cssText = 'font-size:10px;padding:2px 9px;border-radius:10px;background:var(--gold-l);color:var(--gold);font-weight:600';
+    badge.style.cssText = 'font-size:10px;padding:2px 9px;border-radius:10px;background:var(--gold-l);color:var(--gold-deep);font-weight:600';
   }
 }
 
@@ -5030,7 +5030,7 @@ function renderFormulaLiveValues() {
     `<span>Laser sm. <strong style="color:var(--text)">${fmtE(certParams.xl_sm)}</strong></span>` +
     `<span>Laser lg. <strong style="color:var(--text)">${fmtE(certParams.xl_lg)}</strong></span>` +
     `<span style="color:var(--border-strong)">│</span>` +
-    `<span>${t('lbl_kcolor')} <strong style="color:var(--gold)">×${DJR_K_COLOR.toFixed(2)}</strong></span>` +
+    `<span>${t('lbl_kcolor')} <strong style="color:var(--gold-deep)">×${DJR_K_COLOR.toFixed(2)}</strong></span>` +
     `<span style="color:var(--blue);font-style:italic">${t('lbl_matrix_label')}</span>` +
     `</div>`;
 }
@@ -5160,7 +5160,7 @@ function renderScanStones() {
   if (clearBtn) clearBtn.style.display = '';
   if (badge) {
     badge.textContent = `${scanSecStones.length} pietr${scanSecStones.length===1?'a':'e'}`;
-    badge.style.cssText = 'font-size:10px;padding:2px 9px;border-radius:10px;background:var(--gold-l);color:var(--gold);font-weight:600';
+    badge.style.cssText = 'font-size:10px;padding:2px 9px;border-radius:10px;background:var(--gold-l);color:var(--gold-deep);font-weight:600';
   }
   const certAdd = scanSecStones.length * certParams.csec;
   if (hint) hint.textContent = t('lbl_cert_add_gem')(eur(certAdd));
@@ -5897,7 +5897,7 @@ function updateProfileBadge() {
       'font-weight:600',
       'letter-spacing:.06em',
       'background:var(--gold-l)',
-      'color:var(--gold)',
+      'color:var(--gold-deep)',
       'border:1px solid rgba(158,120,32,.25)',
       'padding:3px 9px',
       'border-radius:20px',
@@ -5930,11 +5930,11 @@ function renderDataConfig() {
   } else {
     profileCard =
       `<div class="card" style="border-color:rgba(158,120,32,.35)">
-        <div class="card-t" style="color:var(--gold)">\ud83d\udcca Dati predefiniti attivi</div>
+        <div class="card-t" style="color:var(--gold-deep)">\ud83d\udcca Dati predefiniti attivi</div>
         <p style="font-size:12px;color:var(--text-muted);line-height:1.75">
           Nessun file di dati personali caricato.<br>
           L'app usa tariffari <strong>azzerati</strong> come default.<br>
-          Importa un file <code style="font-family:'DM Mono',monospace;color:var(--gold);font-size:11px">.gcp.json</code>
+          Importa un file <code style="font-family:'DM Mono',monospace;color:var(--gold-deep);font-size:11px">.gcp.json</code>
           per caricare le tue fasce personalizzate su qualsiasi dispositivo.
         </p>
       </div>`;
@@ -5945,7 +5945,7 @@ function renderDataConfig() {
     `<div class="card">
       <div class="card-t">\u2b07\ufe0f Esporta tariffario corrente</div>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.65">
-        Crea un file <code style="font-family:'DM Mono',monospace;color:var(--gold);font-size:11px">.gcp.json</code>
+        Crea un file <code style="font-family:'DM Mono',monospace;color:var(--gold-deep);font-size:11px">.gcp.json</code>
         con tutte le fasce di prezzo correnti (incluse le personalizzazioni dalla pagina
         <em>Formula cert.</em>). Conserva questo file <strong>fuori dal repository Git</strong>.
       </p>
@@ -5963,7 +5963,7 @@ function renderDataConfig() {
     `<div class="card">
       <div class="card-t">\u2b06\ufe0f Importa file dati</div>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.65">
-        Carica un file <code style="font-family:'DM Mono',monospace;color:var(--gold);font-size:11px">.gcp.json</code>
+        Carica un file <code style="font-family:'DM Mono',monospace;color:var(--gold-deep);font-size:11px">.gcp.json</code>
         con il tuo tariffario personalizzato. I dati sovrascrivono i valori predefiniti
         e vengono salvati nel browser automaticamente.
       </p>
@@ -6050,8 +6050,8 @@ function renderDataConfig() {
       <div style="padding:10px 13px;background:var(--surface2);border-radius:var(--r);
                   font-size:11px;color:var(--text-muted);border-left:3px solid var(--gold-m)">
         &#128161; <strong>.gitignore:</strong>&nbsp; aggiungi
-        <code style="font-family:'DM Mono',monospace;color:var(--gold)">*.gcp.json</code>
-        al tuo <code style="font-family:'DM Mono',monospace;color:var(--gold)">.gitignore</code>
+        <code style="font-family:'DM Mono',monospace;color:var(--gold-deep)">*.gcp.json</code>
+        al tuo <code style="font-family:'DM Mono',monospace;color:var(--gold-deep)">.gitignore</code>
         per escludere automaticamente i file dati dal repository pubblico.
         In questo modo il tuo tariffario rimane sempre privato.
       </div>
