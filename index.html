@@ -368,6 +368,38 @@ main { flex: 1; overflow-y: auto; padding: 24px 28px 64px; }
   transform: translateY(-1px);
 }
 
+/* — Superficie HERO — il riepilogo del calcolatore, livello più alto — */
+.card-hero {
+  position: relative;
+  border-radius: var(--rll);
+  border-color: var(--border-strong);
+  border-top-color: var(--gold-m);
+  background:
+    radial-gradient(135% 120% at 0% 0%, var(--gold-l) 0%, var(--surface) 58%);
+  box-shadow:
+    0 14px 36px rgba(158,120,32,.16),
+    0 3px 10px rgba(28,24,20,.08),
+    inset 0 1px 0 rgba(255,255,255,.72);
+  overflow: hidden;
+}
+/* Filo d'oro speculare sul bordo superiore */
+.card-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent, var(--gold-m) 20%, #F8E870 50%, var(--gold-m) 80%, transparent);
+  opacity: .7;
+}
+.card-hero:hover {
+  box-shadow:
+    0 20px 48px rgba(158,120,32,.2),
+    0 4px 14px rgba(28,24,20,.1),
+    inset 0 1px 0 rgba(255,255,255,.8);
+  transform: translateY(-2px);
+}
+
 .card-t {
   font-size: var(--text-2xs);
   font-weight: 600;
@@ -386,12 +418,24 @@ main { flex: 1; overflow-y: auto; padding: 24px 28px 64px; }
 @media(max-width:900px){ .metrics { grid-template-columns: repeat(2, 1fr); } }
 
 .metric {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--rl);
+  border-radius: var(--r);
   padding: 14px 16px;
   box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--dur-base) var(--ease-out-quart),
+              transform var(--dur-base) var(--ease-out-quart);
 }
+.metric::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 14px; right: 14px;
+  height: 1px;
+  background: var(--gold-m);
+  opacity: .35;
+}
+.metric:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
 .metric-l { font-size: var(--text-2xs); color: var(--text-muted); margin-bottom: 5px; font-weight: 500; letter-spacing: .02em; }
 .metric-v {
   font-size: var(--text-lg);
@@ -1798,7 +1842,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
         <div class="calc-right">
 
           <!-- Summary prominente -->
-          <div id="c-summary-card" class="card"></div>
+          <div id="c-summary-card" class="card card-hero"></div>
 
           <!-- Confronto qualità -->
           <div class="card">
