@@ -17,9 +17,9 @@ Quotazione in tempo reale del valore di una gemma, del metallo e del costo del c
 
 ## Panoramica
 
-Gem Cert Pricer è un'applicazione web **single-file** (un solo `index.html` con CSS e JavaScript inline, zero build) pensata per il lavoro quotidiano al banco: selezioni una gemma, imposti peso, qualità e montatura, e ottieni immediatamente valore stimato e costo del certificato, con il rapporto cert/valore che ti dice se la certificazione è conveniente.
+Gem Cert Pricer è un'applicazione web **single-file** (un solo `index.html` con CSS e JavaScript inline, zero build) pensata per il lavoro quotidiano al banco: selezioni una gemma, imposti peso, [...]
 
-Funziona interamente nel browser — **nessun server, nessun account, nessun dato che lascia il dispositivo**. I prezzi vivono nel `localStorage` del browser e possono essere esportati/importati come file `.gcp.json` per spostarli tra dispositivi.
+Funziona interamente nel browser — **nessun server, nessun account, nessun dato che lascia il dispositivo**. I prezzi vivono nel `localStorage` del browser e possono essere esportati/importati c[...]
 
 ---
 
@@ -36,7 +36,7 @@ Funziona interamente nel browser — **nessun server, nessun account, nessun dat
 | **Scansione DB** | Confronto cert/valore su tutte le gemme a parametri fissi, ordinabile |
 | **Dati** | Import / Export del tariffario personalizzato `.gcp.json` |
 
-**Esperienza:** interfaccia bilingue commutabile in-app, tema chiaro "warm ivory + champagne gold", tipografia fluida, transizioni curate, accessibilità (focus visibile, skip-link, `prefers-reduced-motion`, contrasti AA) e layout responsive da desktop a smartphone.
+**Esperienza:** interfaccia bilingue commutabile in-app, tema chiaro "warm ivory + champagne gold", tipografia fluida, transizioni curate, accessibilità (focus visibile, skip-link, `prefers-reduc[...]
 
 ---
 
@@ -94,7 +94,7 @@ cd gem-cert-pricer
 python3 -m http.server 8080      # poi apri http://localhost:8080
 ```
 
-> Aprire `index.html` con doppio clic (`file://`) funziona, ma il manifest PWA non si carica per via delle restrizioni CORS dei browser: per l'esperienza completa usa un piccolo server statico come sopra.
+> Aprire `index.html` con doppio clic (`file://`) funziona, ma il manifest PWA non si carica per via delle restrizioni CORS dei browser: per l'esperienza completa usa un piccolo server statico com[...]
 
 ### 📱 Installare come app sul telefono
 L'app è una **PWA**: nessuno store, installazione diretta dal browser.
@@ -161,3 +161,7 @@ HTML5 · CSS3 (custom properties, grid, container-aware layout) · JavaScript va
 
 Creato da **Alessandro Sequino**.
 Database prezzi di riferimento: distretto orafo **Tarì** 2025, Campania.
+
+---
+
+**Ultimo aggiornamento:** giugno 2026
