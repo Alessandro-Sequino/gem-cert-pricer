@@ -571,7 +571,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 .ov-table summary::-webkit-details-marker { display: none; }
 .ov-table summary::after { content: '+'; color: var(--gold); font-weight: 700; margin-left: auto; }
 .ov-table[open] summary::after { content: '−'; }
-.ov-table summary .custom-chip { margin-left: auto; }
+.ov-table summary > span:first-child { flex: 1; }
 .ov-table .rt-wrap { padding: 0 1rem .8rem; }
 table.rt.ov td.base { color: var(--faint); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; padding-right: .8rem; }
 table.rt.ov th:nth-child(2) { text-align: right; }
