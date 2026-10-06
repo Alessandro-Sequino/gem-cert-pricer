@@ -560,6 +560,10 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 .cr-note { max-width: 46ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cr-actions { display: flex; gap: var(--s2); flex-wrap: wrap; }
 .tier-chip { font-weight: 800; font-size: .68rem; letter-spacing: .1em; padding: .2rem .55rem; border-radius: var(--r-pill); background: var(--gold); color: var(--ink-0); }
+.cat-chip { font-weight: 700; font-size: .68rem; padding: .2rem .55rem; border-radius: var(--r-pill); border: 1px solid rgba(217,180,106,.45); color: var(--gold-hi); }
+.cat-tiers .cat-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 0.9fr); align-items: center; gap: var(--s3); margin-top: var(--s2); font-size: var(--text-sm); color: var(--muted); }
+.cat-tiers select.text-in { padding: .5rem .7rem; cursor: pointer; }
+.ov-table summary .tier-chip { margin-left: .5rem; }
 .custom-chip { font-weight: 700; font-size: .68rem; padding: .2rem .55rem; border-radius: var(--r-pill); border: 1px solid rgba(73,192,149,.45); color: var(--emerald); }
 .clients-empty { padding: var(--s6); text-align: center; color: var(--muted); border: 1px dashed var(--line-strong); border-radius: var(--r-lg); }
 .back-link { display: inline-block; margin-bottom: var(--s4); color: var(--muted); text-decoration: none; font-size: var(--text-sm); font-weight: 600; }
@@ -1288,7 +1292,20 @@ const I18N = {
     client_link: 'Link personale',
     link_hint: 'Contiene solo i prezzi di questo cliente. Se cambi tariffe o prezzi, invia di nuovo il link aggiornato.',
     custom_prices: 'Prezzi su misura',
-    custom_hint: 'Lascia vuoto per usare il prezzo del tier {tier}; scrivi un valore per sovrascriverlo solo per questo cliente.',
+    custom_hint: 'Ogni tabella usa il tier assegnato alla sua categoria. Lascia vuoto per usare quel prezzo; scrivi un valore per sovrascriverlo solo per questo cliente.',
+    cat_tiers_title: 'Tier per categoria',
+    cat_tiers_hint: 'facoltativo',
+    as_base: 'Riferimento ({tier})',
+    grp_t_diam: 'Diamanti sciolti',
+    grp_t_color: 'Gemme di colore sciolte',
+    grp_t_mounted: 'Montato gemma di colore',
+    grp_t_lab: 'Montato lab-grown',
+    grp_t_tennis: 'Tennis',
+    grp_s_diam: 'Diamanti',
+    grp_s_color: 'Colore',
+    grp_s_mounted: 'Montato',
+    grp_s_lab: 'Lab-grown',
+    grp_s_tennis: 'Tennis',
     client_price: 'Prezzo cliente',
     custom_price_aria: 'Prezzo cliente, fascia {band}',
     link_copied: 'Link di {name} copiato',
@@ -1557,7 +1574,20 @@ const I18N = {
     client_link: 'Personal link',
     link_hint: 'It only contains this client’s prices. If you change rates or prices, send the updated link again.',
     custom_prices: 'Custom prices',
-    custom_hint: 'Leave empty to use the {tier} price; enter a value to override it for this client only.',
+    custom_hint: 'Each table uses the tier assigned to its category. Leave empty to use that price; enter a value to override it for this client only.',
+    cat_tiers_title: 'Tier by category',
+    cat_tiers_hint: 'optional',
+    as_base: 'Base ({tier})',
+    grp_t_diam: 'Loose diamonds',
+    grp_t_color: 'Loose coloured gemstones',
+    grp_t_mounted: 'Mounted coloured gemstone',
+    grp_t_lab: 'Mounted lab-grown',
+    grp_t_tennis: 'Tennis',
+    grp_s_diam: 'Diamonds',
+    grp_s_color: 'Coloured',
+    grp_s_mounted: 'Mounted',
+    grp_s_lab: 'Lab-grown',
+    grp_s_tennis: 'Tennis',
     client_price: 'Client price',
     custom_price_aria: 'Client price, band {band}',
     link_copied: '{name}’s link copied',
@@ -2347,6 +2377,24 @@ function bindRates() {
 const STORE_CLIENT = 'gcp3_client';
 const TABLE_PATHS = ['loose.diam', 'loose.color', 'mounted.center', 'mounted.halo', 'mounted.lab', 'tennis'];
 const FEE_PATH = 'mounted.labCenter';
+// Categorie a cui si può assegnare un tier diverso da quello di riferimento del cliente
+const TIER_GROUPS = [
+  { key: 'diam',    paths: ['loose.diam'] },
+  { key: 'color',   paths: ['loose.color'] },
+  { key: 'mounted', paths: ['mounted.center', 'mounted.halo'] },
+  { key: 'lab',     paths: ['mounted.lab', FEE_PATH] },
+  { key: 'tennis',  paths: ['tennis'] },
+];
+const tierFor = (c, path) => {
+  const g = TIER_GROUPS.find(x => x.paths.includes(path));
+  const v = g && c.tiers ? c.tiers[g.key] : undefined;
+  return [0, 1, 2].includes(v) ? v : c.tier;
+};
+function normTiers(o) {
+  const out = {};
+  if (o && typeof o === 'object') for (const g of TIER_GROUPS) if ([0, 1, 2].includes(Number(o[g.key])) && o[g.key] !== null && o[g.key] !== '') out[g.key] = Number(o[g.key]);
+  return out;
+}
 let CLIENT = null;          // profilo cliente attivo: { name, date, rates, preview }
 let HAS_COMPANY = false;    // su questo dispositivo c'è un tariffario aziendale
 
@@ -2374,6 +2422,7 @@ function normClients(arr) {
     id: String(c.id || newId()),
     name: c.name.slice(0, 80),
     tier: [0, 1, 2].includes(Number(c.tier)) ? Number(c.tier) : 0,
+    tiers: normTiers(c.tiers),
     note: String(c.note || '').slice(0, 500),
     phone: String(c.phone || '').slice(0, 20),
     overrides: normOverrides(c.overrides),
@@ -2395,10 +2444,10 @@ function clientRates(c) {
   const ov = c.overrides || {};
   const map = path => getIn(RATES, path).map(b => {
     const o = ov[path]?.[bandKey(b)];
-    const p = Number.isFinite(o) ? o : (Number(b.t[c.tier]) || 0);
+    const p = Number.isFinite(o) ? o : (Number(b.t[tierFor(c, path)]) || 0);
     return { max: b.max, perCt: b.perCt, t: [p, p, p] };
   });
-  const fee = Number.isFinite(ov[FEE_PATH]) ? ov[FEE_PATH] : (Number(RATES.mounted.labCenter[c.tier]) || 0);
+  const fee = Number.isFinite(ov[FEE_PATH]) ? ov[FEE_PATH] : (Number(RATES.mounted.labCenter[tierFor(c, FEE_PATH)]) || 0);
   return {
     loose: { diam: map('loose.diam'), color: map('loose.color') },
     mounted: { center: map('mounted.center'), halo: map('mounted.halo'), lab: map('mounted.lab'), labCenter: [fee, fee, fee] },
@@ -2586,7 +2635,7 @@ function clientListHTML() {
     return `<div class="client-row" data-id="${esc(c.id)}">
       <div class="cr-main">
         <a class="cr-name" href="#/clienti/${encodeURIComponent(c.id)}">${esc(c.name)}</a>
-        <span class="cr-meta"><span class="tier-chip">${TIERS[c.tier]}</span>${n ? `<span class="custom-chip">${esc(t('n_custom', { n }))}</span>` : ''}${c.note ? `<span class="cr-note">${esc(c.note)}</span>` : ''}</span>
+        <span class="cr-meta"><span class="tier-chip">${TIERS[c.tier]}</span>${TIER_GROUPS.filter(g => g.key in (c.tiers || {})).map(g => `<span class="cat-chip">${esc(t('grp_s_' + g.key))} ${TIERS[c.tiers[g.key]]}</span>`).join('')}${n ? `<span class="custom-chip">${esc(t('n_custom', { n }))}</span>` : ''}${c.note ? `<span class="cr-note">${esc(c.note)}</span>` : ''}</span>
       </div>
       <div class="cr-actions">
         <button type="button" class="btn btn-sm btn-gold" data-cact="link">${t('copy_link')}</button>
@@ -2609,10 +2658,11 @@ function clientListHTML() {
 function clientEditorHTML(c) {
   const tables = TABLE_PATHS.map(path => {
     const bands = getIn(RATES, path);
+    const tier = tierFor(c, path);
     const ov = c.overrides[path] || {};
     const nOv = bands.filter(b => bandKey(b) in ov).length;
     const rows = bands.map((b, i) => {
-      const key = bandKey(b), base = Number(b.t[c.tier]) || 0, has = key in ov;
+      const key = bandKey(b), base = Number(b.t[tier]) || 0, has = key in ov;
       return `<tr class="${has ? 'has-ov' : ''}">
         <td class="range">${esc(bandLabel(bands, i))}</td>
         <td class="base">${b.perCt ? fmtEur(base) + '/ct' : fmtEur(base)}</td>
@@ -2620,14 +2670,15 @@ function clientEditorHTML(c) {
       </tr>`;
     }).join('');
     return `<details class="ov-table"${nOv ? ' open' : ''}>
-      <summary><span>${esc(t(TABLES[path].title))}</span>${nOv ? `<span class="custom-chip">${esc(t('n_custom', { n: nOv }))}</span>` : ''}</summary>
+      <summary><span>${esc(t(TABLES[path].title))}</span><span class="tier-chip">${TIERS[tier]}</span>${nOv ? `<span class="custom-chip">${esc(t('n_custom', { n: nOv }))}</span>` : ''}</summary>
       <div class="rt-wrap${bands.length > 14 ? ' tall' : ''}"><table class="rt ov">
-        <thead><tr><th>${t('band')}</th><th>${TIERS[c.tier]}</th><th>${t('client_price')}</th></tr></thead>
+        <thead><tr><th>${t('band')}</th><th>${TIERS[tier]}</th><th>${t('client_price')}</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>
     </details>`;
   }).join('');
-  const feeBase = Number(RATES.mounted.labCenter[c.tier]) || 0;
+  const feeTier = tierFor(c, FEE_PATH);
+  const feeBase = Number(RATES.mounted.labCenter[feeTier]) || 0;
   const feeOv = c.overrides[FEE_PATH];
   return `<a class="back-link" href="#/clienti">← ${t('all_clients')}</a>
     <div class="client-editor" data-id="${esc(c.id)}">
@@ -2639,8 +2690,18 @@ function clientEditorHTML(c) {
           <div class="seg seg-block" role="radiogroup" aria-label="${esc(t('client_tier'))}">
             ${TIERS.map((tier, k) => `<input type="radio" name="cl-tier" id="cl-tier-${k}" value="${k}"${k === c.tier ? ' checked' : ''}><label for="cl-tier-${k}">${tier}</label>`).join('')}
           </div></div>
+        <div class="field cat-tiers"><div class="field-label"><span>${t('cat_tiers_title')}</span><span>${t('cat_tiers_hint')}</span></div>
+          ${TIER_GROUPS.map(g => {
+            const cur = c.tiers && g.key in c.tiers ? c.tiers[g.key] : '';
+            return `<label class="cat-row"><span>${t('grp_t_' + g.key)}</span>
+              <select class="text-in" data-tg="${g.key}" aria-label="${esc(t('grp_t_' + g.key))}">
+                <option value=""${cur === '' ? ' selected' : ''}>${esc(t('as_base', { tier: TIERS[c.tier] }))}</option>
+                ${TIERS.map((tier, k) => `<option value="${k}"${cur === k ? ' selected' : ''}>${tier}</option>`).join('')}
+              </select></label>`;
+          }).join('')}
+        </div>
         <div class="field"><label class="field-label" for="cl-phone"><span>${t('client_phone')}</span><span>${t('shop_phone_hint')}</span></label>
-          <input class="text-in" id="cl-phone" data-cf="phone" value="${esc(c.phone)}" inputmode="tel" maxlength="20" autocomplete="off"></div>
+          <input class="text-in" id="cl-phone" data-cf="phone" value="${esc(c.phone || '')}" inputmode="tel" maxlength="20" autocomplete="off"></div>
         <div class="field"><label class="field-label" for="cl-note"><span>${t('client_note')}</span></label>
           <textarea class="text-in" id="cl-note" data-cf="note" rows="2" maxlength="500">${esc(c.note)}</textarea></div>
         <div class="card-actions">
@@ -2657,9 +2718,9 @@ function clientEditorHTML(c) {
       </div>
       <div class="panel">
         <div class="panel-title">${t('custom_prices')}</div>
-        <p class="hint" style="margin:0 0 var(--s4)">${t('custom_hint', { tier: TIERS[c.tier] })}</p>
+        <p class="hint" style="margin:0 0 var(--s4)">${t('custom_hint')}</p>
         ${tables}
-        <div class="fee-row"><span>${esc(t('fee_center'))} <small class="base">${TIERS[c.tier]}: ${fmtEur(feeBase)}</small></span>
+        <div class="fee-row"><span>${esc(t('fee_center'))} <small class="base">${TIERS[feeTier]}: ${fmtEur(feeBase)}</small></span>
           <label style="grid-column:1/-1">${t('client_price')} <input data-ov="${FEE_PATH}" value="${feeOv !== undefined ? fmtIn(feeOv) : ''}" placeholder="${fmtIn(feeBase)}" inputmode="decimal"></label></div>
       </div>
     </div>`;
@@ -2683,7 +2744,7 @@ async function copyClientLink(c) {
 function bindClients() {
   const root = $('#clients-root');
   $('#btn-new-client').addEventListener('click', () => {
-    const c = { id: newId(), name: t('new_client'), tier: 0, note: '', overrides: {} };
+    const c = { id: newId(), name: t('new_client'), tier: 0, tiers: {}, note: '', phone: '', overrides: {} };
     RATES.clients.push(c); saveRates();
     location.hash = '#/clienti/' + encodeURIComponent(c.id);
     setTimeout(() => { const n = $('#cl-name'); if (n) { n.focus(); n.select(); } }, 50);
@@ -2718,6 +2779,12 @@ function bindClients() {
     if (el.name === 'cl-tier') {
       const c = RATES.clients.find(x => x.id === el.closest('.client-editor').dataset.id);
       c.tier = Number(el.value); saveRates(); renderClients(c.id);
+    }
+    if (el.dataset.tg) {
+      const c = RATES.clients.find(x => x.id === el.closest('.client-editor').dataset.id);
+      c.tiers = c.tiers || {};
+      if (el.value === '') delete c.tiers[el.dataset.tg]; else c.tiers[el.dataset.tg] = Number(el.value);
+      saveRates(); renderClients(c.id);
     }
   });
   root.addEventListener('click', e => {
@@ -2851,7 +2918,7 @@ function createFromRequest(text) {
   const r = parseRequest(text);
   if (!r) { toast(t('req_parse_fail'), true); return; }
   const note = [r.contact && `${t('req_contact')}: ${r.contact}`, r.note].filter(Boolean).join(' · ');
-  const c = { id: newId(), name: r.name.slice(0, 80), tier: 0, note: note.slice(0, 500), phone: normPhone(r.phone), overrides: {} };
+  const c = { id: newId(), name: r.name.slice(0, 80), tier: 0, tiers: {}, note: note.slice(0, 500), phone: normPhone(r.phone), overrides: {} };
   RATES.clients.push(c); saveRates();
   clientsPanel = '';
   toast(t('req_created', { name: c.name }));
