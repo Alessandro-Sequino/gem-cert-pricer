@@ -208,6 +208,8 @@ python3 -m http.server 8080      # poi apri http://localhost:8080
 L'app è una **PWA**: si installa dal browser, senza store, e si apre in una finestra sua.
 La pagina **[Installa l'app](https://alessandro-sequino.github.io/gem-cert-pricer/#/installa)** mostra il pulsante di installazione (Chrome ed Edge) e le istruzioni per ogni dispositivo.
 
+![Pagina Installa l'app](docs/screenshots/installa.webp)
+
 - **Computer, Chrome:** icona *Installa* a destra nella barra degli indirizzi, oppure menu ⋮ → *Trasmetti, salva e condividi* → *Installa pagina come app*
 - **Computer, Edge:** menu ⋯ → *App* → *Installa questo sito come app*
 - **Mac, Safari:** menu *File* → *Aggiungi al Dock* (l'app nel Dock ha dati separati da Safari: reimporta lì il tariffario)
