@@ -29,7 +29,7 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 | **Home** | Pagina iniziale con i tre percorsi di stima |
 | **Stima certificato** | Pietra sciolta · Montato (gemma di colore o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
 | **Tariffe** | Editor delle tabelle di prezzo, import/export `.gcp.json` |
-| **Clienti** | Database clienti: tier di riferimento, prezzi su misura, link personale da inviare su WhatsApp; QR del negozio e richieste via WhatsApp |
+| **Clienti** | Database clienti: tier di riferimento e per categoria, prezzi su misura, link personale da inviare su WhatsApp; QR del negozio e richieste via WhatsApp |
 
 ### Versione aziendale e versione pubblica
 
