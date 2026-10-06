@@ -30,6 +30,37 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 
 ---
 
+## 🖼 Schermate
+
+> Le schermate usano un tariffario **dimostrativo**: i prezzi mostrati sono inventati.
+
+![Pagina iniziale](docs/screenshots/home.webp)
+
+<table>
+  <tr>
+    <td width="50%"><b>Pietra sciolta</b> — fascia di caratura evidenziata e confronto T1 · T2 · T3<br><br><img src="docs/screenshots/sciolto.webp" alt="Stima pietra sciolta"></td>
+    <td width="50%"><b>Montato lab-grown</b> — peso totale dei diamanti + supplemento pietra centrale<br><br><img src="docs/screenshots/lab.webp" alt="Stima montato lab-grown"></td>
+  </tr>
+  <tr>
+    <td width="50%"><b>Tennis</b> — fascia del peso totale, elenco compatto espandibile<br><br><img src="docs/screenshots/tennis.webp" alt="Stima tennis"></td>
+    <td width="50%"><b>Tariffe</b> — tabelle modificabili, import/export del tariffario privato<br><br><img src="docs/screenshots/tariffe.webp" alt="Pagina tariffe"></td>
+  </tr>
+</table>
+
+**Montato con gemma di colore** — pietra centrale + contorno in diamanti, con la griglia completa centrale × contorno:
+
+![Stima montato con gemma di colore](docs/screenshots/montato.webp)
+
+**Da smartphone** — layout ottimizzato con totale sempre visibile:
+
+<p align="center">
+  <img src="docs/screenshots/m-home.webp" alt="Home da smartphone" width="280">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/m-montato.webp" alt="Stima montato da smartphone" width="280">
+</p>
+
+---
+
 ## 📐 Come si calcola il prezzo
 
 Ogni tabella è un elenco di **fasce di caratura** con limite superiore incluso («fino a»). L'ultima fascia è aperta e di norma usa un prezzo **per carato**. Ogni fascia ha un prezzo per ciascuno dei tre tier.
@@ -119,6 +150,7 @@ gem-cert-pricer/
 ├── manifest.json           # Manifest PWA
 ├── icon-192.png / icon-512.png
 ├── sample-pricing.gcp.json # Template vuoto del tariffario
+├── docs/screenshots/       # Schermate usate nel README (prezzi dimostrativi)
 └── README.md
 ```
 
