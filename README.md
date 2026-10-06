@@ -42,9 +42,11 @@ Il link contiene solo i prezzi effettivi di quel cliente e li trasporta nel fram
 
 ## 🖼 Schermate
 
-> Le schermate usano un tariffario **dimostrativo**: i prezzi mostrati sono inventati.
+> Le schermate usano un tariffario **dimostrativo**: prezzi e nomi dei clienti sono inventati.
 
 ![Pagina iniziale](docs/screenshots/home.webp)
+
+### Stima del certificato
 
 <table>
   <tr>
@@ -61,12 +63,27 @@ Il link contiene solo i prezzi effettivi di quel cliente e li trasporta nel fram
 
 ![Stima montato con gemma di colore](docs/screenshots/montato.webp)
 
-**Da smartphone** — layout ottimizzato con totale sempre visibile:
+### Clienti e versione pubblica
+
+<table>
+  <tr>
+    <td width="50%"><b>Database clienti</b> — tier di riferimento, prezzi su misura e link personale<br><br><img src="docs/screenshots/clienti.webp" alt="Elenco clienti"></td>
+    <td width="50%"><b>Scheda cliente</b> — prezzi su misura fascia per fascia rispetto al tier<br><br><img src="docs/screenshots/cliente.webp" alt="Scheda cliente con prezzi su misura"></td>
+  </tr>
+  <tr>
+    <td width="50%"><b>Vista del cliente</b> — aperta dal link personale: un solo prezzo, senza tier né tariffe<br><br><img src="docs/screenshots/pubblica.webp" alt="Versione pubblica vista dal cliente"></td>
+    <td width="50%"><b>English</b> — interfaccia bilingue con selettore IT/EN<br><br><img src="docs/screenshots/english.webp" alt="Interfaccia in inglese"></td>
+  </tr>
+</table>
+
+**Da smartphone** — home, stima con totale sempre visibile e vista del cliente:
 
 <p align="center">
-  <img src="docs/screenshots/m-home.webp" alt="Home da smartphone" width="280">
-  &nbsp;&nbsp;
-  <img src="docs/screenshots/m-montato.webp" alt="Stima montato da smartphone" width="280">
+  <img src="docs/screenshots/m-home.webp" alt="Home da smartphone" width="250">
+  &nbsp;
+  <img src="docs/screenshots/m-montato.webp" alt="Stima montato da smartphone" width="250">
+  &nbsp;
+  <img src="docs/screenshots/m-pubblica.webp" alt="Vista cliente da smartphone" width="250">
 </p>
 
 ---
@@ -169,7 +186,7 @@ gem-cert-pricer/
 ├── manifest.json           # Manifest PWA
 ├── icon-192.png / icon-512.png
 ├── sample-pricing.gcp.json # Template vuoto del tariffario
-├── docs/screenshots/       # Schermate usate nel README (prezzi dimostrativi)
+├── docs/screenshots/       # Schermate usate nel README (prezzi e clienti dimostrativi)
 └── README.md
 ```
 
