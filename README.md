@@ -10,7 +10,7 @@ Inserisci la caratura e confronta subito il prezzo del certificato sui tre tier 
 
 [**▶ Apri l'app**](https://alessandro-sequino.github.io/gem-cert-pricer/)
 
-📱 Installabile come app (PWA) · 🔒 Tariffe private, mai nel repository
+🇮🇹 Italiano · 🇬🇧 English · 📱 Installabile come app (PWA) · 🔒 Tariffe private, mai nel repository
 
 </div>
 
@@ -19,6 +19,8 @@ Inserisci la caratura e confronta subito il prezzo del certificato sui tre tier 
 ## Panoramica
 
 Gem Cert Pricer è un'applicazione web **single-file** (un solo `index.html` con CSS e JavaScript inline, zero build, zero dipendenze JS) pensata per il lavoro al banco.
+
+L'interfaccia è in **italiano e inglese**: la lingua si sceglie dal selettore IT/EN in alto, parte da quella del browser e viene ricordata.
 
 Funziona interamente nel browser: **nessun server, nessun account, nessun dato che lascia il dispositivo**. Le tariffe vivono nel `localStorage` del browser e si spostano tra dispositivi con un file `.gcp.json`.
 

@@ -149,6 +149,13 @@ button { cursor: pointer; }
   padding: .35rem .75rem; border: 1px solid var(--line); border-radius: var(--r-pill);
   text-decoration: none; white-space: nowrap;
 }
+.lang { display: inline-flex; padding: 3px; gap: 2px; border: 1px solid var(--line); border-radius: var(--r-pill); flex-shrink: 0; }
+.lang button {
+  border: 0; background: transparent; color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .06em;
+  padding: .3rem .5rem; border-radius: var(--r-pill); transition: color var(--dur), background var(--dur);
+}
+.lang button:hover { color: var(--text); }
+.lang button[aria-pressed="true"] { background: var(--ink-3); color: var(--gold-hi); }
 .status-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 10px var(--danger); }
 .status-pill.ok .dot { background: var(--emerald); box-shadow: 0 0 10px var(--emerald); }
 
@@ -579,7 +586,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 </style>
 </head>
 <body>
-<a href="#main" class="skip-link">Salta al contenuto</a>
+<a href="#main" class="skip-link" data-i18n="skip">Salta al contenuto</a>
 
 <header class="topbar">
   <div class="wrap">
@@ -587,14 +594,18 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
       <span class="brand-mark" data-gem></span>
       <span class="brand-name">Gem <em>Cert</em> Pricer</span>
     </a>
-    <nav class="nav" aria-label="Navigazione principale">
-      <a href="#/" data-route="home">Home</a>
-      <a href="#/stima" data-route="stima">Stima<span class="long"> certificato</span></a>
-      <a href="#/tariffe" data-route="tariffe">Tariffe</a>
+    <nav class="nav" aria-label="Navigazione principale" data-i18n-attr="aria-label:nav_aria">
+      <a href="#/" data-route="home" data-i18n="nav_home">Home</a>
+      <a href="#/stima" data-route="stima" data-i18n-html="nav_stima">Stima<span class="long"> certificato</span></a>
+      <a href="#/tariffe" data-route="tariffe" data-i18n="nav_rates">Tariffe</a>
     </nav>
     <a class="status-pill" id="status-pill" href="#/tariffe" title="Stato tariffe">
       <span class="dot"></span><span class="txt">Tariffe da configurare</span>
     </a>
+    <div class="lang" role="group" aria-label="Lingua" data-i18n-attr="aria-label:lang_aria">
+      <button type="button" data-lang="it" aria-pressed="true" lang="it" title="Italiano">IT</button>
+      <button type="button" data-lang="en" aria-pressed="false" lang="en" title="English">EN</button>
+    </div>
   </div>
 </header>
 
@@ -605,12 +616,12 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     <div class="hero">
       <div class="wrap">
         <div class="hero-text">
-          <span class="eyebrow">Certificazione gemmologica · Distretto Tarì</span>
-          <h1 id="home-title">Il costo del certificato, <em>in un istante.</em></h1>
-          <p class="lead">Pietre sciolte, gioielli montati e tennis: inserisci la caratura e confronta subito le tre fasce di prezzo.</p>
+          <span class="eyebrow" data-i18n="home_eyebrow">Certificazione gemmologica · Distretto Tarì</span>
+          <h1 id="home-title" data-i18n-html="home_h1">Il costo del certificato, <em>in un istante.</em></h1>
+          <p class="lead" data-i18n="home_lead">Pietre sciolte, gioielli montati e tennis: inserisci la caratura e confronta subito le tre fasce di prezzo.</p>
           <div class="hero-cta">
-            <a class="btn btn-gold btn-lg" href="#/stima">Inizia la stima <span class="arrow">→</span></a>
-            <a class="btn btn-lg" href="#/tariffe">Gestisci tariffe</a>
+            <a class="btn btn-gold btn-lg" href="#/stima" data-i18n-html="home_cta">Inizia la stima <span class="arrow">→</span></a>
+            <a class="btn btn-lg" href="#/tariffe" data-i18n="home_cta2">Gestisci tariffe</a>
           </div>
         </div>
         <div class="gem-stage" id="gem-stage" aria-hidden="true">
@@ -627,33 +638,33 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     <section class="section" aria-labelledby="paths-title">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="paths-title">Cosa vuoi certificare?</h2>
-          <p>Scegli la tipologia: ogni percorso usa le proprie fasce di caratura e i tre tier di prezzo T1 · T2 · T3.</p>
+          <h2 id="paths-title" data-i18n="paths_title">Cosa vuoi certificare?</h2>
+          <p data-i18n="paths_sub">Scegli la tipologia: ogni percorso usa le proprie fasce di caratura e i tre tier di prezzo T1 · T2 · T3.</p>
         </div>
         <div class="paths">
           <a class="path" href="#/stima/sciolto" data-tone="diam">
             <span class="path-go" aria-hidden="true">↗</span>
             <span class="path-index">I.</span>
             <span class="path-icon" data-gem="icon" data-h="205" data-s="38%"></span>
-            <h3>Pietra sciolta</h3>
-            <p>Diamanti e gemme di colore. Il prezzo dipende dalla fascia di caratura; oltre la soglia massima si passa al prezzo per carato.</p>
-            <span class="path-tags"><span class="tag">Diamante</span><span class="tag">Gemma di colore</span></span>
+            <h3 data-i18n="p1_h">Pietra sciolta</h3>
+            <p data-i18n="p1_p">Diamanti e gemme di colore. Il prezzo dipende dalla fascia di caratura; oltre la soglia massima si passa al prezzo per carato.</p>
+            <span class="path-tags"><span class="tag" data-i18n="diam">Diamante</span><span class="tag" data-i18n="color">Gemma di colore</span></span>
           </a>
           <a class="path" href="#/stima/montato" data-tone="color">
             <span class="path-go" aria-hidden="true">↗</span>
             <span class="path-index">II.</span>
             <span class="path-icon" data-gem="icon" data-h="158" data-s="62%"></span>
-            <h3>Gioiello montato</h3>
-            <p>Gemma di colore centrale con contorno in diamanti, oppure gioiello in diamanti lab-grown a peso totale con supplemento per la pietra centrale.</p>
-            <span class="path-tags"><span class="tag">Gemma di colore + contorno</span><span class="tag">Lab-grown</span></span>
+            <h3 data-i18n="p2_h">Gioiello montato</h3>
+            <p data-i18n="p2_p">Gemma di colore centrale con contorno in diamanti, oppure gioiello in diamanti lab-grown a peso totale con supplemento per la pietra centrale.</p>
+            <span class="path-tags"><span class="tag" data-i18n="tag_halo">Gemma di colore + contorno</span><span class="tag">Lab-grown</span></span>
           </a>
           <a class="path" href="#/stima/tennis" data-tone="tennis">
             <span class="path-go" aria-hidden="true">↗</span>
             <span class="path-index">III.</span>
             <span class="path-icon" data-gem="icon" data-h="228" data-s="64%"></span>
-            <h3>Tennis</h3>
-            <p>Bracciali tennis in diamanti naturali: il prezzo segue la fascia del peso totale dei diamanti.</p>
-            <span class="path-tags"><span class="tag">Diamanti naturali</span><span class="tag">Peso totale</span></span>
+            <h3 data-i18n="p3_h">Tennis</h3>
+            <p data-i18n="p3_p">Bracciali tennis in diamanti naturali: il prezzo segue la fascia del peso totale dei diamanti.</p>
+            <span class="path-tags"><span class="tag" data-i18n="tag_natural">Diamanti naturali</span><span class="tag" data-i18n="tag_total">Peso totale</span></span>
           </a>
         </div>
       </div>
@@ -662,23 +673,23 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     <section class="section" aria-labelledby="how-title" style="padding-top:0">
       <div class="wrap">
         <div class="section-head">
-          <h2 id="how-title">Come funziona</h2>
+          <h2 id="how-title" data-i18n="how_title">Come funziona</h2>
         </div>
         <div class="steps">
           <div class="step">
             <div class="step-n">01</div>
-            <h3>Carica le tariffe</h3>
-            <p>Importa il tuo file <code>.gcp.json</code> o compila le tabelle. I prezzi restano solo sul tuo dispositivo.</p>
+            <h3 data-i18n="s1_h">Carica le tariffe</h3>
+            <p data-i18n-html="s1_p">Importa il tuo file <code>.gcp.json</code> o compila le tabelle. I prezzi restano solo sul tuo dispositivo.</p>
           </div>
           <div class="step">
             <div class="step-n">02</div>
-            <h3>Inserisci le carature</h3>
-            <p>Pietra sciolta, oppure centrale più contorno. L'app individua automaticamente la fascia giusta.</p>
+            <h3 data-i18n="s2_h">Inserisci le carature</h3>
+            <p data-i18n="s2_p">Pietra sciolta, oppure centrale più contorno. L'app individua automaticamente la fascia giusta.</p>
           </div>
           <div class="step">
             <div class="step-n">03</div>
-            <h3>Confronta i tier</h3>
-            <p>Vedi il prezzo per T1, T2 e T3 affiancati, con la griglia completa delle fasce.</p>
+            <h3 data-i18n="s3_h">Confronta i tier</h3>
+            <p data-i18n="s3_p">Vedi il prezzo per T1, T2 e T3 affiancati, con la griglia completa delle fasce.</p>
           </div>
         </div>
       </div>
@@ -690,13 +701,13 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     <div class="wrap">
       <div class="page-head">
         <div>
-          <span class="eyebrow">Stima certificato</span>
-          <h1 id="stima-title">Quanto costa <em>certificarlo?</em></h1>
+          <span class="eyebrow" data-i18n="stima_eyebrow">Stima certificato</span>
+          <h1 id="stima-title" data-i18n-html="stima_h1">Quanto costa <em>certificarlo?</em></h1>
         </div>
-        <div class="seg" role="radiogroup" aria-label="Tipologia">
-          <input type="radio" name="mode" id="mode-sciolto" value="sciolto"><label for="mode-sciolto">Pietra sciolta</label>
-          <input type="radio" name="mode" id="mode-montato" value="montato"><label for="mode-montato">Montato</label>
-          <input type="radio" name="mode" id="mode-tennis" value="tennis"><label for="mode-tennis">Tennis</label>
+        <div class="seg" role="radiogroup" aria-label="Tipologia" data-i18n-attr="aria-label:mode_aria">
+          <input type="radio" name="mode" id="mode-sciolto" value="sciolto"><label for="mode-sciolto" data-i18n="mode_loose">Pietra sciolta</label>
+          <input type="radio" name="mode" id="mode-montato" value="montato"><label for="mode-montato" data-i18n="mode_mounted">Montato</label>
+          <input type="radio" name="mode" id="mode-tennis" value="tennis"><label for="mode-tennis" data-i18n="mode_tennis">Tennis</label>
         </div>
       </div>
 
@@ -706,92 +717,92 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
         <!-- INPUT -->
         <div>
           <div class="panel" id="panel-sciolto">
-            <div class="panel-title">Pietra</div>
+            <div class="panel-title" data-i18n="panel_stone">Pietra</div>
             <div class="field">
-              <div class="seg seg-block" role="radiogroup" aria-label="Tipo di pietra">
-                <input type="radio" name="loose-type" id="lt-diam" value="diam"><label for="lt-diam">Diamante</label>
-                <input type="radio" name="loose-type" id="lt-color" value="color"><label for="lt-color">Gemma di colore</label>
+              <div class="seg seg-block" role="radiogroup" aria-label="Tipo di pietra" data-i18n-attr="aria-label:stone_type_aria">
+                <input type="radio" name="loose-type" id="lt-diam" value="diam"><label for="lt-diam" data-i18n="diam">Diamante</label>
+                <input type="radio" name="loose-type" id="lt-color" value="color"><label for="lt-color" data-i18n="color">Gemma di colore</label>
               </div>
             </div>
             <div class="field">
-              <label class="field-label" for="in-loose-ct"><span>Caratura</span><span>ct</span></label>
+              <label class="field-label" for="in-loose-ct"><span data-i18n="carat">Caratura</span><span>ct</span></label>
               <div class="ct-input">
                 <input id="in-loose-ct" data-ct="looseCt" type="text" inputmode="decimal" autocomplete="off" aria-describedby="hint-loose">
                 <span class="unit">ct</span>
-                <div class="stepper"><button type="button" data-step="looseCt" data-dir="1" aria-label="Aumenta">+</button><button type="button" data-step="looseCt" data-dir="-1" aria-label="Diminuisci">−</button></div>
+                <div class="stepper"><button type="button" data-step="looseCt" data-dir="1" aria-label="Aumenta" data-i18n-attr="aria-label:step_up">+</button><button type="button" data-step="looseCt" data-dir="-1" aria-label="Diminuisci" data-i18n-attr="aria-label:step_down">−</button></div>
               </div>
-              <input type="range" data-range="looseCt" min="0.01" max="5" step="0.01" aria-label="Caratura (cursore)">
+              <input type="range" data-range="looseCt" min="0.01" max="5" step="0.01" aria-label="Caratura (cursore)" data-i18n-attr="aria-label:rng_carat">
               <div class="quick" data-quick="looseCt"></div>
-              <p class="hint" id="hint-loose">Usa la virgola o il punto per i decimali.</p>
+              <p class="hint" id="hint-loose" data-i18n="hint_decimal">Usa la virgola o il punto per i decimali.</p>
             </div>
           </div>
 
           <div class="panel" id="panel-mtype">
-            <div class="panel-title">Tipo di gioiello</div>
-            <div class="seg seg-block" role="radiogroup" aria-label="Tipo di gioiello montato">
-              <input type="radio" name="mounted-type" id="mt-color" value="color"><label for="mt-color">Gemma di colore</label>
+            <div class="panel-title" data-i18n="panel_mtype">Tipo di gioiello</div>
+            <div class="seg seg-block" role="radiogroup" aria-label="Tipo di gioiello montato" data-i18n-attr="aria-label:mtype_aria">
+              <input type="radio" name="mounted-type" id="mt-color" value="color"><label for="mt-color" data-i18n="color">Gemma di colore</label>
               <input type="radio" name="mounted-type" id="mt-lab" value="lab"><label for="mt-lab">Lab-grown</label>
             </div>
           </div>
 
           <div class="panel" id="panel-montato">
-            <div class="panel-title">Gemma di colore centrale</div>
+            <div class="panel-title" data-i18n="panel_center">Gemma di colore centrale</div>
             <div class="field">
-              <label class="field-label" for="in-center-ct"><span>Caratura pietra centrale</span><span>ct</span></label>
+              <label class="field-label" for="in-center-ct"><span data-i18n="center_ct">Caratura pietra centrale</span><span>ct</span></label>
               <div class="ct-input">
                 <input id="in-center-ct" data-ct="centerCt" type="text" inputmode="decimal" autocomplete="off">
                 <span class="unit">ct</span>
-                <div class="stepper"><button type="button" data-step="centerCt" data-dir="1" aria-label="Aumenta">+</button><button type="button" data-step="centerCt" data-dir="-1" aria-label="Diminuisci">−</button></div>
+                <div class="stepper"><button type="button" data-step="centerCt" data-dir="1" aria-label="Aumenta" data-i18n-attr="aria-label:step_up">+</button><button type="button" data-step="centerCt" data-dir="-1" aria-label="Diminuisci" data-i18n-attr="aria-label:step_down">−</button></div>
               </div>
-              <input type="range" data-range="centerCt" min="0.01" max="6" step="0.01" aria-label="Caratura centrale (cursore)">
+              <input type="range" data-range="centerCt" min="0.01" max="6" step="0.01" aria-label="Caratura centrale (cursore)" data-i18n-attr="aria-label:rng_center">
             </div>
           </div>
           <div class="panel" id="panel-montato-2">
-            <div class="panel-title">Contorno in diamanti</div>
+            <div class="panel-title" data-i18n="panel_halo">Contorno in diamanti</div>
             <div class="field">
-              <label class="field-label" for="in-halo-ct"><span>Caratura totale contorno</span><span>ct · 0 = nessuno</span></label>
+              <label class="field-label" for="in-halo-ct"><span data-i18n="halo_ct">Caratura totale contorno</span><span data-i18n="halo_hint">ct · 0 = nessuno</span></label>
               <div class="ct-input">
                 <input id="in-halo-ct" data-ct="haloCt" type="text" inputmode="decimal" autocomplete="off">
                 <span class="unit">ct</span>
-                <div class="stepper"><button type="button" data-step="haloCt" data-dir="1" aria-label="Aumenta">+</button><button type="button" data-step="haloCt" data-dir="-1" aria-label="Diminuisci">−</button></div>
+                <div class="stepper"><button type="button" data-step="haloCt" data-dir="1" aria-label="Aumenta" data-i18n-attr="aria-label:step_up">+</button><button type="button" data-step="haloCt" data-dir="-1" aria-label="Diminuisci" data-i18n-attr="aria-label:step_down">−</button></div>
               </div>
-              <input type="range" data-range="haloCt" min="0" max="3" step="0.01" aria-label="Caratura contorno (cursore)">
+              <input type="range" data-range="haloCt" min="0" max="3" step="0.01" aria-label="Caratura contorno (cursore)" data-i18n-attr="aria-label:rng_halo">
               <div class="quick" data-quick="haloCt"></div>
             </div>
           </div>
 
           <div class="panel" id="panel-lab">
-            <div class="panel-title">Diamanti lab-grown</div>
+            <div class="panel-title" data-i18n="panel_lab">Diamanti lab-grown</div>
             <div class="field">
-              <label class="field-label" for="in-lab-ct"><span>Peso totale diamanti</span><span>ct</span></label>
+              <label class="field-label" for="in-lab-ct"><span data-i18n="total_ct">Peso totale diamanti</span><span>ct</span></label>
               <div class="ct-input">
                 <input id="in-lab-ct" data-ct="labCt" type="text" inputmode="decimal" autocomplete="off">
                 <span class="unit">ct</span>
-                <div class="stepper"><button type="button" data-step="labCt" data-dir="1" aria-label="Aumenta">+</button><button type="button" data-step="labCt" data-dir="-1" aria-label="Diminuisci">−</button></div>
+                <div class="stepper"><button type="button" data-step="labCt" data-dir="1" aria-label="Aumenta" data-i18n-attr="aria-label:step_up">+</button><button type="button" data-step="labCt" data-dir="-1" aria-label="Diminuisci" data-i18n-attr="aria-label:step_down">−</button></div>
               </div>
-              <input type="range" data-range="labCt" min="0.01" max="10" step="0.01" aria-label="Peso totale diamanti (cursore)">
+              <input type="range" data-range="labCt" min="0.01" max="10" step="0.01" aria-label="Peso totale diamanti (cursore)" data-i18n-attr="aria-label:rng_total">
               <div class="quick" data-quick="labCt"></div>
-              <label class="check"><input type="checkbox" id="in-lab-center"><span>Con pietra centrale <small id="lab-center-fee"></small></span></label>
+              <label class="check"><input type="checkbox" id="in-lab-center"><span><span data-i18n="with_center">Con pietra centrale</span> <small id="lab-center-fee"></small></span></label>
             </div>
           </div>
 
           <div class="panel" id="panel-tennis">
-            <div class="panel-title">Tennis · diamanti naturali</div>
+            <div class="panel-title" data-i18n="panel_tennis">Tennis · diamanti naturali</div>
             <div class="field">
-              <label class="field-label" for="in-tennis-ct"><span>Peso totale diamanti</span><span>ct</span></label>
+              <label class="field-label" for="in-tennis-ct"><span data-i18n="total_ct">Peso totale diamanti</span><span>ct</span></label>
               <div class="ct-input">
                 <input id="in-tennis-ct" data-ct="tennisCt" type="text" inputmode="decimal" autocomplete="off">
                 <span class="unit">ct</span>
-                <div class="stepper"><button type="button" data-step="tennisCt" data-dir="1" aria-label="Aumenta">+</button><button type="button" data-step="tennisCt" data-dir="-1" aria-label="Diminuisci">−</button></div>
+                <div class="stepper"><button type="button" data-step="tennisCt" data-dir="1" aria-label="Aumenta" data-i18n-attr="aria-label:step_up">+</button><button type="button" data-step="tennisCt" data-dir="-1" aria-label="Diminuisci" data-i18n-attr="aria-label:step_down">−</button></div>
               </div>
-              <input type="range" data-range="tennisCt" min="0.10" max="25" step="0.01" aria-label="Peso totale diamanti (cursore)">
+              <input type="range" data-range="tennisCt" min="0.10" max="25" step="0.01" aria-label="Peso totale diamanti (cursore)" data-i18n-attr="aria-label:rng_total">
               <div class="quick" data-quick="tennisCt"></div>
             </div>
           </div>
 
           <div class="panel" id="panel-tier">
-            <div class="panel-title">Tier di prezzo</div>
-            <div class="seg seg-block" role="radiogroup" aria-label="Tier di prezzo">
+            <div class="panel-title" data-i18n="panel_tier">Tier di prezzo</div>
+            <div class="seg seg-block" role="radiogroup" aria-label="Tier di prezzo" data-i18n-attr="aria-label:panel_tier">
               <input type="radio" name="tier" id="tier-0" value="0"><label for="tier-0">T1</label>
               <input type="radio" name="tier" id="tier-1" value="1"><label for="tier-1">T2</label>
               <input type="radio" name="tier" id="tier-2" value="2"><label for="tier-2">T3</label>
@@ -811,21 +822,21 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     <div class="wrap">
       <div class="page-head">
         <div>
-          <span class="eyebrow">Listino privato</span>
-          <h1 id="tariffe-title">Le tue <em>tariffe</em></h1>
-          <p>Ogni tabella è divisa in fasce di caratura («fino a»). L'ultima fascia è aperta: di solito si applica un prezzo per carato. Le modifiche si salvano da sole in questo browser.</p>
+          <span class="eyebrow" data-i18n="rates_eyebrow">Listino privato</span>
+          <h1 id="tariffe-title" data-i18n-html="rates_h1">Le tue <em>tariffe</em></h1>
+          <p data-i18n="rates_intro">Ogni tabella è divisa in fasce di caratura («fino a»). L'ultima fascia è aperta: di solito si applica un prezzo per carato. Le modifiche si salvano da sole in questo browser.</p>
         </div>
         <div class="rates-toolbar">
-          <button class="btn btn-gold" type="button" id="btn-import">⬆ Importa .gcp.json</button>
-          <button class="btn" type="button" id="btn-export">⬇ Esporta</button>
-          <button class="btn btn-ghost-danger" type="button" id="btn-reset">Azzera</button>
-          <span class="save-state" id="save-state" hidden><span class="dot"></span>Salvato</span>
+          <button class="btn btn-gold" type="button" id="btn-import" data-i18n="btn_import">⬆ Importa .gcp.json</button>
+          <button class="btn" type="button" id="btn-export" data-i18n="btn_export">⬇ Esporta</button>
+          <button class="btn btn-ghost-danger" type="button" id="btn-reset" data-i18n="btn_reset">Azzera</button>
+          <span class="save-state" id="save-state" hidden><span class="dot"></span><span data-i18n="saved">Salvato</span></span>
           <input type="file" id="file-input" accept=".json,application/json" hidden>
         </div>
       </div>
 
       <div class="rates-group">
-        <h2>Pietra sciolta <small>prezzo per fascia di caratura</small></h2>
+        <h2 data-i18n-html="grp_loose">Pietra sciolta <small>prezzo per fascia di caratura</small></h2>
         <div class="rates-cards">
           <div class="rate-card" data-table="loose.diam"></div>
           <div class="rate-card" data-table="loose.color"></div>
@@ -833,8 +844,8 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
       </div>
 
       <div class="rates-group">
-        <h2>Montato <small>gemma di colore centrale + contorno in diamanti</small></h2>
-        <p>Prezzo = tariffa della pietra centrale (per fascia di caratura) + supplemento del contorno (per fascia di caratura totale dei diamanti).</p>
+        <h2 data-i18n-html="grp_mounted">Montato <small>gemma di colore centrale + contorno in diamanti</small></h2>
+        <p data-i18n="grp_mounted_p">Prezzo = tariffa della pietra centrale (per fascia di caratura) + supplemento del contorno (per fascia di caratura totale dei diamanti).</p>
         <div class="rates-cards">
           <div class="rate-card" data-table="mounted.center"></div>
           <div class="rate-card" data-table="mounted.halo"></div>
@@ -842,8 +853,8 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
       </div>
 
       <div class="rates-group">
-        <h2>Lab-grown e tennis <small>prezzo per peso totale dei diamanti</small></h2>
-        <p>Montato lab-grown = tariffa per fascia del peso totale + supplemento fisso se c'è una pietra centrale. Tennis in diamanti naturali = tariffa per fascia del peso totale.</p>
+        <h2 data-i18n-html="grp_lab">Lab-grown e tennis <small>prezzo per peso totale dei diamanti</small></h2>
+        <p data-i18n="grp_lab_p">Montato lab-grown = tariffa per fascia del peso totale + supplemento fisso se c'è una pietra centrale. Tennis in diamanti naturali = tariffa per fascia del peso totale.</p>
         <div class="rates-cards">
           <div class="rate-card" data-table="mounted.lab"></div>
           <div class="rate-card" data-table="tennis"></div>
@@ -857,7 +868,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 <footer class="foot">
   <div class="wrap">
     <span>Gem Cert Pricer · Alessandro Sequino</span>
-    <span>Le tariffe restano solo su questo dispositivo · nessun dato inviato</span>
+    <span data-i18n="foot_privacy">Le tariffe restano solo su questo dispositivo · nessun dato inviato</span>
   </div>
 </footer>
 
@@ -904,32 +915,380 @@ function defaultRates() {
   };
 }
 
+// Chiavi del dizionario I18N per titoli e intestazioni delle tabelle
 const TABLES = {
-  'loose.diam':     { title: 'Diamanti', sub: 'Prezzo per caratura della pietra', axis: 'Fino a (ct)' },
-  'loose.color':    { title: 'Gemme di colore', sub: 'Prezzo per caratura della pietra', axis: 'Fino a (ct)' },
-  'mounted.center': { title: 'Pietra centrale', sub: 'Gemma di colore · prezzo base', axis: 'Fino a (ct)', copyFrom: 'loose.color' },
-  'mounted.halo':   { title: 'Contorno diamanti', sub: 'Supplemento per caratura totale del contorno', axis: 'Fino a (ct tot.)' },
-  'mounted.lab':    { title: 'Montato lab-grown', sub: 'Prezzo per peso totale dei diamanti del gioiello', axis: 'Fino a (ct tot.)', fee: { path: 'mounted.labCenter', label: 'Supplemento pietra centrale' } },
-  'tennis':         { title: 'Tennis · diamanti naturali', sub: 'Prezzo per peso totale dei diamanti', axis: 'Fino a (ct tot.)' },
+  'loose.diam':     { title: 'tbl_diam',   sub: 'sub_stone',      axis: 'axis' },
+  'loose.color':    { title: 'tbl_color',  sub: 'sub_stone',      axis: 'axis' },
+  'mounted.center': { title: 'tbl_center', sub: 'sub_center',     axis: 'axis', copyFrom: 'loose.color' },
+  'mounted.halo':   { title: 'tbl_halo',   sub: 'sub_halo',       axis: 'axis_tot' },
+  'mounted.lab':    { title: 'tbl_lab',    sub: 'sub_lab_tbl',    axis: 'axis_tot', fee: { path: 'mounted.labCenter', label: 'fee_center' } },
+  'tennis':         { title: 'tbl_tennis', sub: 'sub_tennis_tbl', axis: 'axis_tot' },
 };
 
 let RATES = defaultRates();
-const UI = { mode: 'sciolto', looseType: 'diam', mountedType: 'color', tier: 0, looseCt: '0.50', centerCt: '1.00', haloCt: '0.30', labCt: '0.50', labCenter: true, tennisCt: '3.00', allBands: false };
+const UI = { lang: (navigator.language || 'it').toLowerCase().startsWith('it') ? 'it' : 'en', mode: 'sciolto', looseType: 'diam', mountedType: 'color', tier: 0, looseCt: '0.50', centerCt: '1.00', haloCt: '0.30', labCt: '0.50', labCenter: true, tennisCt: '3.00', allBands: false };
 
 /* ─── Utility ──────────────────────────────────────────────────────────── */
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const round2 = v => Math.round(v * 100) / 100;
 const parseNum = s => { const v = parseFloat(String(s ?? '').trim().replace(',', '.')); return Number.isFinite(v) ? v : NaN; };
-const fmtCt = v => v.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtCt = v => v.toLocaleString(locale(), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const fmtEur = v => {
   const r = round2(v);
-  return r.toLocaleString('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: Number.isInteger(r) ? 0 : 2, maximumFractionDigits: 2 });
+  return r.toLocaleString(locale(), { style: 'currency', currency: 'EUR', minimumFractionDigits: Number.isInteger(r) ? 0 : 2, maximumFractionDigits: 2 });
 };
 const fmtRate = (b, tier) => b.perCt ? `${fmtEur(b.t[tier] || 0)}/ct` : fmtEur(b.t[tier] || 0);
 const getTable = path => path.split('.').reduce((o, k) => o?.[k], RATES);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LINGUE — italiano / inglese
+   ═══════════════════════════════════════════════════════════════════════════ */
+const I18N = {
+  it: {
+    skip: 'Salta al contenuto',
+    nav_aria: 'Navigazione principale',
+    nav_home: 'Home',
+    nav_stima: 'Stima<span class="long"> certificato</span>',
+    nav_rates: 'Tariffe',
+    lang_aria: 'Lingua',
+    status_title: 'Stato tariffe',
+    status_on: 'Tariffe attive',
+    status_off: 'Tariffe da configurare',
+    status_on_t: 'Tariffe configurate',
+    status_off_t: 'Tariffe non configurate',
+    title_home: 'Gem Cert Pricer',
+    title_stima: 'Stima certificato · Gem Cert Pricer',
+    title_rates: 'Tariffe · Gem Cert Pricer',
+
+    home_eyebrow: 'Certificazione gemmologica · Distretto Tarì',
+    home_h1: 'Il costo del certificato, <em>in un istante.</em>',
+    home_lead: 'Pietre sciolte, gioielli montati e tennis: inserisci la caratura e confronta subito le tre fasce di prezzo.',
+    home_cta: 'Inizia la stima <span class="arrow">→</span>',
+    home_cta2: 'Gestisci tariffe',
+    paths_title: 'Cosa vuoi certificare?',
+    paths_sub: 'Scegli la tipologia: ogni percorso usa le proprie fasce di caratura e i tre tier di prezzo T1 · T2 · T3.',
+    p1_h: 'Pietra sciolta',
+    p1_p: 'Diamanti e gemme di colore. Il prezzo dipende dalla fascia di caratura; oltre la soglia massima si passa al prezzo per carato.',
+    p2_h: 'Gioiello montato',
+    p2_p: 'Gemma di colore centrale con contorno in diamanti, oppure gioiello in diamanti lab-grown a peso totale con supplemento per la pietra centrale.',
+    p3_h: 'Tennis',
+    p3_p: 'Bracciali tennis in diamanti naturali: il prezzo segue la fascia del peso totale dei diamanti.',
+    tag_halo: 'Gemma di colore + contorno',
+    tag_natural: 'Diamanti naturali',
+    tag_total: 'Peso totale',
+    how_title: 'Come funziona',
+    s1_h: 'Carica le tariffe',
+    s1_p: 'Importa il tuo file <code>.gcp.json</code> o compila le tabelle. I prezzi restano solo sul tuo dispositivo.',
+    s2_h: 'Inserisci le carature',
+    s2_p: 'Pietra sciolta, oppure centrale più contorno. L\'app individua automaticamente la fascia giusta.',
+    s3_h: 'Confronta i tier',
+    s3_p: 'Vedi il prezzo per T1, T2 e T3 affiancati, con la griglia completa delle fasce.',
+    notice: '<strong>Tariffe non ancora configurate.</strong> L\'app è pubblicata senza prezzi: importa il tuo file <code>.gcp.json</code> privato oppure compila le tabelle.',
+    notice_fill: 'Compila tariffe',
+
+    stima_eyebrow: 'Stima certificato',
+    stima_h1: 'Quanto costa <em>certificarlo?</em>',
+    mode_aria: 'Tipologia',
+    mode_loose: 'Pietra sciolta',
+    mode_mounted: 'Montato',
+    mode_tennis: 'Tennis',
+    panel_stone: 'Pietra',
+    stone_type_aria: 'Tipo di pietra',
+    diam: 'Diamante',
+    color: 'Gemma di colore',
+    carat: 'Caratura',
+    step_up: 'Aumenta',
+    step_down: 'Diminuisci',
+    rng_carat: 'Caratura (cursore)',
+    rng_center: 'Caratura centrale (cursore)',
+    rng_halo: 'Caratura contorno (cursore)',
+    rng_total: 'Peso totale diamanti (cursore)',
+    hint_decimal: 'Usa la virgola o il punto per i decimali.',
+    panel_mtype: 'Tipo di gioiello',
+    mtype_aria: 'Tipo di gioiello montato',
+    panel_center: 'Gemma di colore centrale',
+    center_ct: 'Caratura pietra centrale',
+    panel_halo: 'Contorno in diamanti',
+    halo_ct: 'Caratura totale contorno',
+    halo_hint: 'ct · 0 = nessuno',
+    panel_lab: 'Diamanti lab-grown',
+    total_ct: 'Peso totale diamanti',
+    with_center: 'Con pietra centrale',
+    panel_tennis: 'Tennis · diamanti naturali',
+    panel_tier: 'Tier di prezzo',
+    quick_none: 'nessuno',
+
+    k_loose: 'Certificato pietra sciolta',
+    k_mounted: 'Certificato gioiello montato',
+    k_lab: 'Certificato gioiello lab-grown',
+    k_tennis: 'Certificato tennis',
+    band: 'Fascia',
+    fixed_rate: 'tariffa fissa',
+    fixed: 'fisso',
+    any_carat: 'Qualsiasi caratura',
+    rul_diam: 'Fasce diamante',
+    rul_color: 'Fasce gemma di colore',
+    rul_lab: 'Fasce lab-grown',
+    rul_tennis: 'Fasce tennis',
+    show_all: 'Mostra tutte le {n} fasce',
+    show_near: 'Mostra solo le fasce vicine',
+    sub_tennis: 'Diamanti naturali · {ct} ct totali',
+    sub_lab_with: '{ct} ct totali · con pietra centrale',
+    sub_lab_without: '{ct} ct totali · senza pietra centrale',
+    sub_mounted: 'Gemma di colore {c} ct · contorno {h}',
+    halo_absent: 'assente',
+    b_lab: 'Diamanti lab-grown',
+    b_center: 'Pietra centrale',
+    b_halo: 'Contorno diamanti',
+    fixed_fee: 'Supplemento fisso',
+    absent: 'Assente',
+    no_halo: 'Nessun contorno',
+    total: 'Totale certificato',
+    mb_mounted: 'Montato',
+    incomplete: 'Dati incompleti',
+    inv_loose: 'Inserisci una caratura maggiore di zero.',
+    inv_tennis: 'Inserisci il peso totale dei diamanti.',
+    inv_lab: 'Inserisci il peso totale dei diamanti lab-grown.',
+    inv_mounted: 'Inserisci la caratura della pietra centrale (maggiore di zero) e del contorno (0 se assente).',
+    tiers_aria: 'Confronto tier',
+    mx_title: 'Griglia completa {tier} · centrale × contorno',
+    mx_corner: 'Centrale \\ Contorno',
+    mx_none: 'Nessuno',
+
+    rates_eyebrow: 'Listino privato',
+    rates_h1: 'Le tue <em>tariffe</em>',
+    rates_intro: 'Ogni tabella è divisa in fasce di caratura («fino a»). L\'ultima fascia è aperta: di solito si applica un prezzo per carato. Le modifiche si salvano da sole in questo browser.',
+    btn_import: '⬆ Importa .gcp.json',
+    btn_export: '⬇ Esporta',
+    btn_reset: 'Azzera',
+    saved: 'Salvato',
+    grp_loose: 'Pietra sciolta <small>prezzo per fascia di caratura</small>',
+    grp_mounted: 'Montato <small>gemma di colore centrale + contorno in diamanti</small>',
+    grp_mounted_p: 'Prezzo = tariffa della pietra centrale (per fascia di caratura) + supplemento del contorno (per fascia di caratura totale dei diamanti).',
+    grp_lab: 'Lab-grown e tennis <small>prezzo per peso totale dei diamanti</small>',
+    grp_lab_p: 'Montato lab-grown = tariffa per fascia del peso totale + supplemento fisso se c\'è una pietra centrale. Tennis in diamanti naturali = tariffa per fascia del peso totale.',
+    tbl_diam: 'Diamanti',
+    tbl_color: 'Gemme di colore',
+    tbl_center: 'Pietra centrale',
+    tbl_halo: 'Contorno diamanti',
+    tbl_lab: 'Montato lab-grown',
+    tbl_tennis: 'Tennis · diamanti naturali',
+    sub_stone: 'Prezzo per caratura della pietra',
+    sub_center: 'Gemma di colore · prezzo base',
+    sub_halo: 'Supplemento per caratura totale del contorno',
+    sub_lab_tbl: 'Prezzo per peso totale dei diamanti del gioiello',
+    sub_tennis_tbl: 'Prezzo per peso totale dei diamanti',
+    axis: 'Fino a (ct)',
+    axis_tot: 'Fino a (ct tot.)',
+    fee_center: 'Supplemento pietra centrale',
+    col_type: 'Tipo',
+    open_band: 'oltre',
+    band_max_aria: 'Fascia {n}: fino a ct',
+    band_tier_aria: 'Fascia {n} {tier}',
+    mode_title: 'Prezzo fisso o per carato',
+    eur_fixed: '€ fisso',
+    del_band: 'Elimina fascia {n}',
+    add_band: '+ Aggiungi fascia',
+    copy_from: 'Copia da «{src}» sciolte',
+    toast_copied: 'Tabella copiata',
+    toast_band_min: 'Il limite della fascia deve essere maggiore di zero',
+    confirm_reset: 'Azzerare tutte le tariffe salvate in questo browser? Conviene prima esportarle.',
+    toast_reset: 'Tariffe azzerate',
+    toast_exported: 'Tariffario esportato',
+    toast_imported: 'Tariffario importato ✓',
+    toast_import_fail: 'Import non riuscito: {msg}',
+    err_old: 'è un tariffario della versione precedente: usa il nuovo formato',
+    err_format: 'formato non riconosciuto',
+    err_table: 'tabella non valida',
+    err_band: 'limite di fascia non valido',
+    export_name: 'tariffario',
+    foot_privacy: 'Le tariffe restano solo su questo dispositivo · nessun dato inviato',
+  },
+  en: {
+    skip: 'Skip to content',
+    nav_aria: 'Main navigation',
+    nav_home: 'Home',
+    nav_stima: 'Estimate<span class="long"> cost</span>',
+    nav_rates: 'Rates',
+    lang_aria: 'Language',
+    status_title: 'Rates status',
+    status_on: 'Rates active',
+    status_off: 'Rates not set up',
+    status_on_t: 'Rates configured',
+    status_off_t: 'Rates not configured',
+    title_home: 'Gem Cert Pricer',
+    title_stima: 'Certificate estimate · Gem Cert Pricer',
+    title_rates: 'Rates · Gem Cert Pricer',
+
+    home_eyebrow: 'Gemmological certification · Tarì district',
+    home_h1: 'Certificate pricing, <em>in an instant.</em>',
+    home_lead: 'Loose stones, mounted jewellery and tennis bracelets: enter the carat weight and compare all three price tiers at once.',
+    home_cta: 'Start an estimate <span class="arrow">→</span>',
+    home_cta2: 'Manage rates',
+    paths_title: 'What are you certifying?',
+    paths_sub: 'Pick a category: each one has its own carat bands and the three price tiers T1 · T2 · T3.',
+    p1_h: 'Loose stone',
+    p1_p: 'Diamonds and coloured gemstones. The price depends on the carat band; above the top threshold it switches to a per-carat price.',
+    p2_h: 'Mounted jewellery',
+    p2_p: 'A coloured centre stone with a diamond halo, or lab-grown diamond jewellery priced on total weight with a surcharge for the centre stone.',
+    p3_h: 'Tennis',
+    p3_p: 'Natural diamond tennis bracelets: the price follows the total diamond weight band.',
+    tag_halo: 'Coloured gem + halo',
+    tag_natural: 'Natural diamonds',
+    tag_total: 'Total weight',
+    how_title: 'How it works',
+    s1_h: 'Load your rates',
+    s1_p: 'Import your <code>.gcp.json</code> file or fill in the tables. Prices stay on your device only.',
+    s2_h: 'Enter the weights',
+    s2_p: 'A loose stone, or a centre stone plus halo. The app finds the right band automatically.',
+    s3_h: 'Compare the tiers',
+    s3_p: 'See T1, T2 and T3 side by side, with the full band grid.',
+    notice: '<strong>Rates not set up yet.</strong> The app ships without prices: import your private <code>.gcp.json</code> file or fill in the tables.',
+    notice_fill: 'Fill in rates',
+
+    stima_eyebrow: 'Certificate estimate',
+    stima_h1: 'What will it <em>cost to certify?</em>',
+    mode_aria: 'Category',
+    mode_loose: 'Loose stone',
+    mode_mounted: 'Mounted',
+    mode_tennis: 'Tennis',
+    panel_stone: 'Stone',
+    stone_type_aria: 'Stone type',
+    diam: 'Diamond',
+    color: 'Coloured gemstone',
+    carat: 'Carat weight',
+    step_up: 'Increase',
+    step_down: 'Decrease',
+    rng_carat: 'Carat weight (slider)',
+    rng_center: 'Centre stone weight (slider)',
+    rng_halo: 'Halo weight (slider)',
+    rng_total: 'Total diamond weight (slider)',
+    hint_decimal: 'Use a dot or a comma for decimals.',
+    panel_mtype: 'Jewellery type',
+    mtype_aria: 'Mounted jewellery type',
+    panel_center: 'Coloured centre stone',
+    center_ct: 'Centre stone weight',
+    panel_halo: 'Diamond halo',
+    halo_ct: 'Total halo weight',
+    halo_hint: 'ct · 0 = none',
+    panel_lab: 'Lab-grown diamonds',
+    total_ct: 'Total diamond weight',
+    with_center: 'With centre stone',
+    panel_tennis: 'Tennis · natural diamonds',
+    panel_tier: 'Price tier',
+    quick_none: 'none',
+
+    k_loose: 'Loose stone certificate',
+    k_mounted: 'Mounted jewellery certificate',
+    k_lab: 'Lab-grown jewellery certificate',
+    k_tennis: 'Tennis certificate',
+    band: 'Band',
+    fixed_rate: 'fixed rate',
+    fixed: 'fixed',
+    any_carat: 'Any weight',
+    rul_diam: 'Diamond bands',
+    rul_color: 'Coloured gemstone bands',
+    rul_lab: 'Lab-grown bands',
+    rul_tennis: 'Tennis bands',
+    show_all: 'Show all {n} bands',
+    show_near: 'Show nearby bands only',
+    sub_tennis: 'Natural diamonds · {ct} ct total',
+    sub_lab_with: '{ct} ct total · with centre stone',
+    sub_lab_without: '{ct} ct total · no centre stone',
+    sub_mounted: 'Coloured gemstone {c} ct · halo {h}',
+    halo_absent: 'none',
+    b_lab: 'Lab-grown diamonds',
+    b_center: 'Centre stone',
+    b_halo: 'Diamond halo',
+    fixed_fee: 'Fixed surcharge',
+    absent: 'None',
+    no_halo: 'No halo',
+    total: 'Certificate total',
+    mb_mounted: 'Mounted',
+    incomplete: 'Missing data',
+    inv_loose: 'Enter a carat weight greater than zero.',
+    inv_tennis: 'Enter the total diamond weight.',
+    inv_lab: 'Enter the total lab-grown diamond weight.',
+    inv_mounted: 'Enter the centre stone weight (greater than zero) and the halo weight (0 if none).',
+    tiers_aria: 'Tier comparison',
+    mx_title: 'Full grid {tier} · centre × halo',
+    mx_corner: 'Centre \\ Halo',
+    mx_none: 'None',
+
+    rates_eyebrow: 'Private price list',
+    rates_h1: 'Your <em>rates</em>',
+    rates_intro: 'Each table is split into carat bands (“up to”). The last band is open-ended and usually uses a per-carat price. Changes are saved automatically in this browser.',
+    btn_import: '⬆ Import .gcp.json',
+    btn_export: '⬇ Export',
+    btn_reset: 'Reset',
+    saved: 'Saved',
+    grp_loose: 'Loose stones <small>price per carat band</small>',
+    grp_mounted: 'Mounted <small>coloured centre stone + diamond halo</small>',
+    grp_mounted_p: 'Price = centre stone rate (by carat band) + halo surcharge (by total diamond weight band).',
+    grp_lab: 'Lab-grown and tennis <small>price by total diamond weight</small>',
+    grp_lab_p: 'Mounted lab-grown = rate for the total-weight band + a fixed surcharge when there is a centre stone. Natural diamond tennis = rate for the total-weight band.',
+    tbl_diam: 'Diamonds',
+    tbl_color: 'Coloured gemstones',
+    tbl_center: 'Centre stone',
+    tbl_halo: 'Diamond halo',
+    tbl_lab: 'Mounted lab-grown',
+    tbl_tennis: 'Tennis · natural diamonds',
+    sub_stone: 'Price by stone weight',
+    sub_center: 'Coloured gemstone · base price',
+    sub_halo: 'Surcharge by total halo weight',
+    sub_lab_tbl: 'Price by total diamond weight of the piece',
+    sub_tennis_tbl: 'Price by total diamond weight',
+    axis: 'Up to (ct)',
+    axis_tot: 'Up to (total ct)',
+    fee_center: 'Centre stone surcharge',
+    col_type: 'Type',
+    open_band: 'over',
+    band_max_aria: 'Band {n}: up to ct',
+    band_tier_aria: 'Band {n} {tier}',
+    mode_title: 'Fixed or per-carat price',
+    eur_fixed: '€ fixed',
+    del_band: 'Delete band {n}',
+    add_band: '+ Add band',
+    copy_from: 'Copy from loose «{src}»',
+    toast_copied: 'Table copied',
+    toast_band_min: 'The band limit must be greater than zero',
+    confirm_reset: 'Clear all rates saved in this browser? Consider exporting them first.',
+    toast_reset: 'Rates cleared',
+    toast_exported: 'Price list exported',
+    toast_imported: 'Price list imported ✓',
+    toast_import_fail: 'Import failed: {msg}',
+    err_old: 'this price list is from the previous version: use the new format',
+    err_format: 'unrecognised format',
+    err_table: 'invalid table',
+    err_band: 'invalid band limit',
+    export_name: 'price-list',
+    foot_privacy: 'Rates stay on this device only · no data is sent',
+  },
+};
+const LANGS = Object.keys(I18N);
+
+function t(key, vars) {
+  let s = I18N[UI.lang]?.[key] ?? I18N.it[key] ?? key;
+  if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+  return s;
+}
+const locale = () => (UI.lang === 'en' ? 'en-GB' : 'it-IT');
+const fmtIn = v => String(v).replace('.', UI.lang === 'en' ? '.' : ',');
+
+// Applica la lingua ai testi statici: data-i18n (testo), data-i18n-html (markup), data-i18n-attr ("attr:chiave;…")
+function applyLang() {
+  document.documentElement.lang = UI.lang;
+  $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  $$('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  $$('[data-i18n-attr]').forEach(el => el.dataset.i18nAttr.split(';').forEach(pair => {
+    const [attr, key] = pair.split(':');
+    el.setAttribute(attr, t(key));
+  }));
+  $$('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === UI.lang)));
+}
 
 function toast(msg, isErr = false) {
   const el = $('#toast');
@@ -951,7 +1310,7 @@ function findBand(bands, ct) {
 function bandLabel(bands, i) {
   const b = bands[i];
   const lo = i > 0 && bands[i - 1].max !== null ? round2(bands[i - 1].max + 0.01) : null;
-  if (b.max === null) return lo === null ? 'Qualsiasi caratura' : `≥ ${fmtCt(lo)} ct`;
+  if (b.max === null) return lo === null ? t('any_carat') : `≥ ${fmtCt(lo)} ct`;
   if (lo === null) return `≤ ${fmtCt(b.max)} ct`;
   return `${fmtCt(lo)} – ${fmtCt(b.max)} ct`;
 }
@@ -993,12 +1352,12 @@ function isConfigured() {
 
 /* ─── Persistenza ──────────────────────────────────────────────────────── */
 function normBands(arr) {
-  if (!Array.isArray(arr)) throw new Error('tabella non valida');
+  if (!Array.isArray(arr)) throw new Error(t('err_table'));
   const out = arr.map(b => {
     const max = b.max === null || b.max === undefined || b.max === 'Infinity' ? null : Number(b.max);
-    if (max !== null && !Number.isFinite(max)) throw new Error('limite di fascia non valido');
-    const t = [0, 1, 2].map(k => Number(Array.isArray(b.t) ? b.t[k] : 0) || 0);
-    return { max, t, perCt: !!b.perCt };
+    if (max !== null && !Number.isFinite(max)) throw new Error(t('err_band'));
+    const prices = [0, 1, 2].map(k => Number(Array.isArray(b.t) ? b.t[k] : 0) || 0);
+    return { max, t: prices, perCt: !!b.perCt };
   });
   const finite = out.filter(b => b.max !== null).sort((a, b) => a.max - b.max);
   const open = out.filter(b => b.max === null);
@@ -1045,6 +1404,7 @@ function load() {
     if (!['sciolto', 'montato', 'tennis'].includes(UI.mode)) UI.mode = 'sciolto';
     if (!['diam', 'color'].includes(UI.looseType)) UI.looseType = 'diam';
     if (!['color', 'lab'].includes(UI.mountedType)) UI.mountedType = 'color';
+    if (!LANGS.includes(UI.lang)) UI.lang = 'it';
     UI.labCenter = UI.labCenter !== false;
     UI.allBands = UI.allBands === true;
   } catch (e) { /* noop */ }
@@ -1060,10 +1420,10 @@ function exportRates() {
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `tariffario-${new Date().toISOString().slice(0, 10)}.gcp.json`;
+  a.download = `${t('export_name')}-${new Date().toISOString().slice(0, 10)}.gcp.json`;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  toast('Tariffario esportato');
+  toast(t('toast_exported'));
 }
 
 function importRates(file) {
@@ -1073,15 +1433,15 @@ function importRates(file) {
       const json = JSON.parse(fr.result);
       if (json.format !== FORMAT) {
         throw new Error(json.format === 'gcp-pricing-v1' || json.data?.PRICE_TABLE
-          ? 'è un tariffario della versione precedente: usa il nuovo formato'
-          : 'formato non riconosciuto');
+          ? t('err_old')
+          : t('err_format'));
       }
       RATES = normRates(json.data);
       saveRates();
       renderAll();
-      toast('Tariffario importato ✓');
+      toast(t('toast_imported'));
     } catch (e) {
-      toast('Import non riuscito: ' + e.message, true);
+      toast(t('toast_import_fail', { msg: e.message }), true);
     }
   };
   fr.readAsText(file);
@@ -1159,7 +1519,7 @@ function route() {
   $$('.nav a').forEach(a => {
     if (a.dataset.route === view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  document.title = { home: 'Gem Cert Pricer', stima: 'Stima certificato · Gem Cert Pricer', tariffe: 'Tariffe · Gem Cert Pricer' }[view];
+  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates' }[view]);
   if (view !== 'stima') $('#mobile-bar').classList.add('hidden');
   if (view === 'stima') renderCalc();
   if (view === 'tariffe') renderRates();
@@ -1172,16 +1532,16 @@ function updateStatus() {
   const ok = isConfigured();
   const pill = $('#status-pill');
   pill.classList.toggle('ok', ok);
-  pill.querySelector('.txt').textContent = ok ? 'Tariffe attive' : 'Tariffe da configurare';
-  pill.title = ok ? 'Tariffe configurate' : 'Tariffe non configurate';
+  pill.querySelector('.txt').textContent = t(ok ? 'status_on' : 'status_off');
+  pill.title = t(ok ? 'status_on_t' : 'status_off_t');
 }
 
 function noticeHTML() {
   return `<div class="notice" style="margin-bottom:var(--s5)">
-    <p><strong>Tariffe non ancora configurate.</strong> L'app è pubblicata senza prezzi: importa il tuo file <code>.gcp.json</code> privato oppure compila le tabelle.</p>
+    <p>${t('notice')}</p>
     <div class="actions">
-      <button class="btn btn-gold btn-sm" type="button" data-action="import">⬆ Importa .gcp.json</button>
-      <a class="btn btn-sm" href="#/tariffe">Compila tariffe</a>
+      <button class="btn btn-gold btn-sm" type="button" data-action="import">${t('btn_import')}</button>
+      <a class="btn btn-sm" href="#/tariffe">${t('notice_fill')}</a>
     </div>
   </div>`;
 }
@@ -1230,10 +1590,15 @@ function bindCalc() {
     const v = Math.max(0, round2(cur + step * Number(b.dataset.dir)));
     setCt(key, v);
   }));
+  Object.keys(QUICK).forEach(key => {
+    $(`[data-quick="${key}"]`).addEventListener('click', e => { const b = e.target.closest('button'); if (b) setCt(key, Number(b.dataset.v)); });
+  });
+  renderQuick();
+}
+
+function renderQuick() {
   Object.entries(QUICK).forEach(([key, vals]) => {
-    const box = $(`[data-quick="${key}"]`);
-    box.innerHTML = vals.map(v => `<button type="button" data-v="${v}">${v === 0 ? 'nessuno' : fmtCt(v)}</button>`).join('');
-    box.addEventListener('click', e => { const b = e.target.closest('button'); if (b) setCt(key, Number(b.dataset.v)); });
+    $(`[data-quick="${key}"]`).innerHTML = vals.map(v => `<button type="button" data-v="${v}">${v === 0 ? t('quick_none') : fmtCt(v)}</button>`).join('');
   });
 }
 
@@ -1292,10 +1657,10 @@ function animatePrice(el, to) {
 }
 
 function tierCards(fn) {
-  return `<div class="tiers" role="group" aria-label="Confronto tier">${TIERS.map((t, k) => {
+  return `<div class="tiers" role="group" aria-label="${t('tiers_aria')}">${TIERS.map((name, k) => {
     const q = fn(k);
     return `<button type="button" class="tier" data-tier="${k}" aria-pressed="${k === UI.tier}">
-      <span class="t">${t}</span><span class="v">${fmtEur(q.total)}</span><span class="d">${esc(q.note)}</span>
+      <span class="t">${name}</span><span class="v">${fmtEur(q.total)}</span><span class="d">${esc(q.note)}</span>
     </button>`;
   }).join('')}</div>`;
 }
@@ -1310,7 +1675,7 @@ function rulerHTML(bands, activeIdx, tier, title) {
     return `<div class="band${i === activeIdx ? ' on' : ''}"><span class="bl">${esc(bandLabel(bands, i))}</span><span class="bv">${fmtRate(b, tier)}</span></div>`;
   }).join('');
   const more = long
-    ? `<button type="button" class="btn btn-sm ruler-more" data-act="all-bands">${UI.allBands ? 'Mostra solo le fasce vicine' : `Mostra tutte le ${bands.length} fasce`}</button>`
+    ? `<button type="button" class="btn btn-sm ruler-more" data-act="all-bands">${UI.allBands ? t('show_near') : t('show_all', { n: bands.length })}</button>`
     : '';
   return `<div class="panel"><div class="panel-title">${esc(title)}</div><div class="ruler">${rows}</div>${more}</div>`;
 }
@@ -1323,9 +1688,9 @@ function renderResult() {
 
   if (UI.mode === 'sciolto') {
     const ct = parseNum(UI.looseCt);
-    const typeName = UI.looseType === 'diam' ? 'Diamante' : 'Gemma di colore';
+    const typeName = t(UI.looseType);
     if (!(ct > 0)) {
-      html = invalidHTML('Inserisci una caratura maggiore di zero.');
+      html = invalidHTML(t('inv_loose'));
     } else {
       const q = quoteLoose(UI.looseType, ct, tier);
       const p = q.parts[0];
@@ -1333,76 +1698,76 @@ function renderResult() {
       mobileLabel = `${typeName} · ${fmtCt(ct)} ct · ${TIERS[tier]}`;
       html = `<div class="ticket">
         <div class="ticket-top">
-          <div><div class="ticket-kicker">Certificato pietra sciolta</div><div class="ticket-subject">${typeName} · ${fmtCt(ct)} ct</div></div>
+          <div><div class="ticket-kicker">${t('k_loose')}</div><div class="ticket-subject">${typeName} · ${fmtCt(ct)} ct</div></div>
           <span class="tier-badge">${TIERS[tier]}</span>
         </div>
         <div class="price" id="price-out"></div>
-        <p class="price-note">Fascia <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ' · tariffa fissa'}</p>
-        ${tierCards(k => { const x = quoteLoose(UI.looseType, ct, k).parts[0]; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : 'fisso' }; })}
+        <p class="price-note">${t('band')} <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ` · ${t('fixed_rate')}`}</p>
+        ${tierCards(k => { const x = quoteLoose(UI.looseType, ct, k).parts[0]; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : t('fixed') }; })}
       </div>
-      ${rulerHTML(RATES.loose[UI.looseType], p.i, tier, `Fasce ${typeName.toLowerCase()} · ${TIERS[tier]}`)}`;
+      ${rulerHTML(RATES.loose[UI.looseType], p.i, tier, `${t('rul_' + UI.looseType)} · ${TIERS[tier]}`)}`;
     }
   } else if (UI.mode === 'tennis') {
     const ct = parseNum(UI.tennisCt);
     if (!(ct > 0)) {
-      html = invalidHTML('Inserisci il peso totale dei diamanti.');
+      html = invalidHTML(t('inv_tennis'));
     } else {
       const q = quoteTennis(ct, tier), p = q.band;
       total = q.total;
       mobileLabel = `Tennis · ${fmtCt(ct)} ct · ${TIERS[tier]}`;
       html = `<div class="ticket">
         <div class="ticket-top">
-          <div><div class="ticket-kicker">Certificato tennis</div><div class="ticket-subject">Diamanti naturali · ${fmtCt(ct)} ct totali</div></div>
+          <div><div class="ticket-kicker">${t('k_tennis')}</div><div class="ticket-subject">${t('sub_tennis', { ct: fmtCt(ct) })}</div></div>
           <span class="tier-badge">${TIERS[tier]}</span>
         </div>
         <div class="price" id="price-out"></div>
-        <p class="price-note">Fascia <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ' · tariffa fissa'}</p>
-        ${tierCards(k => { const x = quoteTennis(ct, k).band; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : 'fisso' }; })}
+        <p class="price-note">${t('band')} <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ` · ${t('fixed_rate')}`}</p>
+        ${tierCards(k => { const x = quoteTennis(ct, k).band; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : t('fixed') }; })}
       </div>
-      ${rulerHTML(RATES.tennis, p.i, tier, `Fasce tennis · ${TIERS[tier]}`)}`;
+      ${rulerHTML(RATES.tennis, p.i, tier, `${t('rul_tennis')} · ${TIERS[tier]}`)}`;
     }
   } else if (UI.mountedType === 'lab') {
     const ct = parseNum(UI.labCt);
     if (!(ct > 0)) {
-      html = invalidHTML('Inserisci il peso totale dei diamanti lab-grown.');
+      html = invalidHTML(t('inv_lab'));
     } else {
       const q = quoteLab(ct, UI.labCenter, tier), p = q.band;
       total = q.total;
       mobileLabel = `Lab-grown · ${fmtCt(ct)} ct · ${TIERS[tier]}`;
       html = `<div class="ticket">
         <div class="ticket-top">
-          <div><div class="ticket-kicker">Certificato gioiello lab-grown</div><div class="ticket-subject">${fmtCt(ct)} ct totali · ${UI.labCenter ? 'con' : 'senza'} pietra centrale</div></div>
+          <div><div class="ticket-kicker">${t('k_lab')}</div><div class="ticket-subject">${t(UI.labCenter ? 'sub_lab_with' : 'sub_lab_without', { ct: fmtCt(ct) })}</div></div>
           <span class="tier-badge">${TIERS[tier]}</span>
         </div>
         <div class="price" id="price-out"></div>
         <div class="breakdown">
-          <div class="brow"><span class="lbl"><b>Diamanti lab-grown</b><small>${esc(p.label)}${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ''}</small></span><span class="val">${fmtEur(p.value)}</span></div>
-          <div class="brow"><span class="lbl"><b>Pietra centrale</b><small>${UI.labCenter ? 'Supplemento fisso' : 'Assente'}</small></span><span class="val">${UI.labCenter ? '+ ' + fmtEur(q.fee) : '—'}</span></div>
-          <div class="brow total"><span class="lbl"><b>Totale certificato</b></span><span class="val">${fmtEur(total)}</span></div>
+          <div class="brow"><span class="lbl"><b>${t('b_lab')}</b><small>${esc(p.label)}${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ''}</small></span><span class="val">${fmtEur(p.value)}</span></div>
+          <div class="brow"><span class="lbl"><b>${t('b_center')}</b><small>${t(UI.labCenter ? 'fixed_fee' : 'absent')}</small></span><span class="val">${UI.labCenter ? '+ ' + fmtEur(q.fee) : '—'}</span></div>
+          <div class="brow total"><span class="lbl"><b>${t('total')}</b></span><span class="val">${fmtEur(total)}</span></div>
         </div>
-        ${tierCards(k => { const x = quoteLab(ct, UI.labCenter, k); return { total: x.total, note: UI.labCenter ? `${fmtEur(x.band.value)} + ${fmtEur(x.fee)}` : 'fisso' }; })}
+        ${tierCards(k => { const x = quoteLab(ct, UI.labCenter, k); return { total: x.total, note: UI.labCenter ? `${fmtEur(x.band.value)} + ${fmtEur(x.fee)}` : t('fixed') }; })}
       </div>
-      ${rulerHTML(RATES.mounted.lab, p.i, tier, `Fasce lab-grown · ${TIERS[tier]}`)}`;
+      ${rulerHTML(RATES.mounted.lab, p.i, tier, `${t('rul_lab')} · ${TIERS[tier]}`)}`;
     }
   } else {
     const cct = parseNum(UI.centerCt), hct = parseNum(UI.haloCt);
     if (!(cct > 0) || !(hct >= 0)) {
-      html = invalidHTML('Inserisci la caratura della pietra centrale (maggiore di zero) e del contorno (0 se assente).');
+      html = invalidHTML(t('inv_mounted'));
     } else {
       const q = quoteMounted(cct, hct, tier);
       total = q.total;
-      mobileLabel = `Montato · ${fmtCt(cct)} + ${fmtCt(hct)} ct · ${TIERS[tier]}`;
+      mobileLabel = `${t('mb_mounted')} · ${fmtCt(cct)} + ${fmtCt(hct)} ct · ${TIERS[tier]}`;
       const c = q.center, h = q.halo;
       html = `<div class="ticket">
         <div class="ticket-top">
-          <div><div class="ticket-kicker">Certificato gioiello montato</div><div class="ticket-subject">Gemma di colore ${fmtCt(cct)} ct · contorno ${hct > 0 ? fmtCt(hct) + ' ct' : 'assente'}</div></div>
+          <div><div class="ticket-kicker">${t('k_mounted')}</div><div class="ticket-subject">${t('sub_mounted', { c: fmtCt(cct), h: hct > 0 ? fmtCt(hct) + ' ct' : t('halo_absent') })}</div></div>
           <span class="tier-badge">${TIERS[tier]}</span>
         </div>
         <div class="price" id="price-out"></div>
         <div class="breakdown">
-          <div class="brow"><span class="lbl"><b>Pietra centrale</b><small>${esc(c.label)}${c.perCt ? ` · ${fmtEur(c.rate)}/ct × ${fmtCt(cct)} ct` : ''}</small></span><span class="val">${fmtEur(c.value)}</span></div>
-          <div class="brow"><span class="lbl"><b>Contorno diamanti</b><small>${h ? esc(h.label) + (h.perCt ? ` · ${fmtEur(h.rate)}/ct × ${fmtCt(hct)} ct` : '') : 'Nessun contorno'}</small></span><span class="val">${h ? '+ ' + fmtEur(h.value) : '—'}</span></div>
-          <div class="brow total"><span class="lbl"><b>Totale certificato</b></span><span class="val">${fmtEur(total)}</span></div>
+          <div class="brow"><span class="lbl"><b>${t('b_center')}</b><small>${esc(c.label)}${c.perCt ? ` · ${fmtEur(c.rate)}/ct × ${fmtCt(cct)} ct` : ''}</small></span><span class="val">${fmtEur(c.value)}</span></div>
+          <div class="brow"><span class="lbl"><b>${t('b_halo')}</b><small>${h ? esc(h.label) + (h.perCt ? ` · ${fmtEur(h.rate)}/ct × ${fmtCt(hct)} ct` : '') : t('no_halo')}</small></span><span class="val">${h ? '+ ' + fmtEur(h.value) : '—'}</span></div>
+          <div class="brow total"><span class="lbl"><b>${t('total')}</b></span><span class="val">${fmtEur(total)}</span></div>
         </div>
         ${tierCards(k => { const x = quoteMounted(cct, hct, k); return { total: x.total, note: `${fmtEur(x.center.value)} + ${x.halo ? fmtEur(x.halo.value) : '0'}` }; })}
       </div>
@@ -1424,7 +1789,7 @@ function renderResult() {
 
 function invalidHTML(msg) {
   shownTotal = 0;
-  return `<div class="ticket"><div class="ticket-kicker">Dati incompleti</div><p class="price-note" style="margin-top:var(--s3)">${esc(msg)}</p></div>`;
+  return `<div class="ticket"><div class="ticket-kicker">${t('incomplete')}</div><p class="price-note" style="margin-top:var(--s3)">${esc(msg)}</p></div>`;
 }
 
 // Griglia come nel foglio prezzi: righe = fasce pietra centrale, colonne = fasce contorno
@@ -1433,7 +1798,7 @@ function matrixHTML(cct, hct, tier, c, h) {
   const cols = [{ none: true }].concat(H.map((b, j) => ({ b, j })));
   const head = cols.map(col => {
     const on = col.none ? !h : h && h.i === col.j;
-    const lbl = col.none ? 'Nessuno' : (col.b.max === null ? bandLabel(H, col.j).replace(' ct', '') : '≤ ' + fmtCt(col.b.max));
+    const lbl = col.none ? t('mx_none') : (col.b.max === null ? bandLabel(H, col.j).replace(' ct', '') : '≤ ' + fmtCt(col.b.max));
     const add = col.none ? '+0' : (col.b.perCt ? `+${fmtEur(col.b.t[tier] || 0)}/ct` : '+' + fmtEur(col.b.t[tier] || 0));
     return `<th scope="col" class="${on ? 'hl' : ''}">${lbl}<br><span class="pc">${add}</span></th>`;
   }).join('');
@@ -1449,8 +1814,8 @@ function matrixHTML(cct, hct, tier, c, h) {
     }).join('');
     return `<tr><th scope="row" class="${rowOn ? 'hl' : ''}">${esc(bandLabel(C, i))}</th>${cells}</tr>`;
   }).join('');
-  return `<div class="panel"><div class="panel-title">Griglia completa ${TIERS[tier]} · centrale × contorno</div>
-    <div class="matrix-wrap"><table class="matrix"><thead><tr><th scope="col">Centrale \\ Contorno</th>${head}</tr></thead><tbody>${body}</tbody></table></div>
+  return `<div class="panel"><div class="panel-title">${t('mx_title', { tier: TIERS[tier] })}</div>
+    <div class="matrix-wrap"><table class="matrix"><thead><tr><th scope="col">${esc(t('mx_corner'))}</th>${head}</tr></thead><tbody>${body}</tbody></table></div>
   </div>`;
 }
 
@@ -1467,24 +1832,24 @@ function renderRateCard(card) {
   const bands = getTable(path);
   const rows = bands.map((b, i) => `<tr data-i="${i}">
       <td>${b.max === null
-        ? `<span class="open">oltre</span>`
-        : `<input class="maxin" data-f="max" value="${String(b.max).replace('.', ',')}" inputmode="decimal" aria-label="Fascia ${i + 1}: fino a ct">`}
+        ? `<span class="open">${t('open_band')}</span>`
+        : `<input class="maxin" data-f="max" value="${fmtIn(b.max)}" inputmode="decimal" aria-label="${esc(t('band_max_aria', { n: i + 1 }))}">`}
         <div class="range">${esc(bandLabel(bands, i))}</div></td>
-      ${b.t.map((v, k) => `<td><input data-f="t" data-k="${k}" value="${String(v).replace('.', ',')}" inputmode="decimal" aria-label="Fascia ${i + 1} ${TIERS[k]}"></td>`).join('')}
-      <td><button type="button" class="mode-btn${b.perCt ? ' perct' : ''}" data-act="mode" title="Prezzo fisso o per carato">${b.perCt ? '€/ct' : '€ fisso'}</button></td>
-      <td>${b.max === null ? '' : `<button type="button" class="del-btn" data-act="del" aria-label="Elimina fascia ${i + 1}">×</button>`}</td>
+      ${b.t.map((v, k) => `<td><input data-f="t" data-k="${k}" value="${fmtIn(v)}" inputmode="decimal" aria-label="${esc(t('band_tier_aria', { n: i + 1, tier: TIERS[k] }))}"></td>`).join('')}
+      <td><button type="button" class="mode-btn${b.perCt ? ' perct' : ''}" data-act="mode" title="${esc(t('mode_title'))}">${b.perCt ? '€/ct' : t('eur_fixed')}</button></td>
+      <td>${b.max === null ? '' : `<button type="button" class="del-btn" data-act="del" aria-label="${esc(t('del_band', { n: i + 1 }))}">×</button>`}</td>
     </tr>`).join('');
-  card.innerHTML = `<h3>${esc(meta.title)}</h3><p class="sub">${esc(meta.sub)}</p>
+  card.innerHTML = `<h3>${esc(t(meta.title))}</h3><p class="sub">${esc(t(meta.sub))}</p>
     <div class="rt-wrap${bands.length > 14 ? ' tall' : ''}"><table class="rt">
-      <thead><tr><th>${esc(meta.axis)}</th>${TIERS.map(t => `<th style="text-align:right">${t}</th>`).join('')}<th>Tipo</th><th></th></tr></thead>
+      <thead><tr><th>${esc(t(meta.axis))}</th>${TIERS.map(tier => `<th style="text-align:right">${tier}</th>`).join('')}<th>${t('col_type')}</th><th></th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
     <div class="card-actions">
-      <button type="button" class="btn btn-sm" data-act="add">+ Aggiungi fascia</button>
-      ${meta.copyFrom ? `<button type="button" class="btn btn-sm" data-act="copy">Copia da «${esc(TABLES[meta.copyFrom].title)}» sciolte</button>` : ''}
+      <button type="button" class="btn btn-sm" data-act="add">${t('add_band')}</button>
+      ${meta.copyFrom ? `<button type="button" class="btn btn-sm" data-act="copy">${esc(t('copy_from', { src: t(TABLES[meta.copyFrom].title) }))}</button>` : ''}
     </div>
-    ${meta.fee ? `<div class="fee-row"><span>${esc(meta.fee.label)}</span>${getTable(meta.fee.path).map((v, k) =>
-      `<label>${TIERS[k]} <input data-fee="${k}" value="${String(v).replace('.', ',')}" inputmode="decimal" aria-label="${esc(meta.fee.label)} ${TIERS[k]}"></label>`).join('')}</div>` : ''}`;
+    ${meta.fee ? `<div class="fee-row"><span>${esc(t(meta.fee.label))}</span>${getTable(meta.fee.path).map((v, k) =>
+      `<label>${TIERS[k]} <input data-fee="${k}" value="${fmtIn(v)}" inputmode="decimal" aria-label="${esc(t(meta.fee.label))} ${TIERS[k]}"></label>`).join('')}</div>` : ''}`;
 }
 
 function bindRates() {
@@ -1508,7 +1873,7 @@ function bindRates() {
       const bands = getTable(path);
       const i = Number(inp.closest('tr').dataset.i);
       const v = parseNum(inp.value);
-      if (!(v > 0)) { toast('Il limite della fascia deve essere maggiore di zero', true); renderRateCard(card); return; }
+      if (!(v > 0)) { toast(t('toast_band_min'), true); renderRateCard(card); return; }
       bands[i].max = round2(v);
       bands.sort((a, b) => (a.max ?? Infinity) - (b.max ?? Infinity));
       saveRates(); renderRateCard(card);
@@ -1532,7 +1897,7 @@ function bindRates() {
           const src = getTable(TABLES[path].copyFrom);
           const [g, k] = path.split('.');
           RATES[g][k] = JSON.parse(JSON.stringify(src));
-          toast('Tabella copiata');
+          toast(t('toast_copied'));
           break;
         }
       }
@@ -1545,8 +1910,16 @@ function bindRates() {
    AVVIO
    ═══════════════════════════════════════════════════════════════════════════ */
 function renderAll() {
+  applyLang();
   updateStatus();
   route();
+}
+
+function setLang(lang) {
+  if (!LANGS.includes(lang) || lang === UI.lang) return;
+  UI.lang = lang; saveUI();
+  renderQuick();
+  renderAll();
 }
 
 function init() {
@@ -1561,10 +1934,11 @@ function init() {
   $('#btn-import').addEventListener('click', openImport);
   $('#btn-export').addEventListener('click', exportRates);
   $('#btn-reset').addEventListener('click', () => {
-    if (!confirm('Azzerare tutte le tariffe salvate in questo browser? Conviene prima esportarle.')) return;
-    RATES = defaultRates(); saveRates(); renderAll(); toast('Tariffe azzerate');
+    if (!confirm(t('confirm_reset'))) return;
+    RATES = defaultRates(); saveRates(); renderAll(); toast(t('toast_reset'));
   });
   document.addEventListener('click', e => { if (e.target.closest('[data-action="import"]')) openImport(); });
+  $$('[data-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
 
   window.addEventListener('hashchange', route);
   renderAll();
