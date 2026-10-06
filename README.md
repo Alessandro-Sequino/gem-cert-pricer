@@ -29,6 +29,14 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 | **Home** | Pagina iniziale con i tre percorsi di stima |
 | **Stima certificato** | Pietra sciolta · Montato (gemma di colore o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
 | **Tariffe** | Editor delle tabelle di prezzo, import/export `.gcp.json` |
+| **Clienti** | Database clienti: tier di riferimento, prezzi su misura e link personale |
+
+### Versione aziendale e versione pubblica
+
+- **Aziendale** — chi importa il tariffario completo vede i tre tier, le tariffe e la pagina **Clienti**. A ogni cliente si assegna un tier e, se serve, un prezzo su misura per singola fascia (o per il supplemento della pietra centrale).
+- **Pubblica (cliente)** — dalla scheda di un cliente si copia il suo **link personale**. Chi lo apre vede solo i propri prezzi, in un'unica colonna: niente tier, niente tariffe aziendali, niente altri clienti. Il listino resta salvato sul suo dispositivo finché non riceve un link aggiornato.
+
+Il link contiene solo i prezzi effettivi di quel cliente e li trasporta nel frammento `#` dell'indirizzo, che il browser non invia al server. Dall'app aziendale il pulsante **Anteprima** mostra esattamente ciò che vedrà il cliente.
 
 ---
 
@@ -77,6 +85,10 @@ MONTATO — gemma di colore centrale + contorno in diamanti
        + supplemento_contorno[fascia caratura totale contorno][tier]
          (contorno = 0 ct → nessun supplemento)
 
+PREZZO CLIENTE (versione pubblica)
+  per ogni fascia: prezzo su misura del cliente, se presente,
+                   altrimenti il prezzo del suo tier di riferimento
+
 MONTATO LAB-GROWN
   Cert = tariffa_lab[fascia peso totale diamanti][tier]
        + supplemento pietra centrale[tier]   (solo se presente)
@@ -89,7 +101,7 @@ TENNIS — diamanti naturali
 
 ## 🔒 Tariffe separate dal codice
 
-L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffario privato, che non finisce mai nel repository (`*.gcp.json` è in `.gitignore`).
+L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffario privato, che non finisce mai nel repository (`*.gcp.json` è in `.gitignore`). Il file aziendale contiene anche il database clienti: esportalo per farne una copia di sicurezza o spostarlo su un altro dispositivo.
 
 ```
 1. Compila   →  pagina "Tariffe", oppure parti da sample-pricing.gcp.json
@@ -114,7 +126,11 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
       "lab":       [ … ],
       "labCenter": [0, 0, 0]
     },
-    "tennis": [ … ]
+    "tennis": [ … ],
+    "clients": [
+      {"id": "…", "name": "Rossi Gioielli", "tier": 1, "note": "",
+       "overrides": {"loose.diam": {"0.49": 35}, "mounted.labCenter": 9}}
+    ]
   }
 }
 ```
@@ -123,6 +139,7 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
 - `t` — prezzi per T1, T2, T3
 - `perCt` — `true` se il prezzo è in €/ct e va moltiplicato per la caratura
 - `labCenter` — supplemento fisso per la pietra centrale nel montato lab-grown (T1, T2, T3)
+- `clients` — database clienti: `tier` (0 = T1, 1 = T2, 2 = T3) e `overrides`, prezzi su misura indicizzati per tabella e limite della fascia (`"open"` per l'ultima fascia aperta)
 
 I file del formato precedente (`gcp-pricing-v1`) non sono più compatibili.
 

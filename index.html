@@ -106,7 +106,7 @@ body::after {
 h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.05; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
 p { margin: 0; text-wrap: pretty; }
 a { color: inherit; }
-button, input, select { font: inherit; color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
 .num { font-variant-numeric: tabular-nums lining-nums; }
@@ -527,6 +527,64 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 .check small { color: var(--gold); font-weight: 700; margin-left: .3rem; }
 .ruler-more { margin-top: var(--s3); }
 
+/* ═══ CLIENTI ═══════════════════════════════════════════════════════════ */
+.client-mode .company-only, .client-mode .tiers, .client-mode .tier-badge { display: none !important; }
+.client-pill { cursor: default; color: var(--text); max-width: 220px; }
+.client-pill .txt { overflow: hidden; text-overflow: ellipsis; }
+.client-bar { background: linear-gradient(90deg, rgba(73,192,149,.16), rgba(73,192,149,.05)); border-bottom: 1px solid rgba(73,192,149,.3); }
+.client-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); flex-wrap: wrap; padding-top: .55rem; padding-bottom: .55rem; font-size: var(--text-sm); }
+.client-notice { border-color: rgba(73,192,149,.35); background: linear-gradient(90deg, rgba(73,192,149,.12), rgba(73,192,149,.03)); }
+.client-notice strong { color: var(--text); }
+.clients-bar { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; margin-bottom: var(--s4); }
+.clients-count { color: var(--faint); font-size: var(--text-sm); margin-left: auto; }
+.text-in {
+  width: 100%; background: var(--ink-0); border: 1px solid var(--line-strong); border-radius: var(--r-sm);
+  padding: .7rem .85rem; font-size: var(--text-sm); resize: vertical;
+  transition: border-color var(--dur), box-shadow var(--dur);
+}
+.text-in:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px var(--gold-glow); }
+#client-search { max-width: 340px; padding: .6rem .9rem; background: var(--ink-1); border: 1px solid var(--line-strong); border-radius: var(--r-pill); font-size: var(--text-sm); }
+#client-search:focus { outline: none; border-color: var(--gold); }
+.client-list { display: grid; gap: var(--s2); }
+.client-row {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s4); flex-wrap: wrap;
+  padding: var(--s4) var(--s5); background: var(--ink-1); border: 1px solid var(--line); border-radius: var(--r-md);
+  transition: border-color var(--dur);
+}
+.client-row:hover { border-color: var(--line-strong); }
+.cr-main { display: flex; flex-direction: column; gap: .35rem; min-width: 0; }
+.cr-name { font-family: var(--font-display); font-size: 1.45rem; font-weight: 600; text-decoration: none; line-height: 1.1; }
+.cr-name:hover { color: var(--gold-hi); }
+.cr-meta { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; font-size: var(--text-xs); color: var(--faint); }
+.cr-note { max-width: 46ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cr-actions { display: flex; gap: var(--s2); flex-wrap: wrap; }
+.tier-chip { font-weight: 800; font-size: .68rem; letter-spacing: .1em; padding: .2rem .55rem; border-radius: var(--r-pill); background: var(--gold); color: var(--ink-0); }
+.custom-chip { font-weight: 700; font-size: .68rem; padding: .2rem .55rem; border-radius: var(--r-pill); border: 1px solid rgba(73,192,149,.45); color: var(--emerald); }
+.clients-empty { padding: var(--s6); text-align: center; color: var(--muted); border: 1px dashed var(--line-strong); border-radius: var(--r-lg); }
+.back-link { display: inline-block; margin-bottom: var(--s4); color: var(--muted); text-decoration: none; font-size: var(--text-sm); font-weight: 600; }
+.back-link:hover { color: var(--gold-hi); }
+.client-editor { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: var(--s5); align-items: start; }
+.client-editor .panel + .panel { margin-top: 0; }
+.link-out { font-size: .75rem; color: var(--muted); font-family: ui-monospace, monospace; }
+.ov-table { border: 1px solid var(--line); border-radius: var(--r-md); margin-bottom: var(--s3); background: var(--ink-1); }
+.ov-table summary { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); padding: .8rem 1rem; cursor: pointer; font-weight: 600; font-size: var(--text-sm); list-style: none; }
+.ov-table summary::-webkit-details-marker { display: none; }
+.ov-table summary::after { content: '+'; color: var(--gold); font-weight: 700; margin-left: auto; }
+.ov-table[open] summary::after { content: '−'; }
+.ov-table summary .custom-chip { margin-left: auto; }
+.ov-table .rt-wrap { padding: 0 1rem .8rem; }
+table.rt.ov td.base { color: var(--faint); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; padding-right: .8rem; }
+table.rt.ov th:nth-child(2) { text-align: right; }
+table.rt.ov tr.has-ov input { border-color: rgba(73,192,149,.6); color: var(--emerald); }
+table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint); opacity: .55; font-style: italic; }
+.fee-row small.base { color: var(--faint); font-weight: 500; margin-left: .4rem; }
+@media (max-width: 980px) { .client-editor { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 720px) {
+  .client-row { padding: var(--s4); }
+  .cr-actions { width: 100%; }
+  .client-pill { max-width: 120px; }
+}
+
 /* ═══ TOAST ═════════════════════════════════════════════════════════════ */
 .toast {
   position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 200;
@@ -558,6 +616,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
   }
   .mobile-bar.hidden { display: none; }
   body:has(.mobile-bar:not(.hidden)) footer.foot { padding-bottom: 120px; }
+  body:has(.mobile-bar:not(.hidden)) .toast { bottom: calc(100px + env(safe-area-inset-bottom)); }
   .mobile-bar .mb-l { font-size: var(--text-xs); color: var(--muted); }
   .mobile-bar .mb-v { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; color: var(--gold-hi); font-variant-numeric: tabular-nums; }
 }
@@ -576,8 +635,14 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
   .panel { padding: var(--s4); }
   .matrix-wrap { margin: 0 calc(-1 * var(--s4)); padding: 0 var(--s4); }
 }
-@media (max-width: 420px) {
+@media (max-width: 480px) {
   .brand-name { display: none; }
+  .topbar .wrap { gap: 6px; }
+  .nav { gap: 0; }
+  .nav a { padding: .4rem .5rem; font-size: .74rem; }
+  .status-pill { display: none; }
+  .client-mode .client-pill { display: inline-flex; max-width: 96px; }
+  .lang button { padding: .28rem .4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -597,9 +662,11 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     <nav class="nav" aria-label="Navigazione principale" data-i18n-attr="aria-label:nav_aria">
       <a href="#/" data-route="home" data-i18n="nav_home">Home</a>
       <a href="#/stima" data-route="stima" data-i18n-html="nav_stima">Stima<span class="long"> certificato</span></a>
-      <a href="#/tariffe" data-route="tariffe" data-i18n="nav_rates">Tariffe</a>
+      <a href="#/tariffe" data-route="tariffe" data-i18n="nav_rates" class="company-only">Tariffe</a>
+      <a href="#/clienti" data-route="clienti" data-i18n="nav_clients" class="company-only">Clienti</a>
     </nav>
-    <a class="status-pill" id="status-pill" href="#/tariffe" title="Stato tariffe">
+    <span class="status-pill ok client-pill" id="client-pill" hidden data-i18n-attr="title:client_pill_title"><span class="dot"></span><span class="txt"></span></span>
+    <a class="status-pill company-only" id="status-pill" href="#/tariffe" title="Stato tariffe">
       <span class="dot"></span><span class="txt">Tariffe da configurare</span>
     </a>
     <div class="lang" role="group" aria-label="Lingua" data-i18n-attr="aria-label:lang_aria">
@@ -608,6 +675,9 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     </div>
   </div>
 </header>
+<div class="client-bar" id="client-bar" hidden>
+  <div class="wrap"><span class="cb-txt"></span><button type="button" class="btn btn-sm" id="client-exit" data-i18n="back_company">← Torna alla versione aziendale</button></div>
+</div>
 
 <main id="main">
 
@@ -618,10 +688,10 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
         <div class="hero-text">
           <span class="eyebrow" data-i18n="home_eyebrow">Certificazione gemmologica · Distretto Tarì</span>
           <h1 id="home-title" data-i18n-html="home_h1">Il costo del certificato, <em>in un istante.</em></h1>
-          <p class="lead" data-i18n="home_lead">Pietre sciolte, gioielli montati e tennis: inserisci la caratura e confronta subito le tre fasce di prezzo.</p>
+          <p class="lead" data-i18n="home_lead" data-i18n-client="home_lead_client">Pietre sciolte, gioielli montati e tennis: inserisci la caratura e confronta subito le tre fasce di prezzo.</p>
           <div class="hero-cta">
             <a class="btn btn-gold btn-lg" href="#/stima" data-i18n-html="home_cta">Inizia la stima <span class="arrow">→</span></a>
-            <a class="btn btn-lg" href="#/tariffe" data-i18n="home_cta2">Gestisci tariffe</a>
+            <a class="btn btn-lg company-only" href="#/tariffe" data-i18n="home_cta2">Gestisci tariffe</a>
           </div>
         </div>
         <div class="gem-stage" id="gem-stage" aria-hidden="true">
@@ -639,7 +709,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
       <div class="wrap">
         <div class="section-head">
           <h2 id="paths-title" data-i18n="paths_title">Cosa vuoi certificare?</h2>
-          <p data-i18n="paths_sub">Scegli la tipologia: ogni percorso usa le proprie fasce di caratura e i tre tier di prezzo T1 · T2 · T3.</p>
+          <p data-i18n="paths_sub" data-i18n-client="paths_sub_client">Scegli la tipologia: ogni percorso usa le proprie fasce di caratura e i tre tier di prezzo T1 · T2 · T3.</p>
         </div>
         <div class="paths">
           <a class="path" href="#/stima/sciolto" data-tone="diam">
@@ -670,7 +740,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
       </div>
     </section>
 
-    <section class="section" aria-labelledby="how-title" style="padding-top:0">
+    <section class="section company-only" aria-labelledby="how-title" style="padding-top:0">
       <div class="wrap">
         <div class="section-head">
           <h2 id="how-title" data-i18n="how_title">Come funziona</h2>
@@ -800,7 +870,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
             </div>
           </div>
 
-          <div class="panel" id="panel-tier">
+          <div class="panel company-only" id="panel-tier">
             <div class="panel-title" data-i18n="panel_tier">Tier di prezzo</div>
             <div class="seg seg-block" role="radiogroup" aria-label="Tier di prezzo" data-i18n-attr="aria-label:panel_tier">
               <input type="radio" name="tier" id="tier-0" value="0"><label for="tier-0">T1</label>
@@ -863,6 +933,23 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
       <div style="height:var(--s7)"></div>
     </div>
   </section>
+  <!-- ═════════════════════════════════ CLIENTI ═════════════════════════════════ -->
+  <section class="view" id="view-clienti" aria-labelledby="clienti-title">
+    <div class="wrap">
+      <div class="page-head">
+        <div>
+          <span class="eyebrow" data-i18n="clients_eyebrow">Database clienti</span>
+          <h1 id="clienti-title" data-i18n-html="clients_h1">I tuoi <em>clienti</em></h1>
+          <p data-i18n="clients_intro">Assegna a ogni cliente un tier e, se serve, prezzi su misura.</p>
+        </div>
+        <div class="rates-toolbar">
+          <button class="btn btn-gold" type="button" id="btn-new-client" data-i18n="btn_new_client">+ Nuovo cliente</button>
+        </div>
+      </div>
+      <div id="clients-root"></div>
+      <div style="height:var(--s7)"></div>
+    </div>
+  </section>
 </main>
 
 <footer class="foot">
@@ -912,6 +999,7 @@ function defaultRates() {
       labCenter: [0, 0, 0],
     },
     tennis: zeroBands([0.99, 1.49, 1.99, 2.49, 2.99, 3.49, 3.99, 4.49, 4.99, null]).map(b => ({ ...b, perCt: false })),
+    clients: [],
   };
 }
 
@@ -941,6 +1029,7 @@ const fmtEur = v => {
 const fmtRate = (b, tier) => b.perCt ? `${fmtEur(b.t[tier] || 0)}/ct` : fmtEur(b.t[tier] || 0);
 const getTable = path => path.split('.').reduce((o, k) => o?.[k], RATES);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const tierSfx = tier => (CLIENT ? '' : ` · ${TIERS[tier]}`);
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1054,7 +1143,7 @@ const I18N = {
     inv_lab: 'Inserisci il peso totale dei diamanti lab-grown.',
     inv_mounted: 'Inserisci la caratura della pietra centrale (maggiore di zero) e del contorno (0 se assente).',
     tiers_aria: 'Confronto tier',
-    mx_title: 'Griglia completa {tier} · centrale × contorno',
+    mx_title: 'Griglia completa{tier} · centrale × contorno',
     mx_corner: 'Centrale \\ Contorno',
     mx_none: 'Nessuno',
 
@@ -1106,6 +1195,49 @@ const I18N = {
     err_band: 'limite di fascia non valido',
     export_name: 'tariffario',
     foot_privacy: 'Le tariffe restano solo su questo dispositivo · nessun dato inviato',
+    nav_clients: 'Clienti',
+    title_clients: 'Clienti · Gem Cert Pricer',
+    clients_eyebrow: 'Database clienti',
+    clients_h1: 'I tuoi <em>clienti</em>',
+    clients_intro: 'Assegna a ogni cliente un tier e, se serve, prezzi su misura. Poi inviagli il suo link personale: vedrà solo i suoi prezzi, senza tier né tariffe aziendali.',
+    btn_new_client: '+ Nuovo cliente',
+    new_client: 'Nuovo cliente',
+    n_clients: '{n} clienti',
+    search_client: 'Cerca cliente…',
+    no_match: 'Nessun cliente corrisponde alla ricerca.',
+    clients_empty: 'Ancora nessun cliente. Crea il primo con «+ Nuovo cliente».',
+    n_custom: '{n} su misura',
+    copy_link: 'Copia link',
+    share: 'Condividi',
+    preview: 'Anteprima',
+    edit: 'Modifica',
+    all_clients: 'Tutti i clienti',
+    client_data: 'Dati cliente',
+    client_name: 'Nome',
+    client_tier: 'Tier di riferimento',
+    client_note: 'Note interne',
+    clear_custom: 'Ripristina prezzi del tier',
+    delete_client: 'Elimina cliente',
+    client_link: 'Link personale',
+    link_hint: 'Contiene solo i prezzi di questo cliente. Se cambi tariffe o prezzi, invia di nuovo il link aggiornato.',
+    custom_prices: 'Prezzi su misura',
+    custom_hint: 'Lascia vuoto per usare il prezzo del tier {tier}; scrivi un valore per sovrascriverlo solo per questo cliente.',
+    client_price: 'Prezzo cliente',
+    custom_price_aria: 'Prezzo cliente, fascia {band}',
+    link_copied: 'Link di {name} copiato',
+    link_copy_manual: 'Copia non riuscita: seleziona il link e copialo a mano',
+    confirm_clear_custom: 'Eliminare i prezzi su misura di {name} e tornare a quelli del tier?',
+    confirm_delete_client: 'Eliminare il cliente {name}? Il suo link continuerà a funzionare con i prezzi già inviati.',
+    client_deleted: 'Cliente eliminato',
+    preview_bar: 'Vista cliente: {name}',
+    back_company: '← Torna alla versione aziendale',
+    client_welcome: 'Listino riservato a <strong>{name}</strong>{date}.',
+    client_date: ' · aggiornato al {date}',
+    home_lead_client: 'Pietre sciolte, gioielli montati e tennis: inserisci la caratura e ottieni subito il costo del certificato.',
+    paths_sub_client: 'Scegli la tipologia: ogni percorso usa le proprie fasce di caratura.',
+    link_invalid: 'Link cliente non valido o incompleto',
+    client_loaded: 'Listino di {name} attivato',
+    client_pill_title: 'Listino personale',
   },
   en: {
     skip: 'Skip to content',
@@ -1214,7 +1346,7 @@ const I18N = {
     inv_lab: 'Enter the total lab-grown diamond weight.',
     inv_mounted: 'Enter the centre stone weight (greater than zero) and the halo weight (0 if none).',
     tiers_aria: 'Tier comparison',
-    mx_title: 'Full grid {tier} · centre × halo',
+    mx_title: 'Full grid{tier} · centre × halo',
     mx_corner: 'Centre \\ Halo',
     mx_none: 'None',
 
@@ -1266,6 +1398,49 @@ const I18N = {
     err_band: 'invalid band limit',
     export_name: 'price-list',
     foot_privacy: 'Rates stay on this device only · no data is sent',
+    nav_clients: 'Clients',
+    title_clients: 'Clients · Gem Cert Pricer',
+    clients_eyebrow: 'Client database',
+    clients_h1: 'Your <em>clients</em>',
+    clients_intro: 'Give each client a tier and, if needed, custom prices. Then send them their personal link: they will only see their own prices, with no tiers or company rates.',
+    btn_new_client: '+ New client',
+    new_client: 'New client',
+    n_clients: '{n} clients',
+    search_client: 'Search clients…',
+    no_match: 'No client matches your search.',
+    clients_empty: 'No clients yet. Create the first one with “+ New client”.',
+    n_custom: '{n} custom',
+    copy_link: 'Copy link',
+    share: 'Share',
+    preview: 'Preview',
+    edit: 'Edit',
+    all_clients: 'All clients',
+    client_data: 'Client details',
+    client_name: 'Name',
+    client_tier: 'Base tier',
+    client_note: 'Internal notes',
+    clear_custom: 'Reset to tier prices',
+    delete_client: 'Delete client',
+    client_link: 'Personal link',
+    link_hint: 'It only contains this client’s prices. If you change rates or prices, send the updated link again.',
+    custom_prices: 'Custom prices',
+    custom_hint: 'Leave empty to use the {tier} price; enter a value to override it for this client only.',
+    client_price: 'Client price',
+    custom_price_aria: 'Client price, band {band}',
+    link_copied: '{name}’s link copied',
+    link_copy_manual: 'Copy failed: select the link and copy it manually',
+    confirm_clear_custom: 'Remove {name}’s custom prices and go back to the tier prices?',
+    confirm_delete_client: 'Delete client {name}? Their link will keep working with the prices already sent.',
+    client_deleted: 'Client deleted',
+    preview_bar: 'Client view: {name}',
+    back_company: '← Back to company version',
+    client_welcome: 'Price list reserved for <strong>{name}</strong>{date}.',
+    client_date: ' · updated {date}',
+    home_lead_client: 'Loose stones, mounted jewellery and tennis bracelets: enter the carat weight and get the certificate cost instantly.',
+    paths_sub_client: 'Pick a category: each one has its own carat bands.',
+    link_invalid: 'Invalid or incomplete client link',
+    client_loaded: '{name}’s price list is active',
+    client_pill_title: 'Personal price list',
   },
 };
 const LANGS = Object.keys(I18N);
@@ -1281,7 +1456,8 @@ const fmtIn = v => String(v).replace('.', UI.lang === 'en' ? '.' : ',');
 // Applica la lingua ai testi statici: data-i18n (testo), data-i18n-html (markup), data-i18n-attr ("attr:chiave;…")
 function applyLang() {
   document.documentElement.lang = UI.lang;
-  $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  const k = el => (CLIENT && el.dataset.i18nClient) || el.dataset.i18n;
+  $$('[data-i18n]').forEach(el => { el.textContent = t(k(el)); });
   $$('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
   $$('[data-i18n-attr]').forEach(el => el.dataset.i18nAttr.split(';').forEach(pair => {
     const [attr, key] = pair.split(':');
@@ -1345,9 +1521,9 @@ function quoteTennis(ct, tier) {
   return { total: p ? p.value : 0, band: p };
 }
 
-function isConfigured() {
+function isConfigured(r = RATES) {
   const any = bands => bands.some(b => b.t.some(v => Number(v) > 0));
-  return [RATES.loose.diam, RATES.loose.color, RATES.mounted.center, RATES.mounted.lab, RATES.tennis].some(any);
+  return [r.loose.diam, r.loose.color, r.mounted.center, r.mounted.lab, r.tennis].some(any);
 }
 
 /* ─── Persistenza ──────────────────────────────────────────────────────── */
@@ -1378,11 +1554,14 @@ function normRates(d) {
       labCenter: [0, 1, 2].map(k => Number(d?.mounted?.labCenter?.[k]) || 0),
     },
     tennis: Array.isArray(d?.tennis) && d.tennis.length ? normBands(d.tennis) : def.tennis,
+    clients: normClients(d?.clients),
   };
   return r;
 }
 
 function saveRates() {
+  if (CLIENT) return;
+  HAS_COMPANY = isConfigured();
   try { localStorage.setItem(STORE_RATES, JSON.stringify(RATES)); } catch (e) { /* storage non disponibile */ }
   const s = $('#save-state');
   s.hidden = false;
@@ -1392,15 +1571,25 @@ function saveRates() {
 }
 function saveUI() { try { localStorage.setItem(STORE_UI, JSON.stringify(UI)); } catch (e) { /* noop */ } }
 
-function load() {
+function loadCompanyRates() {
   try {
     const r = localStorage.getItem(STORE_RATES);
-    if (r) RATES = normRates(JSON.parse(r));
-  } catch (e) { RATES = defaultRates(); }
+    if (r) return normRates(JSON.parse(r));
+  } catch (e) { /* dati non leggibili */ }
+  return defaultRates();
+}
+
+function load() {
+  RATES = loadCompanyRates();
+  HAS_COMPANY = isConfigured();
+  try {
+    const c = JSON.parse(localStorage.getItem(STORE_CLIENT) || 'null');
+    if (c && c.rates) enterClient({ name: String(c.name || '').slice(0, 80), date: String(c.date || ''), rates: normRates(c.rates) }, false);
+  } catch (e) { /* profilo cliente non valido */ }
   try {
     const u = JSON.parse(localStorage.getItem(STORE_UI) || '{}');
     for (const k of Object.keys(UI)) if (u[k] !== undefined) UI[k] = u[k];
-    UI.tier = [0, 1, 2].includes(Number(UI.tier)) ? Number(UI.tier) : 0;
+    UI.tier = CLIENT ? 0 : ([0, 1, 2].includes(Number(UI.tier)) ? Number(UI.tier) : 0);
     if (!['sciolto', 'montato', 'tennis'].includes(UI.mode)) UI.mode = 'sciolto';
     if (!['diam', 'color'].includes(UI.looseType)) UI.looseType = 'diam';
     if (!['color', 'lab'].includes(UI.mountedType)) UI.mountedType = 'color';
@@ -1511,7 +1700,18 @@ function mountGems() {
    ═══════════════════════════════════════════════════════════════════════════ */
 function route() {
   const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-  const view = ['stima', 'tariffe'].includes(parts[0]) ? parts[0] : 'home';
+  // Link personale del cliente: attiva la vista cliente e ripulisce l'indirizzo
+  if (parts[0] === 'c' && parts[1]) {
+    try {
+      enterClient(decodeClientLink(parts[1]), true);
+      applyLang(); applyMode(); updateStatus();
+      toast(t('client_loaded', { name: CLIENT.name }));
+    } catch (e) { toast(t('link_invalid'), true); }
+    location.replace('#/');
+    return;
+  }
+  let view = ['stima', 'tariffe', 'clienti'].includes(parts[0]) ? parts[0] : 'home';
+  if (CLIENT && (view === 'tariffe' || view === 'clienti')) { location.replace('#/stima'); return; }
   if (view === 'stima' && ['sciolto', 'montato', 'tennis'].includes(parts[1])) {
     UI.mode = parts[1]; saveUI();
   }
@@ -1519,13 +1719,15 @@ function route() {
   $$('.nav a').forEach(a => {
     if (a.dataset.route === view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates' }[view]);
+  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients' }[view]);
   if (view !== 'stima') $('#mobile-bar').classList.add('hidden');
   if (view === 'stima') renderCalc();
   if (view === 'tariffe') renderRates();
+  if (view === 'clienti') renderClients(parts[1] && decodeURIComponent(parts[1]));
   if (view === 'home') renderHome();
-  if (view !== route.last) window.scrollTo({ top: 0, behavior: 'instant' });
-  route.last = view;
+  const key = view + '/' + (parts[1] || '');
+  if (key !== route.last) window.scrollTo({ top: 0, behavior: 'instant' });
+  route.last = key;
 }
 
 function updateStatus() {
@@ -1547,6 +1749,11 @@ function noticeHTML() {
 }
 
 function renderHome() {
+  if (CLIENT) {
+    const date = CLIENT.date ? t('client_date', { date: new Date(CLIENT.date).toLocaleDateString(locale()) }) : '';
+    $('#home-notice-wrap').innerHTML = `<div class="notice client-notice"><p>${t('client_welcome', { name: esc(CLIENT.name), date: esc(date) })}</p></div>`;
+    return;
+  }
   $('#home-notice-wrap').innerHTML = isConfigured() ? '' : noticeHTML();
 }
 
@@ -1637,7 +1844,7 @@ function renderCalc() {
   $('#panel-montato-2').hidden = !mColor;
   $('#panel-lab').hidden = !mLab;
   $('#panel-tennis').hidden = UI.mode !== 'tennis';
-  $('#stima-notice').innerHTML = isConfigured() ? '' : noticeHTML();
+  $('#stima-notice').innerHTML = isConfigured() || CLIENT ? '' : noticeHTML();
   renderResult();
 }
 
@@ -1695,7 +1902,7 @@ function renderResult() {
       const q = quoteLoose(UI.looseType, ct, tier);
       const p = q.parts[0];
       total = q.total;
-      mobileLabel = `${typeName} · ${fmtCt(ct)} ct · ${TIERS[tier]}`;
+      mobileLabel = `${typeName} · ${fmtCt(ct)} ct${tierSfx(tier)}`;
       html = `<div class="ticket">
         <div class="ticket-top">
           <div><div class="ticket-kicker">${t('k_loose')}</div><div class="ticket-subject">${typeName} · ${fmtCt(ct)} ct</div></div>
@@ -1705,7 +1912,7 @@ function renderResult() {
         <p class="price-note">${t('band')} <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ` · ${t('fixed_rate')}`}</p>
         ${tierCards(k => { const x = quoteLoose(UI.looseType, ct, k).parts[0]; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : t('fixed') }; })}
       </div>
-      ${rulerHTML(RATES.loose[UI.looseType], p.i, tier, `${t('rul_' + UI.looseType)} · ${TIERS[tier]}`)}`;
+      ${rulerHTML(RATES.loose[UI.looseType], p.i, tier, `${t('rul_' + UI.looseType)}${tierSfx(tier)}`)}`;
     }
   } else if (UI.mode === 'tennis') {
     const ct = parseNum(UI.tennisCt);
@@ -1714,7 +1921,7 @@ function renderResult() {
     } else {
       const q = quoteTennis(ct, tier), p = q.band;
       total = q.total;
-      mobileLabel = `Tennis · ${fmtCt(ct)} ct · ${TIERS[tier]}`;
+      mobileLabel = `Tennis · ${fmtCt(ct)} ct${tierSfx(tier)}`;
       html = `<div class="ticket">
         <div class="ticket-top">
           <div><div class="ticket-kicker">${t('k_tennis')}</div><div class="ticket-subject">${t('sub_tennis', { ct: fmtCt(ct) })}</div></div>
@@ -1724,7 +1931,7 @@ function renderResult() {
         <p class="price-note">${t('band')} <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ` · ${t('fixed_rate')}`}</p>
         ${tierCards(k => { const x = quoteTennis(ct, k).band; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : t('fixed') }; })}
       </div>
-      ${rulerHTML(RATES.tennis, p.i, tier, `${t('rul_tennis')} · ${TIERS[tier]}`)}`;
+      ${rulerHTML(RATES.tennis, p.i, tier, `${t('rul_tennis')}${tierSfx(tier)}`)}`;
     }
   } else if (UI.mountedType === 'lab') {
     const ct = parseNum(UI.labCt);
@@ -1733,7 +1940,7 @@ function renderResult() {
     } else {
       const q = quoteLab(ct, UI.labCenter, tier), p = q.band;
       total = q.total;
-      mobileLabel = `Lab-grown · ${fmtCt(ct)} ct · ${TIERS[tier]}`;
+      mobileLabel = `Lab-grown · ${fmtCt(ct)} ct${tierSfx(tier)}`;
       html = `<div class="ticket">
         <div class="ticket-top">
           <div><div class="ticket-kicker">${t('k_lab')}</div><div class="ticket-subject">${t(UI.labCenter ? 'sub_lab_with' : 'sub_lab_without', { ct: fmtCt(ct) })}</div></div>
@@ -1747,7 +1954,7 @@ function renderResult() {
         </div>
         ${tierCards(k => { const x = quoteLab(ct, UI.labCenter, k); return { total: x.total, note: UI.labCenter ? `${fmtEur(x.band.value)} + ${fmtEur(x.fee)}` : t('fixed') }; })}
       </div>
-      ${rulerHTML(RATES.mounted.lab, p.i, tier, `${t('rul_lab')} · ${TIERS[tier]}`)}`;
+      ${rulerHTML(RATES.mounted.lab, p.i, tier, `${t('rul_lab')}${tierSfx(tier)}`)}`;
     }
   } else {
     const cct = parseNum(UI.centerCt), hct = parseNum(UI.haloCt);
@@ -1756,7 +1963,7 @@ function renderResult() {
     } else {
       const q = quoteMounted(cct, hct, tier);
       total = q.total;
-      mobileLabel = `${t('mb_mounted')} · ${fmtCt(cct)} + ${fmtCt(hct)} ct · ${TIERS[tier]}`;
+      mobileLabel = `${t('mb_mounted')} · ${fmtCt(cct)} + ${fmtCt(hct)} ct${tierSfx(tier)}`;
       const c = q.center, h = q.halo;
       html = `<div class="ticket">
         <div class="ticket-top">
@@ -1814,7 +2021,7 @@ function matrixHTML(cct, hct, tier, c, h) {
     }).join('');
     return `<tr><th scope="row" class="${rowOn ? 'hl' : ''}">${esc(bandLabel(C, i))}</th>${cells}</tr>`;
   }).join('');
-  return `<div class="panel"><div class="panel-title">${t('mx_title', { tier: TIERS[tier] })}</div>
+  return `<div class="panel"><div class="panel-title">${t('mx_title', { tier: CLIENT ? '' : ' ' + TIERS[tier] })}</div>
     <div class="matrix-wrap"><table class="matrix"><thead><tr><th scope="col">${esc(t('mx_corner'))}</th>${head}</tr></thead><tbody>${body}</tbody></table></div>
   </div>`;
 }
@@ -1907,10 +2114,319 @@ function bindRates() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   CLIENTI — database aziendale e versione pubblica
+   • Ogni cliente ha un tier e, se serve, prezzi su misura per singola fascia
+     (overrides[percorso][limite fascia] = prezzo; 'mounted.labCenter' = supplemento).
+   • Il link personale contiene solo i prezzi effettivi di quel cliente, in un
+     unico livello: chi lo apre entra nella "vista cliente" (niente tier, niente
+     tariffe aziendali). Il dato viaggia nel frammento #, che non arriva al server.
+   ═══════════════════════════════════════════════════════════════════════════ */
+const STORE_CLIENT = 'gcp3_client';
+const TABLE_PATHS = ['loose.diam', 'loose.color', 'mounted.center', 'mounted.halo', 'mounted.lab', 'tennis'];
+const FEE_PATH = 'mounted.labCenter';
+let CLIENT = null;          // profilo cliente attivo: { name, date, rates, preview }
+let HAS_COMPANY = false;    // su questo dispositivo c'è un tariffario aziendale
+
+const getIn = (obj, path) => path.split('.').reduce((o, k) => o?.[k], obj);
+const bandKey = b => (b.max === null ? 'open' : String(b.max));
+const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+function normOverrides(o) {
+  const out = {};
+  if (!o || typeof o !== 'object') return out;
+  for (const path of TABLE_PATHS) {
+    const src = o[path];
+    if (!src || typeof src !== 'object') continue;
+    const m = {};
+    for (const [k, v] of Object.entries(src)) if (Number.isFinite(Number(v)) && v !== '' && v !== null) m[k] = Number(v);
+    if (Object.keys(m).length) out[path] = m;
+  }
+  if (o[FEE_PATH] !== undefined && o[FEE_PATH] !== null && Number.isFinite(Number(o[FEE_PATH]))) out[FEE_PATH] = Number(o[FEE_PATH]);
+  return out;
+}
+
+function normClients(arr) {
+  if (!Array.isArray(arr)) return [];
+  return arr.filter(c => c && typeof c.name === 'string').map(c => ({
+    id: String(c.id || newId()),
+    name: c.name.slice(0, 80),
+    tier: [0, 1, 2].includes(Number(c.tier)) ? Number(c.tier) : 0,
+    note: String(c.note || '').slice(0, 500),
+    overrides: normOverrides(c.overrides),
+  }));
+}
+
+// Numero di prezzi su misura ancora agganciati a una fascia esistente
+function overrideCount(c) {
+  let n = 0;
+  for (const path of TABLE_PATHS) {
+    const o = c.overrides[path]; if (!o) continue;
+    n += getIn(RATES, path).filter(b => bandKey(b) in o).length;
+  }
+  return n + (FEE_PATH in c.overrides ? 1 : 0);
+}
+
+// Tariffe effettive del cliente: un solo prezzo, replicato sui tre tier per riusare il motore di calcolo
+function clientRates(c) {
+  const ov = c.overrides || {};
+  const map = path => getIn(RATES, path).map(b => {
+    const o = ov[path]?.[bandKey(b)];
+    const p = Number.isFinite(o) ? o : (Number(b.t[c.tier]) || 0);
+    return { max: b.max, perCt: b.perCt, t: [p, p, p] };
+  });
+  const fee = Number.isFinite(ov[FEE_PATH]) ? ov[FEE_PATH] : (Number(RATES.mounted.labCenter[c.tier]) || 0);
+  return {
+    loose: { diam: map('loose.diam'), color: map('loose.color') },
+    mounted: { center: map('mounted.center'), halo: map('mounted.halo'), lab: map('mounted.lab'), labCenter: [fee, fee, fee] },
+    tennis: map('tennis'),
+    clients: [],
+  };
+}
+
+const b64urlEncode = str => {
+  const bytes = new TextEncoder().encode(str);
+  let bin = ''; bytes.forEach(b => { bin += String.fromCharCode(b); });
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
+const b64urlDecode = s => {
+  const bin = atob(s.replace(/-/g, '+').replace(/_/g, '/'));
+  return new TextDecoder().decode(Uint8Array.from(bin, ch => ch.charCodeAt(0)));
+};
+
+function clientLink(c) {
+  const r = clientRates(c);
+  const payload = {
+    v: 1, n: c.name, d: new Date().toISOString().slice(0, 10),
+    r: Object.fromEntries(TABLE_PATHS.map(p => [p, getIn(r, p).map(b => [b.max, b.t[0], b.perCt ? 1 : 0])])),
+    f: r.mounted.labCenter[0],
+  };
+  return location.origin + location.pathname + '#/c/' + b64urlEncode(JSON.stringify(payload));
+}
+
+function decodeClientLink(data) {
+  const p = JSON.parse(b64urlDecode(data));
+  if (p.v !== 1 || typeof p.n !== 'string' || !p.r) throw new Error('bad link');
+  const bands = path => (p.r[path] || []).map(([max, price, perCt]) => ({ max, t: [price, price, price], perCt: !!perCt }));
+  const fee = Number(p.f) || 0;
+  const rates = normRates({
+    loose: { diam: bands('loose.diam'), color: bands('loose.color') },
+    mounted: { center: bands('mounted.center'), halo: bands('mounted.halo'), lab: bands('mounted.lab'), labCenter: [fee, fee, fee] },
+    tennis: bands('tennis'),
+  });
+  return { name: p.n.slice(0, 80), date: String(p.d || '').slice(0, 10), rates };
+}
+
+function enterClient(profile, persist) {
+  if (!CLIENT) enterClient.tier = UI.tier;
+  CLIENT = profile;
+  RATES = profile.rates;
+  UI.tier = 0;
+  if (persist) {
+    try { localStorage.setItem(STORE_CLIENT, JSON.stringify({ name: profile.name, date: profile.date, rates: profile.rates })); } catch (e) { /* noop */ }
+  }
+}
+
+function exitClient() {
+  CLIENT = null;
+  if (enterClient.tier !== undefined) UI.tier = enterClient.tier;
+  try { localStorage.removeItem(STORE_CLIENT); } catch (e) { /* noop */ }
+  RATES = loadCompanyRates();
+  location.hash = '#/clienti';
+  renderAll();
+}
+
+function previewClient(c) {
+  enterClient({ name: c.name, date: '', rates: clientRates(c), preview: true }, false);
+  location.hash = '#/stima';
+  renderAll();
+}
+
+// Banner e classi della vista cliente
+function applyMode() {
+  document.body.classList.toggle('client-mode', !!CLIENT);
+  const bar = $('#client-bar');
+  if (CLIENT && (CLIENT.preview || HAS_COMPANY)) {
+    bar.hidden = false;
+    bar.querySelector('.cb-txt').innerHTML = t('preview_bar', { name: `<b>${esc(CLIENT.name)}</b>` });
+  } else {
+    bar.hidden = true;
+  }
+  const pill = $('#client-pill');
+  pill.hidden = !CLIENT;
+  if (CLIENT) pill.querySelector('.txt').textContent = CLIENT.name;
+}
+
+/* ─── Pagina Clienti (aziendale) ───────────────────────────────────────── */
+let clientQuery = '';
+
+function renderClients(id) {
+  const box = $('#clients-root');
+  const c = id && RATES.clients.find(x => x.id === id);
+  box.innerHTML = c ? clientEditorHTML(c) : clientListHTML();
+  if (!c) {
+    const q = $('#client-search');
+    if (q) { q.value = clientQuery; if (document.activeElement !== q && clientQuery) q.focus(); }
+  }
+}
+
+function clientListHTML() {
+  const list = RATES.clients
+    .filter(c => !clientQuery || c.name.toLowerCase().includes(clientQuery.toLowerCase()))
+    .sort((a, b) => a.name.localeCompare(b.name, locale()));
+  const rows = list.map(c => {
+    const n = overrideCount(c);
+    return `<div class="client-row" data-id="${esc(c.id)}">
+      <div class="cr-main">
+        <a class="cr-name" href="#/clienti/${encodeURIComponent(c.id)}">${esc(c.name)}</a>
+        <span class="cr-meta"><span class="tier-chip">${TIERS[c.tier]}</span>${n ? `<span class="custom-chip">${esc(t('n_custom', { n }))}</span>` : ''}${c.note ? `<span class="cr-note">${esc(c.note)}</span>` : ''}</span>
+      </div>
+      <div class="cr-actions">
+        <button type="button" class="btn btn-sm btn-gold" data-cact="link">${t('copy_link')}</button>
+        <button type="button" class="btn btn-sm" data-cact="preview">${t('preview')}</button>
+        <a class="btn btn-sm" href="#/clienti/${encodeURIComponent(c.id)}">${t('edit')}</a>
+      </div>
+    </div>`;
+  }).join('');
+  const empty = RATES.clients.length
+    ? `<p class="clients-empty">${t('no_match')}</p>`
+    : `<div class="clients-empty"><p>${t('clients_empty')}</p></div>`;
+  return `<div class="clients-bar">
+      ${RATES.clients.length > 4 ? `<input type="search" id="client-search" placeholder="${esc(t('search_client'))}" aria-label="${esc(t('search_client'))}" autocomplete="off">` : ''}
+      <span class="clients-count">${t('n_clients', { n: RATES.clients.length })}</span>
+    </div>
+    <div class="client-list">${rows || empty}</div>`;
+}
+
+function clientEditorHTML(c) {
+  const tables = TABLE_PATHS.map(path => {
+    const bands = getIn(RATES, path);
+    const ov = c.overrides[path] || {};
+    const nOv = bands.filter(b => bandKey(b) in ov).length;
+    const rows = bands.map((b, i) => {
+      const key = bandKey(b), base = Number(b.t[c.tier]) || 0, has = key in ov;
+      return `<tr class="${has ? 'has-ov' : ''}">
+        <td class="range">${esc(bandLabel(bands, i))}</td>
+        <td class="base">${b.perCt ? fmtEur(base) + '/ct' : fmtEur(base)}</td>
+        <td><input data-ov="${esc(path)}" data-key="${esc(key)}" value="${has ? fmtIn(ov[key]) : ''}" placeholder="${fmtIn(base)}" inputmode="decimal" aria-label="${esc(t('custom_price_aria', { band: bandLabel(bands, i) }))}"></td>
+      </tr>`;
+    }).join('');
+    return `<details class="ov-table"${nOv ? ' open' : ''}>
+      <summary><span>${esc(t(TABLES[path].title))}</span>${nOv ? `<span class="custom-chip">${esc(t('n_custom', { n: nOv }))}</span>` : ''}</summary>
+      <div class="rt-wrap${bands.length > 14 ? ' tall' : ''}"><table class="rt ov">
+        <thead><tr><th>${t('band')}</th><th>${TIERS[c.tier]}</th><th>${t('client_price')}</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </details>`;
+  }).join('');
+  const feeBase = Number(RATES.mounted.labCenter[c.tier]) || 0;
+  const feeOv = c.overrides[FEE_PATH];
+  return `<a class="back-link" href="#/clienti">← ${t('all_clients')}</a>
+    <div class="client-editor" data-id="${esc(c.id)}">
+      <div class="panel">
+        <div class="panel-title">${t('client_data')}</div>
+        <div class="field"><label class="field-label" for="cl-name"><span>${t('client_name')}</span></label>
+          <input class="text-in" id="cl-name" data-cf="name" value="${esc(c.name)}" maxlength="80" autocomplete="off"></div>
+        <div class="field"><div class="field-label"><span>${t('client_tier')}</span></div>
+          <div class="seg seg-block" role="radiogroup" aria-label="${esc(t('client_tier'))}">
+            ${TIERS.map((tier, k) => `<input type="radio" name="cl-tier" id="cl-tier-${k}" value="${k}"${k === c.tier ? ' checked' : ''}><label for="cl-tier-${k}">${tier}</label>`).join('')}
+          </div></div>
+        <div class="field"><label class="field-label" for="cl-note"><span>${t('client_note')}</span></label>
+          <textarea class="text-in" id="cl-note" data-cf="note" rows="2" maxlength="500">${esc(c.note)}</textarea></div>
+        <div class="card-actions">
+          <button type="button" class="btn btn-gold btn-sm" data-cact="link">${t('copy_link')}</button>
+          ${navigator.share ? `<button type="button" class="btn btn-sm" data-cact="share">${t('share')}</button>` : ''}
+          <button type="button" class="btn btn-sm" data-cact="preview">${t('preview')}</button>
+          <button type="button" class="btn btn-sm" data-cact="clear-ov">${t('clear_custom')}</button>
+          <button type="button" class="btn btn-sm btn-ghost-danger" data-cact="delete">${t('delete_client')}</button>
+        </div>
+        <label class="field-label" for="cl-link" style="margin-top:var(--s4)"><span>${t('client_link')}</span></label>
+        <input class="text-in link-out" id="cl-link" readonly value="${esc(clientLink(c))}">
+        <p class="hint">${t('link_hint')}</p>
+      </div>
+      <div class="panel">
+        <div class="panel-title">${t('custom_prices')}</div>
+        <p class="hint" style="margin:0 0 var(--s4)">${t('custom_hint', { tier: TIERS[c.tier] })}</p>
+        ${tables}
+        <div class="fee-row"><span>${esc(t('fee_center'))} <small class="base">${TIERS[c.tier]}: ${fmtEur(feeBase)}</small></span>
+          <label style="grid-column:1/-1">${t('client_price')} <input data-ov="${FEE_PATH}" value="${feeOv !== undefined ? fmtIn(feeOv) : ''}" placeholder="${fmtIn(feeBase)}" inputmode="decimal"></label></div>
+      </div>
+    </div>`;
+}
+
+async function copyClientLink(c) {
+  const url = clientLink(c);
+  try {
+    await navigator.clipboard.writeText(url);
+    toast(t('link_copied', { name: c.name }));
+  } catch (e) {
+    const out = $('#cl-link');
+    if (out) { out.focus(); out.select(); }
+    toast(t('link_copy_manual'), true);
+  }
+}
+
+function bindClients() {
+  const root = $('#clients-root');
+  $('#btn-new-client').addEventListener('click', () => {
+    const c = { id: newId(), name: t('new_client'), tier: 0, note: '', overrides: {} };
+    RATES.clients.push(c); saveRates();
+    location.hash = '#/clienti/' + encodeURIComponent(c.id);
+    setTimeout(() => { const n = $('#cl-name'); if (n) { n.focus(); n.select(); } }, 50);
+  });
+  root.addEventListener('input', e => {
+    const el = e.target;
+    if (el.id === 'client-search') { clientQuery = el.value; renderClients(); return; }
+    const ed = el.closest('.client-editor'); if (!ed) return;
+    const c = RATES.clients.find(x => x.id === ed.dataset.id); if (!c) return;
+    if (el.dataset.cf) { c[el.dataset.cf] = el.value; }
+    else if (el.dataset.ov) {
+      const v = parseNum(el.value), path = el.dataset.ov;
+      if (path === FEE_PATH) {
+        if (Number.isFinite(v)) c.overrides[FEE_PATH] = v; else delete c.overrides[FEE_PATH];
+      } else {
+        const m = c.overrides[path] || (c.overrides[path] = {});
+        if (Number.isFinite(v)) m[el.dataset.key] = v; else delete m[el.dataset.key];
+        if (!Object.keys(m).length) delete c.overrides[path];
+        el.closest('tr').classList.toggle('has-ov', Number.isFinite(v));
+      }
+    }
+    saveRates();
+    const out = $('#cl-link'); if (out) out.value = clientLink(c);
+  });
+  root.addEventListener('change', e => {
+    const el = e.target;
+    if (el.name === 'cl-tier') {
+      const c = RATES.clients.find(x => x.id === el.closest('.client-editor').dataset.id);
+      c.tier = Number(el.value); saveRates(); renderClients(c.id);
+    }
+  });
+  root.addEventListener('click', e => {
+    const btn = e.target.closest('[data-cact]'); if (!btn) return;
+    const holder = btn.closest('[data-id]');
+    const c = RATES.clients.find(x => x.id === holder.dataset.id); if (!c) return;
+    switch (btn.dataset.cact) {
+      case 'link': copyClientLink(c); break;
+      case 'share': navigator.share({ title: 'Gem Cert Pricer', text: c.name, url: clientLink(c) }).catch(() => {}); break;
+      case 'preview': previewClient(c); break;
+      case 'clear-ov':
+        if (!overrideCount(c) || confirm(t('confirm_clear_custom', { name: c.name }))) { c.overrides = {}; saveRates(); renderClients(c.id); }
+        break;
+      case 'delete':
+        if (confirm(t('confirm_delete_client', { name: c.name }))) {
+          RATES.clients = RATES.clients.filter(x => x.id !== c.id); saveRates();
+          location.hash = '#/clienti'; toast(t('client_deleted'));
+        }
+        break;
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    AVVIO
    ═══════════════════════════════════════════════════════════════════════════ */
 function renderAll() {
   applyLang();
+  applyMode();
   updateStatus();
   route();
 }
@@ -1927,6 +2443,8 @@ function init() {
   mountGems();
   bindCalc();
   bindRates();
+  bindClients();
+  $('#client-exit').addEventListener('click', exitClient);
 
   const fileInput = $('#file-input');
   const openImport = () => fileInput.click();
