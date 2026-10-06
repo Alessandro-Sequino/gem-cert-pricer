@@ -577,6 +577,13 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 [data-panel][aria-pressed="true"] { border-color: var(--gold); color: var(--gold-hi); }
 .btn[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
+.install-cta { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); flex-wrap: wrap; border-color: rgba(217,180,106,.35); }
+.inst-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--s4); margin-top: var(--s5); }
+.inst-grid .panel + .panel { margin-top: 0; }
+.inst-card h3 { font-size: 1.35rem; margin-bottom: var(--s2); }
+.inst-card p { color: var(--muted); font-size: var(--text-sm); }
+.foot-link { color: var(--gold); text-decoration: none; font-weight: 600; }
+.foot-link:hover { color: var(--gold-hi); }
 .request-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s5); align-items: start; }
 .req-steps ol { margin: 0; padding-left: 1.2rem; display: grid; gap: var(--s3); color: var(--muted); }
 .req-steps li::marker { color: var(--gold); font-weight: 700; }
@@ -708,6 +715,7 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
           <div class="hero-cta">
             <a class="btn btn-gold btn-lg" href="#/stima" data-i18n-html="home_cta">Inizia la stima <span class="arrow">→</span></a>
             <a class="btn btn-lg company-only" href="#/tariffe" data-i18n="home_cta2">Gestisci tariffe</a>
+            <button class="btn btn-lg" type="button" data-install hidden data-i18n="install_btn">⤓ Installa l'app</button>
           </div>
         </div>
         <div class="gem-stage" id="gem-stage" aria-hidden="true">
@@ -949,6 +957,21 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
       <div style="height:var(--s7)"></div>
     </div>
   </section>
+  <!-- ═════════════════════════════════ INSTALLA ═════════════════════════════════ -->
+  <section class="view" id="view-installa" aria-labelledby="installa-title">
+    <div class="wrap">
+      <div class="page-head">
+        <div>
+          <span class="eyebrow" data-i18n="inst_eyebrow">App</span>
+          <h1 id="installa-title" data-i18n-html="inst_h1">Installa <em>Gem Cert Pricer</em></h1>
+          <p data-i18n="inst_intro">L'app si installa dal browser, senza store: si apre in una finestra sua, con l'icona tra le applicazioni.</p>
+        </div>
+      </div>
+      <div id="install-root"></div>
+      <div style="height:var(--s7)"></div>
+    </div>
+  </section>
+
   <!-- ═════════════════════════════════ RICHIESTA ═════════════════════════════════ -->
   <section class="view" id="view-richiesta" aria-labelledby="richiesta-title">
     <div class="wrap">
@@ -989,6 +1012,7 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
   <div class="wrap">
     <span>Gem Cert Pricer · Alessandro Sequino</span>
     <span data-i18n="foot_privacy">Le tariffe restano solo su questo dispositivo · nessun dato inviato</span>
+    <a href="#/installa" class="foot-link" data-i18n="install_link">Installa l'app</a>
   </div>
 </footer>
 
@@ -1281,6 +1305,27 @@ const I18N = {
     link_invalid: 'Link cliente non valido o incompleto',
     client_loaded: 'Listino di {name} attivato',
     client_pill_title: 'Listino personale',
+    title_install: 'Installa l\'app · Gem Cert Pricer',
+    install_btn: '⤓ Installa l\'app',
+    install_link: 'Installa l\'app',
+    inst_eyebrow: 'App',
+    inst_h1: 'Installa <em>Gem Cert Pricer</em>',
+    inst_intro: 'L\'app si installa dal browser, senza store: si apre in una finestra sua, con l\'icona tra le applicazioni.',
+    inst_ready: 'Il tuo browser può installare l\'app: premi il pulsante e conferma.',
+    inst_already: '<strong>L\'app è già installata</strong> e la stai usando ora.',
+    inst_manual: 'Il pulsante di installazione compare con <strong>Chrome</strong> o <strong>Edge</strong>. Negli altri browser segui le istruzioni qui sotto. Se l\'app è già installata, aprila dalle tue applicazioni.',
+    inst_done: 'App installata ✓',
+    inst_chrome_t: 'Chrome · computer',
+    inst_chrome: 'Premi l\'icona <strong>Installa</strong> (monitor con freccia) a destra nella barra degli indirizzi, oppure menu <strong>⋮ → Trasmetti, salva e condividi → Installa pagina come app</strong>.',
+    inst_edge_t: 'Edge · computer',
+    inst_edge: 'Menu <strong>⋯ → App → Installa questo sito come app</strong>.',
+    inst_safari_mac_t: 'Safari · Mac',
+    inst_safari_mac: 'Menu <strong>File → Aggiungi al Dock</strong>. L\'app nel Dock ha dati separati da Safari: importa lì il tuo tariffario.',
+    inst_iphone_t: 'iPhone · Safari',
+    inst_iphone: 'Pulsante <strong>Condividi</strong> (□↑) → <strong>Aggiungi alla schermata Home</strong>.',
+    inst_android_t: 'Android · Chrome',
+    inst_android: 'Menu <strong>⋮ → Installa app</strong> (o <em>Aggiungi a schermata Home</em>).',
+    inst_data_note: 'Le tariffe e i clienti restano nel browser in cui li hai caricati. Con Chrome ed Edge l\'app installata li condivide con il sito; se non li vedi, importa il file .gcp.json da Tariffe.',
     title_request: 'Richiedi listino · Gem Cert Pricer',
     req_eyebrow: 'Listino personale',
     req_h1: 'Richiedi il tuo <em>listino</em>',
@@ -1529,6 +1574,27 @@ const I18N = {
     link_invalid: 'Invalid or incomplete client link',
     client_loaded: '{name}’s price list is active',
     client_pill_title: 'Personal price list',
+    title_install: 'Install the app · Gem Cert Pricer',
+    install_btn: '⤓ Install the app',
+    install_link: 'Install the app',
+    inst_eyebrow: 'App',
+    inst_h1: 'Install <em>Gem Cert Pricer</em>',
+    inst_intro: 'The app installs from the browser, no store needed: it opens in its own window, with an icon among your applications.',
+    inst_ready: 'Your browser can install the app: press the button and confirm.',
+    inst_already: '<strong>The app is already installed</strong> and you are using it now.',
+    inst_manual: 'The install button appears in <strong>Chrome</strong> or <strong>Edge</strong>. In other browsers follow the steps below. If the app is already installed, open it from your applications.',
+    inst_done: 'App installed ✓',
+    inst_chrome_t: 'Chrome · computer',
+    inst_chrome: 'Click the <strong>Install</strong> icon (monitor with an arrow) on the right of the address bar, or menu <strong>⋮ → Cast, save and share → Install page as app</strong>.',
+    inst_edge_t: 'Edge · computer',
+    inst_edge: 'Menu <strong>⋯ → Apps → Install this site as an app</strong>.',
+    inst_safari_mac_t: 'Safari · Mac',
+    inst_safari_mac: 'Menu <strong>File → Add to Dock</strong>. The Dock app keeps its data separate from Safari: import your price list there.',
+    inst_iphone_t: 'iPhone · Safari',
+    inst_iphone: '<strong>Share</strong> button (□↑) → <strong>Add to Home Screen</strong>.',
+    inst_android_t: 'Android · Chrome',
+    inst_android: 'Menu <strong>⋮ → Install app</strong> (or <em>Add to Home screen</em>).',
+    inst_data_note: 'Rates and clients stay in the browser where you loaded them. In Chrome and Edge the installed app shares them with the site; if you don\'t see them, import your .gcp.json file from Rates.',
     title_request: 'Request price list · Gem Cert Pricer',
     req_eyebrow: 'Personal price list',
     req_h1: 'Request your <em>price list</em>',
@@ -1859,7 +1925,7 @@ function route() {
     location.replace(SHOP_REQ ? '#/richiesta' : '#/');
     return;
   }
-  let view = ['stima', 'tariffe', 'clienti', 'richiesta'].includes(parts[0]) ? parts[0] : 'home';
+  let view = ['stima', 'tariffe', 'clienti', 'richiesta', 'installa'].includes(parts[0]) ? parts[0] : 'home';
   if (isPublic() && (view === 'tariffe' || view === 'clienti')) { location.replace('#/stima'); return; }
   if (view === 'stima' && ['sciolto', 'montato', 'tennis'].includes(parts[1])) {
     UI.mode = parts[1]; saveUI();
@@ -1868,11 +1934,12 @@ function route() {
   $$('.nav a').forEach(a => {
     if (a.dataset.route === view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients', richiesta: 'title_request' }[view]);
+  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients', richiesta: 'title_request', installa: 'title_install' }[view]);
   if (view !== 'stima') $('#mobile-bar').classList.add('hidden');
   if (view === 'stima') renderCalc();
   if (view === 'tariffe') renderRates();
   if (view === 'richiesta') renderRequest();
+  if (view === 'installa') renderInstall();
   if (view === 'clienti') renderClients(parts[1] && decodeURIComponent(parts[1]));
   if (view === 'home') renderHome();
   const key = view + '/' + (parts[1] || '');
@@ -2835,6 +2902,44 @@ function refreshShopQr() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   INSTALLAZIONE (PWA)
+   Chrome ed Edge segnalano l'app installabile con «beforeinstallprompt»:
+   il pulsante «Installa» compare solo allora; altrove si mostrano le istruzioni.
+   ═══════════════════════════════════════════════════════════════════════════ */
+let installPrompt = null;
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; updateInstallUI(); });
+window.addEventListener('appinstalled', () => { installPrompt = null; toast(t('inst_done')); updateInstallUI(); });
+
+async function runInstall() {
+  if (!installPrompt) { location.hash = '#/installa'; return; }
+  installPrompt.prompt();
+  try { await installPrompt.userChoice; } catch (e) { /* noop */ }
+  installPrompt = null;
+  updateInstallUI();
+}
+
+function updateInstallUI() {
+  $$('[data-install]').forEach(b => { b.hidden = !installPrompt || isStandalone(); });
+  if (route.last && route.last.startsWith('installa')) renderInstall();
+}
+
+function renderInstall() {
+  const box = $('#install-root');
+  let main;
+  if (isStandalone()) main = `<div class="notice client-notice"><p>${t('inst_already')}</p></div>`;
+  else if (installPrompt) main = `<div class="panel install-cta"><p>${t('inst_ready')}</p><button type="button" class="btn btn-gold btn-lg" data-install-now>${t('install_btn')}</button></div>`;
+  else main = `<div class="notice"><p>${t('inst_manual')}</p></div>`;
+  const steps = ['chrome', 'edge', 'safari_mac', 'iphone', 'android'].map(k =>
+    `<div class="panel inst-card"><h3>${t('inst_' + k + '_t')}</h3><p>${t('inst_' + k)}</p></div>`).join('');
+  box.innerHTML = `${main}
+    <div class="inst-grid">${steps}</div>
+    <p class="hint" style="margin-top:var(--s5)">${t('inst_data_note')}</p>`;
+  const now = $('[data-install-now]', box); if (now) now.addEventListener('click', runInstall);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    AVVIO
    ═══════════════════════════════════════════════════════════════════════════ */
 function renderAll() {
@@ -2870,6 +2975,8 @@ function init() {
   });
   document.addEventListener('click', e => { if (e.target.closest('[data-action="import"]')) openImport(); });
   $$('[data-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+  $$('[data-install]').forEach(b => b.addEventListener('click', runInstall));
+  updateInstallUI();
 
   window.addEventListener('hashchange', route);
   renderAll();

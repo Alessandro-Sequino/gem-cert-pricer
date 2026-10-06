@@ -199,7 +199,18 @@ cd gem-cert-pricer
 python3 -m http.server 8080      # poi apri http://localhost:8080
 ```
 
-**Sul telefono (PWA):** Android/Chrome → menu ⋮ → *Aggiungi a schermata Home* · iPhone/Safari → Condividi → *Aggiungi a schermata Home*.
+### 📲 Installare l'app
+
+L'app è una **PWA**: si installa dal browser, senza store, e si apre in una finestra sua.
+La pagina **[Installa l'app](https://alessandro-sequino.github.io/gem-cert-pricer/#/installa)** mostra il pulsante di installazione (Chrome ed Edge) e le istruzioni per ogni dispositivo.
+
+- **Computer, Chrome:** icona *Installa* a destra nella barra degli indirizzi, oppure menu ⋮ → *Trasmetti, salva e condividi* → *Installa pagina come app*
+- **Computer, Edge:** menu ⋯ → *App* → *Installa questo sito come app*
+- **Mac, Safari:** menu *File* → *Aggiungi al Dock* (l'app nel Dock ha dati separati da Safari: reimporta lì il tariffario)
+- **Android, Chrome:** menu ⋮ → *Installa app*
+- **iPhone, Safari:** Condividi → *Aggiungi alla schermata Home*
+
+Tariffe e clienti restano nel browser in cui li hai caricati: dopo l'installazione, se non li vedi, importa il file `.gcp.json` da *Tariffe*.
 
 ---
 
