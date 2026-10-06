@@ -101,6 +101,7 @@
       "labCenter": [0, 0, 0]
     },
     "clients": [],
+    "shop": {"name": "", "phone": ""},
     "tennis": [
       {"max": 0.99, "t": [0, 0, 0]},
       {"max": 1.49, "t": [0, 0, 0]},

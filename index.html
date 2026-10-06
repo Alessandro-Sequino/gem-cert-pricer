@@ -357,7 +357,7 @@ footer.foot .wrap { display: flex; justify-content: space-between; gap: var(--s4
 
 .field + .field { margin-top: var(--s5); }
 .field-label { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s2); font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--s2); }
-.field-label span:last-child { font-size: var(--text-xs); color: var(--faint); font-weight: 500; }
+.field-label span:last-child:not(:first-child) { font-size: var(--text-xs); color: var(--faint); font-weight: 500; }
 .ct-input {
   display: flex; align-items: center; gap: var(--s2);
   background: var(--ink-0); border: 1px solid var(--line-strong); border-radius: var(--r-md);
@@ -492,6 +492,7 @@ table.matrix { border-collapse: separate; border-spacing: 3px; font-size: .8rem;
 .rate-card { background: var(--ink-1); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--s5); min-width: 0; }
 .rate-card h3 { font-size: 1.6rem; }
 .rate-card .sub { color: var(--faint); font-size: var(--text-xs); margin-top: .2rem; margin-bottom: var(--s4); }
+.panel .card-actions { display: flex; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s4); }
 .rate-card .card-actions { display: flex; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s3); }
 .rt-wrap { overflow-x: auto; }
 .rt-wrap.tall { max-height: 560px; overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; }
@@ -566,9 +567,21 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 .client-editor { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: var(--s5); align-items: start; }
 .client-editor .panel + .panel { margin-top: 0; }
 .qr-box { width: 100%; max-width: 280px; margin-top: var(--s2); padding: 10px; background: #fff; border-radius: var(--r-md); box-shadow: 0 0 0 1px var(--line-strong); }
-.qr-box svg { display: block; width: 100%; height: auto; }
+.qr-box svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 .qr-box .hint { color: #555; margin: 0; }
 .qr-block .btn { margin-top: var(--s2); }
+.shop-panel { margin-bottom: var(--s4); }
+.shop-grid { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: var(--s5); align-items: start; }
+.shop-grid .qr-box { justify-self: end; }
+.clients-root-panel + .clients-bar { margin-top: var(--s4); }
+#clients-root > .panel { margin-bottom: var(--s4); }
+[data-panel][aria-pressed="true"] { border-color: var(--gold); color: var(--gold-hi); }
+.btn[aria-disabled="true"] { opacity: .5; pointer-events: none; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.request-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s5); align-items: start; }
+.req-steps ol { margin: 0; padding-left: 1.2rem; display: grid; gap: var(--s3); color: var(--muted); }
+.req-steps li::marker { color: var(--gold); font-weight: 700; }
+@media (max-width: 860px) { .shop-grid, .request-grid { grid-template-columns: minmax(0, 1fr); } .shop-grid .qr-box { justify-self: start; } }
 .link-out { font-size: .75rem; color: var(--muted); font-family: ui-monospace, monospace; }
 .ov-table { border: 1px solid var(--line); border-radius: var(--r-md); margin-bottom: var(--s3); background: var(--ink-1); }
 .ov-table summary { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); padding: .8rem 1rem; cursor: pointer; font-weight: 600; font-size: var(--text-sm); list-style: none; }
@@ -937,6 +950,21 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
       <div style="height:var(--s7)"></div>
     </div>
   </section>
+  <!-- ═════════════════════════════════ RICHIESTA ═════════════════════════════════ -->
+  <section class="view" id="view-richiesta" aria-labelledby="richiesta-title">
+    <div class="wrap">
+      <div class="page-head">
+        <div>
+          <span class="eyebrow" data-i18n="req_eyebrow">Listino personale</span>
+          <h1 id="richiesta-title" data-i18n-html="req_h1">Richiedi il tuo <em>listino</em></h1>
+          <p data-i18n="req_intro">Compila i tuoi dati e invia la richiesta su WhatsApp: riceverai un link personale con i tuoi prezzi.</p>
+        </div>
+      </div>
+      <div id="request-root"></div>
+      <div style="height:var(--s7)"></div>
+    </div>
+  </section>
+
   <!-- ═════════════════════════════════ CLIENTI ═════════════════════════════════ -->
   <section class="view" id="view-clienti" aria-labelledby="clienti-title">
     <div class="wrap">
@@ -947,6 +975,8 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
           <p data-i18n="clients_intro">Assegna a ogni cliente un tier e, se serve, prezzi su misura.</p>
         </div>
         <div class="rates-toolbar">
+          <button class="btn" type="button" data-panel="shop" aria-pressed="false" data-i18n="btn_shop_qr">▦ QR del negozio</button>
+          <button class="btn" type="button" data-panel="paste" aria-pressed="false" data-i18n="btn_from_request">Da richiesta WhatsApp</button>
           <button class="btn btn-gold" type="button" id="btn-new-client" data-i18n="btn_new_client">+ Nuovo cliente</button>
         </div>
       </div>
@@ -1010,6 +1040,7 @@ function defaultRates() {
     },
     tennis: zeroBands([0.99, 1.49, 1.99, 2.49, 2.99, 3.49, 3.99, 4.49, 4.99, null]).map(b => ({ ...b, perCt: false })),
     clients: [],
+    shop: { name: '', phone: '' },
   };
 }
 
@@ -1253,6 +1284,48 @@ const I18N = {
     link_invalid: 'Link cliente non valido o incompleto',
     client_loaded: 'Listino di {name} attivato',
     client_pill_title: 'Listino personale',
+    title_request: 'Richiedi listino · Gem Cert Pricer',
+    req_eyebrow: 'Listino personale',
+    req_h1: 'Richiedi il tuo <em>listino</em>',
+    req_intro: 'Compila i tuoi dati e invia la richiesta su WhatsApp: riceverai un link personale con i tuoi prezzi.',
+    req_form_title: 'I tuoi dati',
+    req_name: 'Nome',
+    req_contact: 'Referente',
+    req_phone: 'Telefono',
+    req_note: 'Note',
+    required: 'obbligatorio',
+    req_send: 'Invia richiesta su WhatsApp',
+    req_privacy: 'Si apre WhatsApp con il messaggio già scritto: controllalo e premi invia. Nessun dato viene salvato altrove.',
+    req_how: 'Come funziona',
+    req_step1: 'Compila nome e contatti e premi «Invia richiesta su WhatsApp».',
+    req_step2: 'Invia il messaggio a {shop}: riceverai il tuo listino personale.',
+    req_step3: 'Apri il link che ti arriva: l\'app si attiva con i tuoi prezzi, pronta da usare.',
+    req_shop_fallback: 'il negozio',
+    req_sent: 'Richiesta pronta su WhatsApp. Appena riceverai il link personale, aprilo da questo telefono per attivare il listino.',
+    req_name_missing: 'Inserisci il tuo nome o la ragione sociale',
+    req_msg_title: 'Richiesta listino certificati — Gem Cert Pricer',
+    req_no_shop: 'Inquadra il codice QR esposto in negozio per richiedere il tuo listino.',
+    req_notice: 'Per vedere i prezzi dei certificati richiedi il tuo listino personale a <strong>{shop}</strong>.',
+    req_cta: 'Richiedi listino',
+    req_parse_fail: 'Non trovo una richiesta valida nel testo incollato',
+    req_created: 'Cliente {name} creato dalla richiesta',
+    btn_shop_qr: '▦ QR del negozio',
+    btn_from_request: 'Da richiesta WhatsApp',
+    shop_title: 'QR del negozio',
+    shop_hint: 'Stampalo ed esponilo in negozio: chi lo inquadra ti invia su WhatsApp la richiesta del listino. Poi la incolli qui con «Da richiesta WhatsApp».',
+    shop_name: 'Nome del negozio',
+    shop_phone: 'Numero WhatsApp',
+    shop_phone_hint: 'con prefisso, es. 39 333…',
+    shop_try: 'Prova la pagina di richiesta',
+    shop_need_phone: 'Inserisci il numero WhatsApp per generare il QR.',
+    shop_qr_caption: 'Inquadra per richiedere il tuo listino certificati',
+    paste_title: 'Nuovo cliente da richiesta',
+    paste_hint: 'Copia il messaggio ricevuto su WhatsApp e incollalo qui: il cliente viene creato con nome, contatti e note. Poi scegli tier o prezzi e inviagli il link.',
+    paste_placeholder: 'Incolla qui il messaggio della richiesta…',
+    paste_create: 'Crea cliente',
+    client_phone: 'Telefono WhatsApp',
+    wa_send: 'Invia su WhatsApp',
+    wa_link_msg: 'Ciao {name}, ecco il tuo listino certificati personale. Aprilo da questo telefono per attivarlo:\n{url}',
   },
   en: {
     skip: 'Skip to content',
@@ -1461,6 +1534,48 @@ const I18N = {
     link_invalid: 'Invalid or incomplete client link',
     client_loaded: '{name}’s price list is active',
     client_pill_title: 'Personal price list',
+    title_request: 'Request price list · Gem Cert Pricer',
+    req_eyebrow: 'Personal price list',
+    req_h1: 'Request your <em>price list</em>',
+    req_intro: 'Fill in your details and send the request on WhatsApp: you will receive a personal link with your prices.',
+    req_form_title: 'Your details',
+    req_name: 'Name',
+    req_contact: 'Contact person',
+    req_phone: 'Phone',
+    req_note: 'Notes',
+    required: 'required',
+    req_send: 'Send request on WhatsApp',
+    req_privacy: 'WhatsApp opens with the message ready: check it and tap send. No data is stored anywhere else.',
+    req_how: 'How it works',
+    req_step1: 'Enter your name and contact details and tap “Send request on WhatsApp”.',
+    req_step2: 'Send the message to {shop}: you will receive your personal price list.',
+    req_step3: 'Open the link you receive: the app activates with your prices, ready to use.',
+    req_shop_fallback: 'the shop',
+    req_sent: 'Request ready on WhatsApp. As soon as you receive your personal link, open it on this phone to activate your price list.',
+    req_name_missing: 'Enter your name or company name',
+    req_msg_title: 'Certificate price list request — Gem Cert Pricer',
+    req_no_shop: 'Scan the QR code displayed in the shop to request your price list.',
+    req_notice: 'To see certificate prices, request your personal price list from <strong>{shop}</strong>.',
+    req_cta: 'Request price list',
+    req_parse_fail: 'No valid request found in the pasted text',
+    req_created: 'Client {name} created from the request',
+    btn_shop_qr: '▦ Shop QR code',
+    btn_from_request: 'From WhatsApp request',
+    shop_title: 'Shop QR code',
+    shop_hint: 'Print it and display it in the shop: whoever scans it sends you a price list request on WhatsApp. Then paste it here with “From WhatsApp request”.',
+    shop_name: 'Shop name',
+    shop_phone: 'WhatsApp number',
+    shop_phone_hint: 'with country code, e.g. 39 333…',
+    shop_try: 'Try the request page',
+    shop_need_phone: 'Enter the WhatsApp number to generate the QR code.',
+    shop_qr_caption: 'Scan to request your certificate price list',
+    paste_title: 'New client from request',
+    paste_hint: 'Copy the message you received on WhatsApp and paste it here: the client is created with name, contacts and notes. Then pick a tier or prices and send them the link.',
+    paste_placeholder: 'Paste the request message here…',
+    paste_create: 'Create client',
+    client_phone: 'WhatsApp phone',
+    wa_send: 'Send on WhatsApp',
+    wa_link_msg: 'Hi {name}, here is your personal certificate price list. Open it on this phone to activate it:\n{url}',
   },
 };
 const LANGS = Object.keys(I18N);
@@ -1476,7 +1591,7 @@ const fmtIn = v => String(v).replace('.', UI.lang === 'en' ? '.' : ',');
 // Applica la lingua ai testi statici: data-i18n (testo), data-i18n-html (markup), data-i18n-attr ("attr:chiave;…")
 function applyLang() {
   document.documentElement.lang = UI.lang;
-  const k = el => (CLIENT && el.dataset.i18nClient) || el.dataset.i18n;
+  const k = el => (isPublic() && el.dataset.i18nClient) || el.dataset.i18n;
   $$('[data-i18n]').forEach(el => { el.textContent = t(k(el)); });
   $$('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
   $$('[data-i18n-attr]').forEach(el => el.dataset.i18nAttr.split(';').forEach(pair => {
@@ -1575,6 +1690,7 @@ function normRates(d) {
     },
     tennis: Array.isArray(d?.tennis) && d.tennis.length ? normBands(d.tennis) : def.tennis,
     clients: normClients(d?.clients),
+    shop: { name: String(d?.shop?.name || '').slice(0, 80), phone: String(d?.shop?.phone || '').slice(0, 20) },
   };
   return r;
 }
@@ -1603,6 +1719,10 @@ function loadCompanyRates() {
 function load() {
   RATES = loadCompanyRates();
   HAS_COMPANY = isConfigured();
+  try {
+    const sh = JSON.parse(localStorage.getItem(STORE_SHOP) || 'null');
+    if (sh && sh.w) SHOP_REQ = { n: String(sh.n || '').slice(0, 80), w: normPhone(sh.w) };
+  } catch (e) { /* noop */ }
   try {
     const c = JSON.parse(localStorage.getItem(STORE_CLIENT) || 'null');
     if (c && c.rates) enterClient({ name: String(c.name || '').slice(0, 80), date: String(c.date || ''), rates: normRates(c.rates) }, false);
@@ -1733,8 +1853,19 @@ function route() {
       .finally(() => location.replace('#/'));
     return;
   }
-  let view = ['stima', 'tariffe', 'clienti'].includes(parts[0]) ? parts[0] : 'home';
-  if (CLIENT && (view === 'tariffe' || view === 'clienti')) { location.replace('#/stima'); return; }
+  // QR del negozio: memorizza il negozio e apre la pagina di richiesta
+  if (parts[0] === 'r' && parts[1]) {
+    try {
+      SHOP_REQ = decodeShopLink(parts[1]);
+      try { localStorage.setItem(STORE_SHOP, JSON.stringify(SHOP_REQ)); } catch (e) { /* noop */ }
+      renderRequest.sent = false;
+      applyLang(); applyMode();
+    } catch (e) { toast(t('link_invalid'), true); }
+    location.replace(SHOP_REQ ? '#/richiesta' : '#/');
+    return;
+  }
+  let view = ['stima', 'tariffe', 'clienti', 'richiesta'].includes(parts[0]) ? parts[0] : 'home';
+  if (isPublic() && (view === 'tariffe' || view === 'clienti')) { location.replace('#/stima'); return; }
   if (view === 'stima' && ['sciolto', 'montato', 'tennis'].includes(parts[1])) {
     UI.mode = parts[1]; saveUI();
   }
@@ -1742,10 +1873,11 @@ function route() {
   $$('.nav a').forEach(a => {
     if (a.dataset.route === view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients' }[view]);
+  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients', richiesta: 'title_request' }[view]);
   if (view !== 'stima') $('#mobile-bar').classList.add('hidden');
   if (view === 'stima') renderCalc();
   if (view === 'tariffe') renderRates();
+  if (view === 'richiesta') renderRequest();
   if (view === 'clienti') renderClients(parts[1] && decodeURIComponent(parts[1]));
   if (view === 'home') renderHome();
   const key = view + '/' + (parts[1] || '');
@@ -1762,6 +1894,12 @@ function updateStatus() {
 }
 
 function noticeHTML() {
+  if (isPublic() && !CLIENT) {
+    return `<div class="notice client-notice" style="margin-bottom:var(--s5)">
+      <p>${t('req_notice', { shop: esc(SHOP_REQ.n || t('req_shop_fallback')) })}</p>
+      <div class="actions"><a class="btn btn-gold btn-sm" href="#/richiesta">${t('req_cta')}</a></div>
+    </div>`;
+  }
   return `<div class="notice" style="margin-bottom:var(--s5)">
     <p>${t('notice')}</p>
     <div class="actions">
@@ -1777,7 +1915,7 @@ function renderHome() {
     $('#home-notice-wrap').innerHTML = `<div class="notice client-notice"><p>${t('client_welcome', { name: esc(CLIENT.name), date: esc(date) })}</p></div>`;
     return;
   }
-  $('#home-notice-wrap').innerHTML = isConfigured() ? '' : noticeHTML();
+  $('#home-notice-wrap').innerHTML = isConfigured() && !(isPublic() && !CLIENT) ? '' : noticeHTML();
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1867,7 +2005,7 @@ function renderCalc() {
   $('#panel-montato-2').hidden = !mColor;
   $('#panel-lab').hidden = !mLab;
   $('#panel-tennis').hidden = UI.mode !== 'tennis';
-  $('#stima-notice').innerHTML = isConfigured() || CLIENT ? '' : noticeHTML();
+  $('#stima-notice').innerHTML = (isConfigured() && !(isPublic() && !CLIENT)) || CLIENT ? '' : noticeHTML();
   renderResult();
 }
 
@@ -2175,6 +2313,7 @@ function normClients(arr) {
     name: c.name.slice(0, 80),
     tier: [0, 1, 2].includes(Number(c.tier)) ? Number(c.tier) : 0,
     note: String(c.note || '').slice(0, 500),
+    phone: String(c.phone || '').slice(0, 20),
     overrides: normOverrides(c.overrides),
   }));
 }
@@ -2256,6 +2395,8 @@ async function refreshClientLink(c) {
   linkCache.set(c.id, url);
   const out = $('#cl-link');
   if (out) out.value = url;
+  const wa = $('#cl-wa');
+  if (wa) { wa.href = waLink(c.phone, t('wa_link_msg', { name: c.name, url })); wa.removeAttribute('aria-disabled'); }
   renderQr(url);
 }
 
@@ -2278,37 +2419,47 @@ function qrPath(qr) {
   return d;
 }
 
-function renderQr(url) {
-  const box = $('#cl-qr'); if (!box) return;
+function renderQr(url) { renderQrInto($('#cl-qr'), url); }
+
+function renderQrInto(box, url) {
+  if (!box) return;
   const qr = makeQr(url);
   if (!qr) { box.innerHTML = `<p class="hint">${t('qr_too_long')}</p>`; return; }
-  const n = qr.getModuleCount(), q = 4;
-  box.innerHTML = `<svg viewBox="${-q} ${-q} ${n + 2 * q} ${n + 2 * q}" role="img" aria-label="${esc(t('qr_title'))}" shape-rendering="crispEdges">
+  const n = qr.getModuleCount(), q = 4, cells = n + 2 * q;
+  // moduli di dimensione intera in pixel: il QR resta nitido e leggibile a ogni larghezza
+  const avail = (box.clientWidth || 280) - 20;
+  const px = Math.max(2, Math.floor(avail * (window.devicePixelRatio || 1) / cells)) / (window.devicePixelRatio || 1);
+  box.innerHTML = `<svg viewBox="${-q} ${-q} ${cells} ${cells}" width="${px * cells}" height="${px * cells}" role="img" aria-label="${esc(t('qr_title'))}" shape-rendering="crispEdges">
     <rect x="${-q}" y="${-q}" width="${n + 2 * q}" height="${n + 2 * q}" fill="#fff"/><path d="${qrPath(qr)}" fill="#0B0A0F"/></svg>`;
 }
 
 // PNG stampabile: QR con margine bianco e nome del cliente sotto
 async function downloadQr(c) {
   const url = linkCache.get(c.id) || await clientLink(c);
+  downloadQrPng(url, c.name, t('qr_caption'), c.name);
+}
+
+// PNG stampabile: QR con margine bianco, titolo e didascalia sotto
+function downloadQrPng(url, title, caption, fileBase) {
   const qr = makeQr(url); if (!qr) return;
   const n = qr.getModuleCount(), scale = Math.max(8, Math.ceil(1000 / n)), quiet = 4 * scale;
-  const side = n * scale + 2 * quiet, caption = 150;
+  const side = n * scale + 2 * quiet, capH = 150;
   const cv = document.createElement('canvas');
-  cv.width = side; cv.height = side + caption;
+  cv.width = side; cv.height = side + capH;
   const g = cv.getContext('2d');
   g.fillStyle = '#fff'; g.fillRect(0, 0, cv.width, cv.height);
   g.fillStyle = '#0B0A0F';
   for (let r = 0; r < n; r++) for (let col = 0; col < n; col++) if (qr.isDark(r, col)) g.fillRect(quiet + col * scale, quiet + r * scale, scale, scale);
   g.textAlign = 'center';
   g.font = `600 ${Math.round(side / 20)}px Manrope, system-ui, sans-serif`;
-  g.fillText(c.name, side / 2, side + caption * 0.35, side - 2 * quiet);
+  g.fillText(title, side / 2, side + capH * 0.35, side - 2 * quiet);
   g.fillStyle = '#7A6A55';
   g.font = `500 ${Math.round(side / 34)}px Manrope, system-ui, sans-serif`;
-  g.fillText(t('qr_caption'), side / 2, side + caption * 0.72, side - 2 * quiet);
+  g.fillText(caption, side / 2, side + capH * 0.72, side - 2 * quiet);
   cv.toBlob(blob => {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `qr-${c.name.toLowerCase().replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'cliente'}.png`;
+    a.download = `qr-${String(fileBase).toLowerCase().replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'gem-cert-pricer'}.png`;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }, 'image/png');
@@ -2341,7 +2492,7 @@ function previewClient(c) {
 
 // Banner e classi della vista cliente
 function applyMode() {
-  document.body.classList.toggle('client-mode', !!CLIENT);
+  document.body.classList.toggle('client-mode', isPublic());
   const bar = $('#client-bar');
   if (CLIENT && (CLIENT.preview || HAS_COMPANY)) {
     bar.hidden = false;
@@ -2361,6 +2512,9 @@ function renderClients(id) {
   const box = $('#clients-root');
   const c = id && RATES.clients.find(x => x.id === id);
   box.innerHTML = c ? clientEditorHTML(c) : clientListHTML();
+  $$('[data-panel]').forEach(b => b.setAttribute('aria-pressed', String(!c && b.dataset.panel === clientsPanel)));
+  if (!c && clientsPanel === 'shop') refreshShopQr();
+  if (!c && clientsPanel === 'paste') $('#req-paste').focus();
   if (c) refreshClientLink(c);
   else RATES.clients.forEach(x => { if (!linkCache.has(x.id)) clientLink(x).then(u => linkCache.set(x.id, u)); });
   if (!c) {
@@ -2390,7 +2544,8 @@ function clientListHTML() {
   const empty = RATES.clients.length
     ? `<p class="clients-empty">${t('no_match')}</p>`
     : `<div class="clients-empty"><p>${t('clients_empty')}</p></div>`;
-  return `<div class="clients-bar">
+  const panel = clientsPanel === 'shop' ? shopPanelHTML() : clientsPanel === 'paste' ? pastePanelHTML() : '';
+  return `${panel}<div class="clients-bar">
       ${RATES.clients.length > 4 ? `<input type="search" id="client-search" placeholder="${esc(t('search_client'))}" aria-label="${esc(t('search_client'))}" autocomplete="off">` : ''}
       <span class="clients-count">${t('n_clients', { n: RATES.clients.length })}</span>
     </div>
@@ -2430,10 +2585,13 @@ function clientEditorHTML(c) {
           <div class="seg seg-block" role="radiogroup" aria-label="${esc(t('client_tier'))}">
             ${TIERS.map((tier, k) => `<input type="radio" name="cl-tier" id="cl-tier-${k}" value="${k}"${k === c.tier ? ' checked' : ''}><label for="cl-tier-${k}">${tier}</label>`).join('')}
           </div></div>
+        <div class="field"><label class="field-label" for="cl-phone"><span>${t('client_phone')}</span><span>${t('shop_phone_hint')}</span></label>
+          <input class="text-in" id="cl-phone" data-cf="phone" value="${esc(c.phone)}" inputmode="tel" maxlength="20" autocomplete="off"></div>
         <div class="field"><label class="field-label" for="cl-note"><span>${t('client_note')}</span></label>
           <textarea class="text-in" id="cl-note" data-cf="note" rows="2" maxlength="500">${esc(c.note)}</textarea></div>
         <div class="card-actions">
-          <button type="button" class="btn btn-gold btn-sm" data-cact="link">${t('copy_link')}</button>
+          <a class="btn btn-gold btn-sm" id="cl-wa" href="#" target="_blank" rel="noopener" aria-disabled="true">${t('wa_send')}</a>
+          <button type="button" class="btn btn-sm" data-cact="link">${t('copy_link')}</button>
           ${navigator.share ? `<button type="button" class="btn btn-sm" data-cact="share">${t('share')}</button>` : ''}
           <button type="button" class="btn btn-sm" data-cact="preview">${t('preview')}</button>
           <button type="button" class="btn btn-sm" data-cact="clear-ov">${t('clear_custom')}</button>
@@ -2482,9 +2640,14 @@ function bindClients() {
     location.hash = '#/clienti/' + encodeURIComponent(c.id);
     setTimeout(() => { const n = $('#cl-name'); if (n) { n.focus(); n.select(); } }, 50);
   });
+  $$('[data-panel]').forEach(b => b.addEventListener('click', () => {
+    clientsPanel = clientsPanel === b.dataset.panel ? '' : b.dataset.panel;
+    if (location.hash !== '#/clienti') location.hash = '#/clienti'; else renderClients();
+  }));
   root.addEventListener('input', e => {
     const el = e.target;
     if (el.id === 'client-search') { clientQuery = el.value; renderClients(); return; }
+    if (el.dataset.shop) { RATES.shop[el.dataset.shop] = el.value; saveRates(); refreshShopQr(); return; }
     const ed = el.closest('.client-editor'); if (!ed) return;
     const c = RATES.clients.find(x => x.id === ed.dataset.id); if (!c) return;
     if (el.dataset.cf) { c[el.dataset.cf] = el.value; }
@@ -2510,6 +2673,14 @@ function bindClients() {
     }
   });
   root.addEventListener('click', e => {
+    const sbtn = e.target.closest('[data-sact]');
+    if (sbtn) {
+      if (sbtn.dataset.sact === 'download') downloadQrPng(shopLink(), RATES.shop.name || 'Gem Cert Pricer', t('shop_qr_caption'), 'negozio');
+      if (sbtn.dataset.sact === 'create') createFromRequest($('#req-paste').value);
+      return;
+    }
+    const wa = e.target.closest('#cl-wa');
+    if (wa && wa.getAttribute('aria-disabled') === 'true') { e.preventDefault(); return; }
     const btn = e.target.closest('[data-cact]'); if (!btn) return;
     const holder = btn.closest('[data-id]');
     const c = RATES.clients.find(x => x.id === holder.dataset.id); if (!c) return;
@@ -2529,6 +2700,158 @@ function bindClients() {
         break;
     }
   });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   QR DEL NEGOZIO — richiesta del listino via WhatsApp
+   Il QR esposto in negozio apre la pagina di richiesta (#/r/<dati negozio>):
+   il cliente compila nome e contatti e invia un messaggio WhatsApp già scritto.
+   L'azienda incolla il messaggio in Clienti → «Da richiesta», assegna tier o
+   prezzi e rimanda il link personale con «Invia su WhatsApp».
+   ═══════════════════════════════════════════════════════════════════════════ */
+const STORE_SHOP = 'gcp3_shop';
+const REQ_TAG = '#GCP-REQ';
+let SHOP_REQ = null;   // negozio da cui il visitatore ha inquadrato il QR: { n, w }
+
+// Numero WhatsApp: solo cifre con prefisso internazionale (un cellulare italiano senza prefisso riceve il 39)
+function normPhone(v) {
+  let d = String(v || '').replace(/\D/g, '');
+  if (d.startsWith('00')) d = d.slice(2);
+  if (d.length === 10 && d.startsWith('3')) d = '39' + d;
+  return d.slice(0, 15);
+}
+const waLink = (phone, text) => `https://wa.me/${normPhone(phone)}?text=${encodeURIComponent(text)}`;
+
+function shopLink() {
+  const s = RATES.shop || {};
+  return location.origin + location.pathname + '#/r/' + bytesToB64url(new TextEncoder().encode(JSON.stringify({ v: 1, n: s.name || '', w: normPhone(s.phone) })));
+}
+
+function decodeShopLink(data) {
+  const p = JSON.parse(new TextDecoder().decode(b64urlToBytes(data)));
+  if (p.v !== 1 || !normPhone(p.w)) throw new Error('bad shop link');
+  return { n: String(p.n || '').slice(0, 80), w: normPhone(p.w) };
+}
+
+// Vista pubblica: cliente con listino, oppure visitatore arrivato dal QR del negozio
+const isPublic = () => !!CLIENT || (!!SHOP_REQ && !HAS_COMPANY);
+
+/* ─── Pagina di richiesta (visitatore) ─────────────────────────────────── */
+function renderRequest() {
+  const box = $('#request-root');
+  if (!SHOP_REQ) { box.innerHTML = `<div class="panel empty-state"><p>${t('req_no_shop')}</p></div>`; return; }
+  const sent = renderRequest.sent;
+  box.innerHTML = `<div class="request-grid">
+    <form class="panel" id="req-form" novalidate>
+      <div class="panel-title">${t('req_form_title')}</div>
+      <div class="field"><label class="field-label" for="rq-name"><span>${t('req_name')}</span><span>${t('required')}</span></label>
+        <input class="text-in" id="rq-name" maxlength="80" autocomplete="organization" required></div>
+      <div class="field"><label class="field-label" for="rq-contact"><span>${t('req_contact')}</span></label>
+        <input class="text-in" id="rq-contact" maxlength="80" autocomplete="name"></div>
+      <div class="field"><label class="field-label" for="rq-phone"><span>${t('req_phone')}</span></label>
+        <input class="text-in" id="rq-phone" maxlength="20" inputmode="tel" autocomplete="tel"></div>
+      <div class="field"><label class="field-label" for="rq-note"><span>${t('req_note')}</span></label>
+        <textarea class="text-in" id="rq-note" rows="3" maxlength="300"></textarea></div>
+      <button type="submit" class="btn btn-gold btn-lg wa-btn" style="margin-top:var(--s5);width:100%">${t('req_send')}</button>
+      <p class="hint">${t('req_privacy')}</p>
+    </form>
+    <div class="panel req-steps">
+      <div class="panel-title">${t('req_how')}</div>
+      <ol>
+        <li>${t('req_step1')}</li>
+        <li>${t('req_step2', { shop: esc(SHOP_REQ.n || t('req_shop_fallback')) })}</li>
+        <li>${t('req_step3')}</li>
+      </ol>
+      ${sent ? `<div class="notice client-notice" style="margin-top:var(--s4)"><p>${t('req_sent')}</p></div>` : ''}
+    </div>
+  </div>`;
+  const f = $('#req-form');
+  f.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $('#rq-name').value.trim();
+    if (!name) { $('#rq-name').focus(); toast(t('req_name_missing'), true); return; }
+    const data = { v: 1, n: name, c: $('#rq-contact').value.trim(), p: $('#rq-phone').value.trim(), no: $('#rq-note').value.trim() };
+    const lines = [t('req_msg_title'), `${t('req_name')}: ${data.n}`];
+    if (data.c) lines.push(`${t('req_contact')}: ${data.c}`);
+    if (data.p) lines.push(`${t('req_phone')}: ${data.p}`);
+    if (data.no) lines.push(`${t('req_note')}: ${data.no}`);
+    lines.push('', `${REQ_TAG} ${bytesToB64url(new TextEncoder().encode(JSON.stringify(data)))}`);
+    renderRequest.sent = true;
+    window.open(waLink(SHOP_REQ.w, lines.join('\n')), '_blank', 'noopener');
+    renderRequest();
+  });
+}
+
+/* ─── Lettura del messaggio di richiesta (azienda) ─────────────────────── */
+function parseRequest(text) {
+  const m = String(text).match(/#GCP-REQ\s+([A-Za-z0-9_-]+)/);
+  if (m) {
+    try {
+      const d = JSON.parse(new TextDecoder().decode(b64urlToBytes(m[1])));
+      if (d && typeof d.n === 'string' && d.n.trim()) return { name: d.n, contact: d.c || '', phone: d.p || '', note: d.no || '' };
+    } catch (e) { /* codice illeggibile: provo con le righe */ }
+  }
+  const field = keys => {
+    for (const k of keys) { const r = String(text).match(new RegExp('^\\s*' + k + '\\s*:\\s*(.+)$', 'im')); if (r) return r[1].trim(); }
+    return '';
+  };
+  const name = field(['Nome', 'Name']);
+  if (!name) return null;
+  return { name, contact: field(['Referente', 'Contact person']), phone: field(['Telefono', 'Phone']), note: field(['Note', 'Notes']) };
+}
+
+function createFromRequest(text) {
+  const r = parseRequest(text);
+  if (!r) { toast(t('req_parse_fail'), true); return; }
+  const note = [r.contact && `${t('req_contact')}: ${r.contact}`, r.note].filter(Boolean).join(' · ');
+  const c = { id: newId(), name: r.name.slice(0, 80), tier: 0, note: note.slice(0, 500), phone: normPhone(r.phone), overrides: {} };
+  RATES.clients.push(c); saveRates();
+  clientsPanel = '';
+  toast(t('req_created', { name: c.name }));
+  location.hash = '#/clienti/' + encodeURIComponent(c.id);
+}
+
+/* ─── Pannelli della pagina Clienti: QR del negozio e incolla richiesta ── */
+let clientsPanel = '';   // '' | 'shop' | 'paste'
+
+function shopPanelHTML() {
+  const s = RATES.shop;
+  const ok = !!normPhone(s.phone);
+  return `<div class="panel shop-panel">
+    <div class="panel-title">${t('shop_title')}</div>
+    <div class="shop-grid">
+      <div>
+        <p class="hint" style="margin:0 0 var(--s4)">${t('shop_hint')}</p>
+        <div class="field"><label class="field-label" for="shop-name"><span>${t('shop_name')}</span></label>
+          <input class="text-in" id="shop-name" data-shop="name" value="${esc(s.name)}" maxlength="80"></div>
+        <div class="field"><label class="field-label" for="shop-phone"><span>${t('shop_phone')}</span><span>${t('shop_phone_hint')}</span></label>
+          <input class="text-in" id="shop-phone" data-shop="phone" value="${esc(s.phone)}" inputmode="tel" maxlength="20"></div>
+        <div class="card-actions">
+          <button type="button" class="btn btn-gold btn-sm" data-sact="download"${ok ? '' : ' disabled'}>${t('qr_download')}</button>
+          <a class="btn btn-sm" id="shop-try" href="${ok ? esc(shopLink()) : '#/clienti'}"${ok ? '' : ' aria-disabled="true"'}>${t('shop_try')}</a>
+        </div>
+      </div>
+      <div class="qr-box" id="shop-qr">${ok ? '' : `<p class="hint">${t('shop_need_phone')}</p>`}</div>
+    </div>
+  </div>`;
+}
+
+function pastePanelHTML() {
+  return `<div class="panel">
+    <div class="panel-title">${t('paste_title')}</div>
+    <p class="hint" style="margin:0 0 var(--s3)">${t('paste_hint')}</p>
+    <textarea class="text-in" id="req-paste" rows="6" placeholder="${esc(t('paste_placeholder'))}"></textarea>
+    <div class="card-actions"><button type="button" class="btn btn-gold btn-sm" data-sact="create">${t('paste_create')}</button></div>
+  </div>`;
+}
+
+function refreshShopQr() {
+  const box = $('#shop-qr'); if (!box) return;
+  const ok = !!normPhone(RATES.shop.phone);
+  const dl = $('[data-sact="download"]'); if (dl) dl.disabled = !ok;
+  const tryLink = $('#shop-try'); if (tryLink) tryLink.href = ok ? shopLink() : '#/clienti';
+  if (!ok) { box.innerHTML = `<p class="hint">${t('shop_need_phone')}</p>`; return; }
+  renderQrInto(box, shopLink());
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
