@@ -569,7 +569,6 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 .qr-box { width: 100%; max-width: 280px; margin-top: var(--s2); padding: 10px; background: #fff; border-radius: var(--r-md); box-shadow: 0 0 0 1px var(--line-strong); }
 .qr-box svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 .qr-box .hint { color: #555; margin: 0; }
-.qr-block .btn { margin-top: var(--s2); }
 .shop-panel { margin-bottom: var(--s4); }
 .shop-grid { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: var(--s5); align-items: start; }
 .shop-grid .qr-box { justify-self: end; }
@@ -1251,9 +1250,7 @@ const I18N = {
     copy_link: 'Copia link',
     share: 'Condividi',
     qr_title: 'Codice QR',
-    qr_hint: 'Il cliente inquadra il codice con la fotocamera del telefono: si apre l\'app con il suo listino già caricato.',
     qr_download: '⬇ Scarica QR (PNG)',
-    qr_caption: 'Inquadra per aprire il tuo listino · Gem Cert Pricer',
     qr_too_long: 'Il link è troppo lungo per un codice QR: usa «Copia link».',
     preview: 'Anteprima',
     edit: 'Modifica',
@@ -1501,9 +1498,7 @@ const I18N = {
     copy_link: 'Copy link',
     share: 'Share',
     qr_title: 'QR code',
-    qr_hint: 'The client scans the code with their phone camera: the app opens with their price list already loaded.',
     qr_download: '⬇ Download QR (PNG)',
-    qr_caption: 'Scan to open your price list · Gem Cert Pricer',
     qr_too_long: 'The link is too long for a QR code: use “Copy link”.',
     preview: 'Preview',
     edit: 'Edit',
@@ -2397,7 +2392,6 @@ async function refreshClientLink(c) {
   if (out) out.value = url;
   const wa = $('#cl-wa');
   if (wa) { wa.href = waLink(c.phone, t('wa_link_msg', { name: c.name, url })); wa.removeAttribute('aria-disabled'); }
-  renderQr(url);
 }
 
 /* ─── Codice QR del link personale ─────────────────────────────────────── */
@@ -2419,8 +2413,6 @@ function qrPath(qr) {
   return d;
 }
 
-function renderQr(url) { renderQrInto($('#cl-qr'), url); }
-
 function renderQrInto(box, url) {
   if (!box) return;
   const qr = makeQr(url);
@@ -2433,11 +2425,6 @@ function renderQrInto(box, url) {
     <rect x="${-q}" y="${-q}" width="${n + 2 * q}" height="${n + 2 * q}" fill="#fff"/><path d="${qrPath(qr)}" fill="#0B0A0F"/></svg>`;
 }
 
-// PNG stampabile: QR con margine bianco e nome del cliente sotto
-async function downloadQr(c) {
-  const url = linkCache.get(c.id) || await clientLink(c);
-  downloadQrPng(url, c.name, t('qr_caption'), c.name);
-}
 
 // PNG stampabile: QR con margine bianco, titolo e didascalia sotto
 function downloadQrPng(url, title, caption, fileBase) {
@@ -2600,12 +2587,6 @@ function clientEditorHTML(c) {
         <label class="field-label" for="cl-link" style="margin-top:var(--s4)"><span>${t('client_link')}</span></label>
         <input class="text-in link-out" id="cl-link" readonly value="" placeholder="…">
         <p class="hint">${t('link_hint')}</p>
-        <div class="qr-block">
-          <div class="field-label" style="margin-top:var(--s4)"><span>${t('qr_title')}</span></div>
-          <div class="qr-box" id="cl-qr"></div>
-          <p class="hint">${t('qr_hint')}</p>
-          <button type="button" class="btn btn-sm" data-cact="qr">${t('qr_download')}</button>
-        </div>
       </div>
       <div class="panel">
         <div class="panel-title">${t('custom_prices')}</div>
@@ -2687,7 +2668,6 @@ function bindClients() {
     switch (btn.dataset.cact) {
       case 'link': copyClientLink(c); break;
       case 'share': navigator.share({ title: 'Gem Cert Pricer', text: c.name, url: linkCache.get(c.id) }).catch(() => {}); break;
-      case 'qr': downloadQr(c); break;
       case 'preview': previewClient(c); break;
       case 'clear-ov':
         if (!overrideCount(c) || confirm(t('confirm_clear_custom', { name: c.name }))) { c.overrides = {}; saveRates(); renderClients(c.id); }

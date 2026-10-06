@@ -29,18 +29,16 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 | **Home** | Pagina iniziale con i tre percorsi di stima |
 | **Stima certificato** | Pietra sciolta · Montato (gemma di colore o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
 | **Tariffe** | Editor delle tabelle di prezzo, import/export `.gcp.json` |
-| **Clienti** | Database clienti: tier di riferimento, prezzi su misura, link personale e codice QR; QR del negozio e richieste via WhatsApp |
+| **Clienti** | Database clienti: tier di riferimento, prezzi su misura, link personale da inviare su WhatsApp; QR del negozio e richieste via WhatsApp |
 
 ### Versione aziendale e versione pubblica
 
 - **Aziendale** — chi importa il tariffario completo vede i tre tier, le tariffe e la pagina **Clienti**. A ogni cliente si assegna un tier e, se serve, un prezzo su misura per singola fascia (o per il supplemento della pietra centrale).
-- **Pubblica (cliente)** — dalla scheda di un cliente si copia il suo **link personale**. Chi lo apre vede solo i propri prezzi, in un'unica colonna: niente tier, niente tariffe aziendali, niente altri clienti. Il listino resta salvato sul suo dispositivo finché non riceve un link aggiornato.
-
-Lo stesso link è disponibile come **codice QR**, da mostrare a schermo o da stampare (pulsante *Scarica QR*, PNG con il nome del cliente): il cliente lo inquadra con la fotocamera e l'app si apre con il suo listino già caricato.
+- **Pubblica (cliente)** — dalla scheda di un cliente si invia su WhatsApp (o si copia) il suo **link personale**. Chi lo apre vede solo i propri prezzi, in un'unica colonna: niente tier, niente tariffe aziendali, niente altri clienti. Il listino resta salvato sul suo dispositivo finché non riceve un link aggiornato.
 
 ### QR del negozio: richiesta del listino via WhatsApp
 
-Un secondo QR, **uguale per tutti**, si espone in negozio (Clienti → *QR del negozio*, con nome del negozio e numero WhatsApp):
+Un unico QR, **uguale per tutti**, si espone in negozio (Clienti → *QR del negozio*, con nome del negozio e numero WhatsApp):
 
 ```
 1. Il cliente inquadra il QR esposto  →  pagina «Richiedi il tuo listino»
@@ -84,7 +82,7 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
 <table>
   <tr>
     <td width="50%"><b>Database clienti</b> — tier di riferimento, prezzi su misura e link personale<br><br><img src="docs/screenshots/clienti.webp" alt="Elenco clienti"></td>
-    <td width="50%"><b>Scheda cliente</b> — prezzi su misura fascia per fascia, link personale e codice QR<br><br><img src="docs/screenshots/cliente.webp" alt="Scheda cliente con prezzi su misura"></td>
+    <td width="50%"><b>Scheda cliente</b> — prezzi su misura fascia per fascia, telefono e invio del link su WhatsApp<br><br><img src="docs/screenshots/cliente.webp" alt="Scheda cliente con prezzi su misura"></td>
   </tr>
   <tr>
     <td width="50%"><b>Vista del cliente</b> — aperta dal link personale: un solo prezzo, senza tier né tariffe<br><br><img src="docs/screenshots/pubblica.webp" alt="Versione pubblica vista dal cliente"></td>
