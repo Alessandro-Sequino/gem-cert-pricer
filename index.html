@@ -550,6 +550,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
     box-shadow: 0 20px 40px -10px rgba(0,0,0,.7);
   }
   .mobile-bar.hidden { display: none; }
+  body:has(.mobile-bar:not(.hidden)) footer.foot { padding-bottom: 120px; }
   .mobile-bar .mb-l { font-size: var(--text-xs); color: var(--muted); }
   .mobile-bar .mb-v { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; color: var(--gold-hi); font-variant-numeric: tabular-nums; }
 }
@@ -803,10 +804,6 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
       </div>
 
     </div>
-    <div class="mobile-bar hidden" id="mobile-bar" aria-hidden="true">
-      <span class="mb-l" id="mb-l"></span>
-      <span class="mb-v" id="mb-v"></span>
-    </div>
   </section>
 
   <!-- ═════════════════════════════════ TARIFFE ═════════════════════════════════ -->
@@ -864,6 +861,10 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
   </div>
 </footer>
 
+<div class="mobile-bar hidden" id="mobile-bar" aria-hidden="true">
+  <span class="mb-l" id="mb-l"></span>
+  <span class="mb-v" id="mb-v"></span>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1159,6 +1160,7 @@ function route() {
     if (a.dataset.route === view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
   document.title = { home: 'Gem Cert Pricer', stima: 'Stima certificato · Gem Cert Pricer', tariffe: 'Tariffe · Gem Cert Pricer' }[view];
+  if (view !== 'stima') $('#mobile-bar').classList.add('hidden');
   if (view === 'stima') renderCalc();
   if (view === 'tariffe') renderRates();
   if (view === 'home') renderHome();
