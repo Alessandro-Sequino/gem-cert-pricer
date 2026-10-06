@@ -18,7 +18,7 @@ Inserisci la caratura e confronta subito il prezzo del certificato sui tre tier 
 
 ## Panoramica
 
-Gem Cert Pricer è un'applicazione web **single-file** (un solo `index.html` con CSS e JavaScript inline, zero build, zero dipendenze JS) pensata per il lavoro al banco.
+Gem Cert Pricer è un'applicazione web **single-file** (un solo `index.html` con CSS e JavaScript inline, zero build, nessuna dipendenza da caricare: il generatore di codici QR è incluso nel file) pensata per il lavoro al banco.
 
 L'interfaccia è in **italiano e inglese**: la lingua si sceglie dal selettore IT/EN in alto, parte da quella del browser e viene ricordata.
 
@@ -29,14 +29,16 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 | **Home** | Pagina iniziale con i tre percorsi di stima |
 | **Stima certificato** | Pietra sciolta · Montato (gemma di colore o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
 | **Tariffe** | Editor delle tabelle di prezzo, import/export `.gcp.json` |
-| **Clienti** | Database clienti: tier di riferimento, prezzi su misura e link personale |
+| **Clienti** | Database clienti: tier di riferimento, prezzi su misura, link personale e codice QR |
 
 ### Versione aziendale e versione pubblica
 
 - **Aziendale** — chi importa il tariffario completo vede i tre tier, le tariffe e la pagina **Clienti**. A ogni cliente si assegna un tier e, se serve, un prezzo su misura per singola fascia (o per il supplemento della pietra centrale).
 - **Pubblica (cliente)** — dalla scheda di un cliente si copia il suo **link personale**. Chi lo apre vede solo i propri prezzi, in un'unica colonna: niente tier, niente tariffe aziendali, niente altri clienti. Il listino resta salvato sul suo dispositivo finché non riceve un link aggiornato.
 
-Il link contiene solo i prezzi effettivi di quel cliente e li trasporta nel frammento `#` dell'indirizzo, che il browser non invia al server. Dall'app aziendale il pulsante **Anteprima** mostra esattamente ciò che vedrà il cliente.
+Lo stesso link è disponibile come **codice QR**, da mostrare a schermo o da stampare (pulsante *Scarica QR*, PNG con il nome del cliente): il cliente lo inquadra con la fotocamera e l'app si apre con il suo listino già caricato.
+
+Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li trasporta nel frammento `#` dell'indirizzo, che il browser non invia al server. Dall'app aziendale il pulsante **Anteprima** mostra esattamente ciò che vedrà il cliente.
 
 ---
 
@@ -68,7 +70,7 @@ Il link contiene solo i prezzi effettivi di quel cliente e li trasporta nel fram
 <table>
   <tr>
     <td width="50%"><b>Database clienti</b> — tier di riferimento, prezzi su misura e link personale<br><br><img src="docs/screenshots/clienti.webp" alt="Elenco clienti"></td>
-    <td width="50%"><b>Scheda cliente</b> — prezzi su misura fascia per fascia rispetto al tier<br><br><img src="docs/screenshots/cliente.webp" alt="Scheda cliente con prezzi su misura"></td>
+    <td width="50%"><b>Scheda cliente</b> — prezzi su misura fascia per fascia, link personale e codice QR<br><br><img src="docs/screenshots/cliente.webp" alt="Scheda cliente con prezzi su misura"></td>
   </tr>
   <tr>
     <td width="50%"><b>Vista del cliente</b> — aperta dal link personale: un solo prezzo, senza tier né tariffe<br><br><img src="docs/screenshots/pubblica.webp" alt="Versione pubblica vista dal cliente"></td>
@@ -182,7 +184,7 @@ python3 -m http.server 8080      # poi apri http://localhost:8080
 
 ```
 gem-cert-pricer/
-├── index.html              # L'intera applicazione (HTML + CSS + JS inline)
+├── index.html              # L'intera applicazione (HTML + CSS + JS inline, incluso il generatore QR)
 ├── manifest.json           # Manifest PWA
 ├── icon-192.png / icon-512.png
 ├── sample-pricing.gcp.json # Template vuoto del tariffario
@@ -195,5 +197,6 @@ gem-cert-pricer/
 ## Crediti
 
 Creato da **Alessandro Sequino** · distretto orafo **Tarì**, Campania.
+Codici QR generati con [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) di Kazuhiko Arase (licenza MIT). «QR Code» è un marchio registrato di DENSO WAVE INCORPORATED.
 
 **Ultimo aggiornamento:** ottobre 2026
