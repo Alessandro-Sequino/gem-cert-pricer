@@ -5,6 +5,7 @@
 **Stima istantanea del costo dei certificati gemmologici**
 
 Strumento per gemologi e operatori del distretto orafo **Tarì** (Marcianise, Campania).
+Pietre sciolte, gioielli montati (gemma di colore o lab-grown) e bracciali tennis.
 Inserisci la caratura e confronta subito il prezzo del certificato sui tre tier T1 · T2 · T3.
 
 [**▶ Apri l'app**](https://alessandro-sequino.github.io/gem-cert-pricer/)
@@ -24,7 +25,7 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 | Schermata | Descrizione |
 |---|---|
 | **Home** | Pagina iniziale con i tre percorsi di stima |
-| **Stima certificato** | Pietra sciolta · Montato · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
+| **Stima certificato** | Pietra sciolta · Montato (gemma di colore o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
 | **Tariffe** | Editor delle tabelle di prezzo, import/export `.gcp.json` |
 
 ---
@@ -43,8 +44,12 @@ MONTATO — gemma di colore centrale + contorno in diamanti
        + supplemento_contorno[fascia caratura totale contorno][tier]
          (contorno = 0 ct → nessun supplemento)
 
-TENNIS
-  In arrivo
+MONTATO LAB-GROWN
+  Cert = tariffa_lab[fascia peso totale diamanti][tier]
+       + supplemento pietra centrale[tier]   (solo se presente)
+
+TENNIS — diamanti naturali
+  Cert = tariffa_tennis[fascia peso totale diamanti][tier]
 ```
 
 ---
@@ -71,10 +76,12 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
       "color": [ … ]
     },
     "mounted": {
-      "center": [ … ],
-      "halo":   [ … ]
+      "center":    [ … ],
+      "halo":      [ … ],
+      "lab":       [ … ],
+      "labCenter": [0, 0, 0]
     },
-    "tennis": []
+    "tennis": [ … ]
   }
 }
 ```
@@ -82,6 +89,7 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
 - `max` — limite superiore della fascia in ct (incluso); `null` = fascia aperta
 - `t` — prezzi per T1, T2, T3
 - `perCt` — `true` se il prezzo è in €/ct e va moltiplicato per la caratura
+- `labCenter` — supplemento fisso per la pietra centrale nel montato lab-grown (T1, T2, T3)
 
 I file del formato precedente (`gcp-pricing-v1`) non sono più compatibili.
 

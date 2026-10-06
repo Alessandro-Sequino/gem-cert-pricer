@@ -487,6 +487,8 @@ table.matrix { border-collapse: separate; border-spacing: 3px; font-size: .8rem;
 .rate-card .sub { color: var(--faint); font-size: var(--text-xs); margin-top: .2rem; margin-bottom: var(--s4); }
 .rate-card .card-actions { display: flex; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s3); }
 .rt-wrap { overflow-x: auto; }
+.rt-wrap.tall { max-height: 560px; overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; }
+.rt-wrap.tall thead th { position: sticky; top: 0; z-index: 1; background: var(--ink-1); }
 table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 .rt th { font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); font-weight: 700; text-align: left; padding: 0 .3rem .5rem; }
 .rt td { padding: .2rem .3rem; border-top: 1px solid var(--line); }
@@ -507,11 +509,16 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 .mode-btn.perct { color: var(--gold); border-color: rgba(217,180,106,.4); }
 .del-btn { border: 0; background: transparent; color: var(--faint); font-size: 1.1rem; padding: .2rem .4rem; border-radius: 6px; }
 .del-btn:hover { color: var(--danger); }
-.soon-card {
-  margin-top: var(--s4); border: 1px dashed var(--line-strong); border-radius: var(--r-lg); padding: var(--s5);
-  display: flex; align-items: center; gap: var(--s4); color: var(--muted);
-}
-.soon-card .gem-mini { width: 56px; height: 56px; flex-shrink: 0; --gem-h: 228; --gem-s: 64%; }
+.fee-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2) var(--s3); margin-top: var(--s4); padding-top: var(--s4); border-top: 1px dashed var(--line-strong); }
+.fee-row > span { grid-column: 1 / -1; font-size: var(--text-sm); font-weight: 600; }
+.fee-row label { display: flex; align-items: center; gap: .35rem; font-size: .7rem; font-weight: 700; color: var(--faint); letter-spacing: .08em; }
+.fee-row input { flex: 1; min-width: 0; width: 100%; background: var(--ink-0); border: 1px solid var(--line); border-radius: 8px; padding: .45rem .5rem; text-align: right; font-variant-numeric: tabular-nums; }
+.fee-row input:focus { outline: none; border-color: var(--gold); }
+.check { display: flex; align-items: center; gap: .65rem; margin-top: var(--s4); padding: .75rem .9rem; border: 1px solid var(--line); border-radius: var(--r-md); cursor: pointer; font-size: var(--text-sm); font-weight: 600; transition: border-color var(--dur); }
+.check:hover { border-color: var(--line-strong); }
+.check input { width: 18px; height: 18px; accent-color: var(--gold); }
+.check small { color: var(--gold); font-weight: 700; margin-left: .3rem; }
+.ruler-more { margin-top: var(--s3); }
 
 /* ═══ TOAST ═════════════════════════════════════════════════════════════ */
 .toast {
@@ -636,16 +643,16 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
             <span class="path-index">II.</span>
             <span class="path-icon" data-gem="icon" data-h="158" data-s="62%"></span>
             <h3>Gioiello montato</h3>
-            <p>Gemma di colore centrale con contorno in diamanti: prezzo base per la caratura della centrale più il supplemento del contorno.</p>
-            <span class="path-tags"><span class="tag">Pietra centrale</span><span class="tag">Contorno diamanti</span></span>
+            <p>Gemma di colore centrale con contorno in diamanti, oppure gioiello in diamanti lab-grown a peso totale con supplemento per la pietra centrale.</p>
+            <span class="path-tags"><span class="tag">Gemma di colore + contorno</span><span class="tag">Lab-grown</span></span>
           </a>
           <a class="path" href="#/stima/tennis" data-tone="tennis">
             <span class="path-go" aria-hidden="true">↗</span>
             <span class="path-index">III.</span>
             <span class="path-icon" data-gem="icon" data-h="228" data-s="64%"></span>
             <h3>Tennis</h3>
-            <p>Bracciali e collane tennis. Il listino dedicato verrà aggiunto a breve.</p>
-            <span class="path-tags"><span class="tag soon">In arrivo</span></span>
+            <p>Bracciali tennis in diamanti naturali: il prezzo segue la fascia del peso totale dei diamanti.</p>
+            <span class="path-tags"><span class="tag">Diamanti naturali</span><span class="tag">Peso totale</span></span>
           </a>
         </div>
       </div>
@@ -688,7 +695,7 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
         <div class="seg" role="radiogroup" aria-label="Tipologia">
           <input type="radio" name="mode" id="mode-sciolto" value="sciolto"><label for="mode-sciolto">Pietra sciolta</label>
           <input type="radio" name="mode" id="mode-montato" value="montato"><label for="mode-montato">Montato</label>
-          <input type="radio" name="mode" id="mode-tennis" value="tennis"><label for="mode-tennis">Tennis <span class="mini">presto</span></label>
+          <input type="radio" name="mode" id="mode-tennis" value="tennis"><label for="mode-tennis">Tennis</label>
         </div>
       </div>
 
@@ -718,6 +725,14 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
             </div>
           </div>
 
+          <div class="panel" id="panel-mtype">
+            <div class="panel-title">Tipo di gioiello</div>
+            <div class="seg seg-block" role="radiogroup" aria-label="Tipo di gioiello montato">
+              <input type="radio" name="mounted-type" id="mt-color" value="color"><label for="mt-color">Gemma di colore</label>
+              <input type="radio" name="mounted-type" id="mt-lab" value="lab"><label for="mt-lab">Lab-grown</label>
+            </div>
+          </div>
+
           <div class="panel" id="panel-montato">
             <div class="panel-title">Gemma di colore centrale</div>
             <div class="field">
@@ -744,6 +759,35 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
             </div>
           </div>
 
+          <div class="panel" id="panel-lab">
+            <div class="panel-title">Diamanti lab-grown</div>
+            <div class="field">
+              <label class="field-label" for="in-lab-ct"><span>Peso totale diamanti</span><span>ct</span></label>
+              <div class="ct-input">
+                <input id="in-lab-ct" data-ct="labCt" type="text" inputmode="decimal" autocomplete="off">
+                <span class="unit">ct</span>
+                <div class="stepper"><button type="button" data-step="labCt" data-dir="1" aria-label="Aumenta">+</button><button type="button" data-step="labCt" data-dir="-1" aria-label="Diminuisci">−</button></div>
+              </div>
+              <input type="range" data-range="labCt" min="0.01" max="10" step="0.01" aria-label="Peso totale diamanti (cursore)">
+              <div class="quick" data-quick="labCt"></div>
+              <label class="check"><input type="checkbox" id="in-lab-center"><span>Con pietra centrale <small id="lab-center-fee"></small></span></label>
+            </div>
+          </div>
+
+          <div class="panel" id="panel-tennis">
+            <div class="panel-title">Tennis · diamanti naturali</div>
+            <div class="field">
+              <label class="field-label" for="in-tennis-ct"><span>Peso totale diamanti</span><span>ct</span></label>
+              <div class="ct-input">
+                <input id="in-tennis-ct" data-ct="tennisCt" type="text" inputmode="decimal" autocomplete="off">
+                <span class="unit">ct</span>
+                <div class="stepper"><button type="button" data-step="tennisCt" data-dir="1" aria-label="Aumenta">+</button><button type="button" data-step="tennisCt" data-dir="-1" aria-label="Diminuisci">−</button></div>
+              </div>
+              <input type="range" data-range="tennisCt" min="0.10" max="25" step="0.01" aria-label="Peso totale diamanti (cursore)">
+              <div class="quick" data-quick="tennisCt"></div>
+            </div>
+          </div>
+
           <div class="panel" id="panel-tier">
             <div class="panel-title">Tier di prezzo</div>
             <div class="seg seg-block" role="radiogroup" aria-label="Tier di prezzo">
@@ -758,17 +802,6 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
         <div id="result" aria-live="polite"></div>
       </div>
 
-      <div id="tennis-soon" hidden>
-        <div class="panel empty-state">
-          <div class="gem-mini" data-gem="icon"></div>
-          <h2>Listino tennis in arrivo</h2>
-          <p>Bracciali e collane tennis avranno il loro tariffario dedicato. Appena saranno disponibili i prezzi, questa sezione si attiverà automaticamente.</p>
-          <div class="hero-cta" style="justify-content:center">
-            <a class="btn" href="#/stima/sciolto">Stima una pietra sciolta</a>
-            <a class="btn" href="#/stima/montato">Stima un montato</a>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="mobile-bar hidden" id="mobile-bar" aria-hidden="true">
       <span class="mb-l" id="mb-l"></span>
@@ -812,10 +845,11 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
       </div>
 
       <div class="rates-group">
-        <h2>Tennis <small>bracciali e collane</small></h2>
-        <div class="soon-card">
-          <div class="gem-mini" data-gem="icon"></div>
-          <p>Il listino tennis verrà aggiunto con i prossimi prezzi. Il formato del file <code>.gcp.json</code> è già predisposto.</p>
+        <h2>Lab-grown e tennis <small>prezzo per peso totale dei diamanti</small></h2>
+        <p>Montato lab-grown = tariffa per fascia del peso totale + supplemento fisso se c'è una pietra centrale. Tennis in diamanti naturali = tariffa per fascia del peso totale.</p>
+        <div class="rates-cards">
+          <div class="rate-card" data-table="mounted.lab"></div>
+          <div class="rate-card" data-table="tennis"></div>
         </div>
       </div>
       <div style="height:var(--s7)"></div>
@@ -862,8 +896,10 @@ function defaultRates() {
     mounted: {
       center: zeroBands([0.79, 0.99, 1.49, 1.99, 2.49, 2.99, null]),
       halo:   zeroBands([0.1, 0.2, 0.3, 0.5, 0.7, 0.9, 1, 1.2, 1.5, 1.8, 2, null]),
+      lab:    zeroBands([0.17, 0.22, 0.29, 0.37, 0.45, 0.49, 0.69, 0.89, 0.99, 1.45, 1.94, 2.94, null]).map(b => ({ ...b, perCt: false })),
+      labCenter: [0, 0, 0],
     },
-    tennis: [],
+    tennis: zeroBands([0.99, 1.49, 1.99, 2.49, 2.99, 3.49, 3.99, 4.49, 4.99, null]).map(b => ({ ...b, perCt: false })),
   };
 }
 
@@ -872,10 +908,12 @@ const TABLES = {
   'loose.color':    { title: 'Gemme di colore', sub: 'Prezzo per caratura della pietra', axis: 'Fino a (ct)' },
   'mounted.center': { title: 'Pietra centrale', sub: 'Gemma di colore · prezzo base', axis: 'Fino a (ct)', copyFrom: 'loose.color' },
   'mounted.halo':   { title: 'Contorno diamanti', sub: 'Supplemento per caratura totale del contorno', axis: 'Fino a (ct tot.)' },
+  'mounted.lab':    { title: 'Montato lab-grown', sub: 'Prezzo per peso totale dei diamanti del gioiello', axis: 'Fino a (ct tot.)', fee: { path: 'mounted.labCenter', label: 'Supplemento pietra centrale' } },
+  'tennis':         { title: 'Tennis · diamanti naturali', sub: 'Prezzo per peso totale dei diamanti', axis: 'Fino a (ct tot.)' },
 };
 
 let RATES = defaultRates();
-const UI = { mode: 'sciolto', looseType: 'diam', tier: 0, looseCt: '0.50', centerCt: '1.00', haloCt: '0.30' };
+const UI = { mode: 'sciolto', looseType: 'diam', mountedType: 'color', tier: 0, looseCt: '0.50', centerCt: '1.00', haloCt: '0.30', labCt: '0.50', labCenter: true, tennisCt: '3.00', allBands: false };
 
 /* ─── Utility ──────────────────────────────────────────────────────────── */
 const $ = (s, r = document) => r.querySelector(s);
@@ -936,9 +974,20 @@ function quoteMounted(centerCt, haloCt, tier) {
   return { total: (c ? c.value : 0) + (h ? h.value : 0), center: c, halo: h };
 }
 
+function quoteLab(ct, withCenter, tier) {
+  const p = priceBand(RATES.mounted.lab, ct, tier);
+  const fee = withCenter ? Number(RATES.mounted.labCenter[tier]) || 0 : 0;
+  return { total: (p ? p.value : 0) + fee, band: p, fee };
+}
+
+function quoteTennis(ct, tier) {
+  const p = priceBand(RATES.tennis, ct, tier);
+  return { total: p ? p.value : 0, band: p };
+}
+
 function isConfigured() {
   const any = bands => bands.some(b => b.t.some(v => Number(v) > 0));
-  return any(RATES.loose.diam) || any(RATES.loose.color) || any(RATES.mounted.center);
+  return [RATES.loose.diam, RATES.loose.color, RATES.mounted.center, RATES.mounted.lab, RATES.tennis].some(any);
 }
 
 /* ─── Persistenza ──────────────────────────────────────────────────────── */
@@ -965,8 +1014,10 @@ function normRates(d) {
     mounted: {
       center: d?.mounted?.center ? normBands(d.mounted.center) : def.mounted.center,
       halo:   d?.mounted?.halo   ? normBands(d.mounted.halo)   : def.mounted.halo,
+      lab:    d?.mounted?.lab    ? normBands(d.mounted.lab)    : def.mounted.lab,
+      labCenter: [0, 1, 2].map(k => Number(d?.mounted?.labCenter?.[k]) || 0),
     },
-    tennis: Array.isArray(d?.tennis) ? normBands(d.tennis) : [],
+    tennis: Array.isArray(d?.tennis) && d.tennis.length ? normBands(d.tennis) : def.tennis,
   };
   return r;
 }
@@ -992,6 +1043,9 @@ function load() {
     UI.tier = [0, 1, 2].includes(Number(UI.tier)) ? Number(UI.tier) : 0;
     if (!['sciolto', 'montato', 'tennis'].includes(UI.mode)) UI.mode = 'sciolto';
     if (!['diam', 'color'].includes(UI.looseType)) UI.looseType = 'diam';
+    if (!['color', 'lab'].includes(UI.mountedType)) UI.mountedType = 'color';
+    UI.labCenter = UI.labCenter !== false;
+    UI.allBands = UI.allBands === true;
   } catch (e) { /* noop */ }
 }
 
@@ -1137,11 +1191,21 @@ function renderHome() {
 /* ═══════════════════════════════════════════════════════════════════════════
    CALCOLATORE
    ═══════════════════════════════════════════════════════════════════════════ */
-const QUICK = { looseCt: [0.10, 0.25, 0.50, 1.00, 1.50, 2.00, 3.00], haloCt: [0, 0.10, 0.30, 0.50, 1.00, 2.00] };
+const QUICK = {
+  looseCt: [0.10, 0.25, 0.50, 1.00, 1.50, 2.00, 3.00],
+  haloCt: [0, 0.10, 0.30, 0.50, 1.00, 2.00],
+  labCt: [0.25, 0.50, 1.00, 2.00, 3.00, 5.00],
+  tennisCt: [1.00, 2.00, 3.00, 5.00, 7.00, 10.00],
+};
 
 function bindCalc() {
   $$('input[name="mode"]').forEach(r => r.addEventListener('change', () => { location.hash = '#/stima/' + r.value; }));
   $$('input[name="loose-type"]').forEach(r => r.addEventListener('change', () => { UI.looseType = r.value; saveUI(); renderCalc(); }));
+  $$('input[name="mounted-type"]').forEach(r => r.addEventListener('change', () => { UI.mountedType = r.value; saveUI(); renderCalc(); }));
+  $('#in-lab-center').addEventListener('change', e => { UI.labCenter = e.target.checked; saveUI(); renderResult(); });
+  $('#result').addEventListener('click', e => {
+    if (e.target.closest('[data-act="all-bands"]')) { UI.allBands = !UI.allBands; saveUI(); renderResult(); }
+  });
   $$('input[name="tier"]').forEach(r => r.addEventListener('change', () => { UI.tier = Number(r.value); saveUI(); renderCalc(); }));
 
   $$('[data-ct]').forEach(inp => {
@@ -1196,12 +1260,16 @@ function renderCalc() {
     if (document.activeElement !== inp) inp.value = Number.isFinite(v) ? fmtCt(v) : UI[inp.dataset.ct];
     syncRange(inp.dataset.ct);
   });
-  const tennis = UI.mode === 'tennis';
-  $('#calc-grid').hidden = tennis;
-  $('#tennis-soon').hidden = !tennis;
+  $(`#mt-${UI.mountedType}`).checked = true;
+  $('#in-lab-center').checked = UI.labCenter;
+  const mColor = UI.mode === 'montato' && UI.mountedType === 'color';
+  const mLab = UI.mode === 'montato' && UI.mountedType === 'lab';
   $('#panel-sciolto').hidden = UI.mode !== 'sciolto';
-  $('#panel-montato').hidden = UI.mode !== 'montato';
-  $('#panel-montato-2').hidden = UI.mode !== 'montato';
+  $('#panel-mtype').hidden = UI.mode !== 'montato';
+  $('#panel-montato').hidden = !mColor;
+  $('#panel-montato-2').hidden = !mColor;
+  $('#panel-lab').hidden = !mLab;
+  $('#panel-tennis').hidden = UI.mode !== 'tennis';
   $('#stima-notice').innerHTML = isConfigured() ? '' : noticeHTML();
   renderResult();
 }
@@ -1230,16 +1298,24 @@ function tierCards(fn) {
   }).join('')}</div>`;
 }
 
+// Elenchi lunghi: mostra solo le fasce vicine a quella attiva, con pulsante per espandere
 function rulerHTML(bands, activeIdx, tier, title) {
-  return `<div class="panel"><div class="panel-title">${esc(title)}</div><div class="ruler">${bands.map((b, i) =>
-    `<div class="band${i === activeIdx ? ' on' : ''}"><span class="bl">${esc(bandLabel(bands, i))}</span><span class="bv">${fmtRate(b, tier)}</span></div>`
-  ).join('')}</div></div>`;
+  const WIN = 4, long = bands.length > 2 * WIN + 3;
+  const from = long && !UI.allBands ? Math.max(0, Math.min(activeIdx - WIN, bands.length - 2 * WIN - 1)) : 0;
+  const to = long && !UI.allBands ? Math.min(bands.length, from + 2 * WIN + 1) : bands.length;
+  const rows = bands.slice(from, to).map((b, n) => {
+    const i = from + n;
+    return `<div class="band${i === activeIdx ? ' on' : ''}"><span class="bl">${esc(bandLabel(bands, i))}</span><span class="bv">${fmtRate(b, tier)}</span></div>`;
+  }).join('');
+  const more = long
+    ? `<button type="button" class="btn btn-sm ruler-more" data-act="all-bands">${UI.allBands ? 'Mostra solo le fasce vicine' : `Mostra tutte le ${bands.length} fasce`}</button>`
+    : '';
+  return `<div class="panel"><div class="panel-title">${esc(title)}</div><div class="ruler">${rows}</div>${more}</div>`;
 }
 
 function renderResult() {
   const box = $('#result');
   const mb = $('#mobile-bar');
-  if (UI.mode === 'tennis') { mb.classList.add('hidden'); return; }
   const tier = UI.tier;
   let html = '', total = 0, mobileLabel = '';
 
@@ -1263,6 +1339,48 @@ function renderResult() {
         ${tierCards(k => { const x = quoteLoose(UI.looseType, ct, k).parts[0]; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : 'fisso' }; })}
       </div>
       ${rulerHTML(RATES.loose[UI.looseType], p.i, tier, `Fasce ${typeName.toLowerCase()} · ${TIERS[tier]}`)}`;
+    }
+  } else if (UI.mode === 'tennis') {
+    const ct = parseNum(UI.tennisCt);
+    if (!(ct > 0)) {
+      html = invalidHTML('Inserisci il peso totale dei diamanti.');
+    } else {
+      const q = quoteTennis(ct, tier), p = q.band;
+      total = q.total;
+      mobileLabel = `Tennis · ${fmtCt(ct)} ct · ${TIERS[tier]}`;
+      html = `<div class="ticket">
+        <div class="ticket-top">
+          <div><div class="ticket-kicker">Certificato tennis</div><div class="ticket-subject">Diamanti naturali · ${fmtCt(ct)} ct totali</div></div>
+          <span class="tier-badge">${TIERS[tier]}</span>
+        </div>
+        <div class="price" id="price-out"></div>
+        <p class="price-note">Fascia <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ' · tariffa fissa'}</p>
+        ${tierCards(k => { const x = quoteTennis(ct, k).band; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : 'fisso' }; })}
+      </div>
+      ${rulerHTML(RATES.tennis, p.i, tier, `Fasce tennis · ${TIERS[tier]}`)}`;
+    }
+  } else if (UI.mountedType === 'lab') {
+    const ct = parseNum(UI.labCt);
+    if (!(ct > 0)) {
+      html = invalidHTML('Inserisci il peso totale dei diamanti lab-grown.');
+    } else {
+      const q = quoteLab(ct, UI.labCenter, tier), p = q.band;
+      total = q.total;
+      mobileLabel = `Lab-grown · ${fmtCt(ct)} ct · ${TIERS[tier]}`;
+      html = `<div class="ticket">
+        <div class="ticket-top">
+          <div><div class="ticket-kicker">Certificato gioiello lab-grown</div><div class="ticket-subject">${fmtCt(ct)} ct totali · ${UI.labCenter ? 'con' : 'senza'} pietra centrale</div></div>
+          <span class="tier-badge">${TIERS[tier]}</span>
+        </div>
+        <div class="price" id="price-out"></div>
+        <div class="breakdown">
+          <div class="brow"><span class="lbl"><b>Diamanti lab-grown</b><small>${esc(p.label)}${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ''}</small></span><span class="val">${fmtEur(p.value)}</span></div>
+          <div class="brow"><span class="lbl"><b>Pietra centrale</b><small>${UI.labCenter ? 'Supplemento fisso' : 'Assente'}</small></span><span class="val">${UI.labCenter ? '+ ' + fmtEur(q.fee) : '—'}</span></div>
+          <div class="brow total"><span class="lbl"><b>Totale certificato</b></span><span class="val">${fmtEur(total)}</span></div>
+        </div>
+        ${tierCards(k => { const x = quoteLab(ct, UI.labCenter, k); return { total: x.total, note: UI.labCenter ? `${fmtEur(x.band.value)} + ${fmtEur(x.fee)}` : 'fisso' }; })}
+      </div>
+      ${rulerHTML(RATES.mounted.lab, p.i, tier, `Fasce lab-grown · ${TIERS[tier]}`)}`;
     }
   } else {
     const cct = parseNum(UI.centerCt), hct = parseNum(UI.haloCt);
@@ -1290,6 +1408,7 @@ function renderResult() {
     }
   }
 
+  $('#lab-center-fee').textContent = '+ ' + fmtEur(Number(RATES.mounted.labCenter[tier]) || 0);
   box.innerHTML = html;
   const out = $('#price-out', box);
   if (out) animatePrice(out, total);
@@ -1354,14 +1473,16 @@ function renderRateCard(card) {
       <td>${b.max === null ? '' : `<button type="button" class="del-btn" data-act="del" aria-label="Elimina fascia ${i + 1}">×</button>`}</td>
     </tr>`).join('');
   card.innerHTML = `<h3>${esc(meta.title)}</h3><p class="sub">${esc(meta.sub)}</p>
-    <div class="rt-wrap"><table class="rt">
+    <div class="rt-wrap${bands.length > 14 ? ' tall' : ''}"><table class="rt">
       <thead><tr><th>${esc(meta.axis)}</th>${TIERS.map(t => `<th style="text-align:right">${t}</th>`).join('')}<th>Tipo</th><th></th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
     <div class="card-actions">
       <button type="button" class="btn btn-sm" data-act="add">+ Aggiungi fascia</button>
       ${meta.copyFrom ? `<button type="button" class="btn btn-sm" data-act="copy">Copia da «${esc(TABLES[meta.copyFrom].title)}» sciolte</button>` : ''}
-    </div>`;
+    </div>
+    ${meta.fee ? `<div class="fee-row"><span>${esc(meta.fee.label)}</span>${getTable(meta.fee.path).map((v, k) =>
+      `<label>${TIERS[k]} <input data-fee="${k}" value="${String(v).replace('.', ',')}" inputmode="decimal" aria-label="${esc(meta.fee.label)} ${TIERS[k]}"></label>`).join('')}</div>` : ''}`;
 }
 
 function bindRates() {
@@ -1369,6 +1490,11 @@ function bindRates() {
     const path = card.dataset.table;
     card.addEventListener('input', e => {
       const inp = e.target.closest('input'); if (!inp) return;
+      if (inp.dataset.fee !== undefined) {
+        const v = parseNum(inp.value);
+        getTable(TABLES[path].fee.path)[Number(inp.dataset.fee)] = Number.isFinite(v) ? v : 0;
+        saveRates(); return;
+      }
       const i = Number(inp.closest('tr').dataset.i);
       const b = getTable(path)[i];
       const v = parseNum(inp.value);
