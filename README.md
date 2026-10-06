@@ -29,7 +29,7 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 | **Home** | Pagina iniziale con i tre percorsi di stima |
 | **Stima certificato** | Pietra sciolta · Montato (gemma di colore o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
 | **Tariffe** | Editor delle tabelle di prezzo, import/export `.gcp.json` |
-| **Clienti** | Database clienti: tier di riferimento, prezzi su misura, link personale e codice QR |
+| **Clienti** | Database clienti: tier di riferimento, prezzi su misura, link personale e codice QR; QR del negozio e richieste via WhatsApp |
 
 ### Versione aziendale e versione pubblica
 
@@ -37,6 +37,20 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 - **Pubblica (cliente)** — dalla scheda di un cliente si copia il suo **link personale**. Chi lo apre vede solo i propri prezzi, in un'unica colonna: niente tier, niente tariffe aziendali, niente altri clienti. Il listino resta salvato sul suo dispositivo finché non riceve un link aggiornato.
 
 Lo stesso link è disponibile come **codice QR**, da mostrare a schermo o da stampare (pulsante *Scarica QR*, PNG con il nome del cliente): il cliente lo inquadra con la fotocamera e l'app si apre con il suo listino già caricato.
+
+### QR del negozio: richiesta del listino via WhatsApp
+
+Un secondo QR, **uguale per tutti**, si espone in negozio (Clienti → *QR del negozio*, con nome del negozio e numero WhatsApp):
+
+```
+1. Il cliente inquadra il QR esposto  →  pagina «Richiedi il tuo listino»
+2. Compila nome e contatti            →  si apre WhatsApp con la richiesta già scritta verso il negozio
+3. In Clienti → «Da richiesta WhatsApp» incolli il messaggio  →  il cliente è creato con nome, telefono e note
+4. Scegli tier o prezzi su misura e premi «Invia su WhatsApp»  →  il cliente riceve il suo link personale
+5. Il cliente apre il link            →  l'app si attiva con il suo listino
+```
+
+Sei sempre tu a decidere quale listino agganciare: il QR del negozio non contiene prezzi, solo nome e numero WhatsApp del negozio. Non serve nessun server.
 
 Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li trasporta nel frammento `#` dell'indirizzo, che il browser non invia al server. Dall'app aziendale il pulsante **Anteprima** mostra esattamente ciò che vedrà il cliente.
 
@@ -75,6 +89,15 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
   <tr>
     <td width="50%"><b>Vista del cliente</b> — aperta dal link personale: un solo prezzo, senza tier né tariffe<br><br><img src="docs/screenshots/pubblica.webp" alt="Versione pubblica vista dal cliente"></td>
     <td width="50%"><b>English</b> — interfaccia bilingue con selettore IT/EN<br><br><img src="docs/screenshots/english.webp" alt="Interfaccia in inglese"></td>
+  </tr>
+</table>
+
+**QR del negozio** — da stampare ed esporre; chi lo inquadra richiede il listino su WhatsApp:
+
+<table>
+  <tr>
+    <td width="68%"><img src="docs/screenshots/negozio.webp" alt="QR del negozio nella pagina Clienti"></td>
+    <td width="32%"><img src="docs/screenshots/m-richiesta.webp" alt="Pagina di richiesta del listino da smartphone"></td>
   </tr>
 </table>
 
@@ -147,9 +170,10 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
     },
     "tennis": [ … ],
     "clients": [
-      {"id": "…", "name": "Rossi Gioielli", "tier": 1, "note": "",
+      {"id": "…", "name": "Rossi Gioielli", "tier": 1, "note": "", "phone": "393331234567",
        "overrides": {"loose.diam": {"0.49": 35}, "mounted.labCenter": 9}}
-    ]
+    ],
+    "shop": {"name": "Il mio negozio", "phone": "39 333 1234567"}
   }
 }
 ```
@@ -158,7 +182,8 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
 - `t` — prezzi per T1, T2, T3
 - `perCt` — `true` se il prezzo è in €/ct e va moltiplicato per la caratura
 - `labCenter` — supplemento fisso per la pietra centrale nel montato lab-grown (T1, T2, T3)
-- `clients` — database clienti: `tier` (0 = T1, 1 = T2, 2 = T3) e `overrides`, prezzi su misura indicizzati per tabella e limite della fascia (`"open"` per l'ultima fascia aperta)
+- `clients` — database clienti: `tier` (0 = T1, 1 = T2, 2 = T3), `phone` WhatsApp e `overrides`, prezzi su misura indicizzati per tabella e limite della fascia (`"open"` per l'ultima fascia aperta)
+- `shop` — nome e numero WhatsApp del negozio usati dal QR da esporre
 
 I file del formato precedente (`gcp-pricing-v1`) non sono più compatibili.
 
