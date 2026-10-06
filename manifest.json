@@ -1,15 +1,19 @@
 {
+  "id": "./",
   "name": "Gem Cert Pricer",
   "short_name": "Gem Pricer",
-  "description": "Calcolatore valore gemme e costo certificati gemmologici",
+  "description": "Stima istantanea del costo dei certificati gemmologici: pietre sciolte, gioielli montati e tennis, con listini personali per i clienti.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
   "theme_color": "#0B0A0F",
   "background_color": "#0B0A0F",
   "lang": "it",
-  "categories": ["business", "finance", "utilities"],
+  "categories": [
+    "business",
+    "finance",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "icon-192.png",
