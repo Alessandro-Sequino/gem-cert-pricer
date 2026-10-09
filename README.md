@@ -81,7 +81,7 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
 
 <table>
   <tr>
-    <td width="50%"><b>Pietra sciolta</b> — fascia di caratura evidenziata e confronto T1 · T2 · T3<br><br><img src="docs/screenshots/sciolto.webp" alt="Stima pietra sciolta"></td>
+    <td width="50%"><b>Pietra sciolta</b> — diamante, gemma di colore o semiprezioso: fascia di caratura evidenziata e confronto T1 · T2 · T3<br><br><img src="docs/screenshots/sciolto.webp" alt="Stima pietra sciolta"></td>
     <td width="50%"><b>Montato lab-grown</b> — peso totale dei diamanti + supplemento pietra centrale<br><br><img src="docs/screenshots/lab.webp" alt="Stima montato lab-grown"></td>
   </tr>
   <tr>
