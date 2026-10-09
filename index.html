@@ -137,7 +137,7 @@ button { cursor: pointer; }
 .brand-name em { color: var(--gold); font-style: italic; }
 .nav { display: flex; gap: .25rem; margin-left: auto; }
 .nav a {
-  text-decoration: none; font-size: var(--text-sm); font-weight: 600; color: var(--muted);
+  text-decoration: none; font-size: var(--text-sm); font-weight: 600; color: var(--muted); white-space: nowrap;
   padding: .5rem .9rem; border-radius: var(--r-pill);
   transition: color var(--dur), background var(--dur);
 }
@@ -612,6 +612,69 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
   .client-pill { max-width: 120px; }
 }
 
+/* ═══ PREVENTIVO ═══════════════════════════════════════════════════════ */
+.nav-count {
+  display: inline-grid; place-items: center; min-width: 1.15rem; height: 1.15rem; padding: 0 .3rem; margin-left: .3rem;
+  border-radius: var(--r-pill); background: var(--gold); color: var(--ink-0); font-size: .64rem; font-weight: 800; line-height: 1;
+}
+.nav .nq-short { display: none; }
+.nav a[aria-current="page"] .nav-count { background: var(--ink-0); color: var(--gold-hi); }
+.quote-add { display: flex; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s4); }
+.quote-grid { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: var(--s5); align-items: start; }
+.quote-grid .panel + .panel { margin-top: 0; }
+.quote-grid > div > * + * { margin-top: var(--s4); }
+.q-state { font-size: var(--text-xs); color: var(--faint); margin-top: var(--s3); }
+.q-state b { color: var(--muted); }
+.q-list { margin-top: var(--s4); border-top: 1px dashed var(--line-strong); }
+.q-item { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(5.5rem, auto) auto; gap: var(--s2) var(--s3); align-items: center; padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
+.q-main { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+.q-main b { font-weight: 600; }
+.q-main small { color: var(--faint); font-size: var(--text-xs); }
+.q-ref { margin-top: .3rem; width: 100%; max-width: 280px; background: transparent; border: 1px dashed var(--line-strong); border-radius: 8px; padding: .3rem .5rem; font-size: var(--text-xs); }
+.q-ref:focus { outline: none; border-color: var(--gold); border-style: solid; }
+.q-ref::placeholder { color: var(--faint); opacity: .7; }
+.q-qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--ink-0); }
+.q-qty button { border: 0; background: transparent; width: 30px; height: 30px; color: var(--muted); font-size: 1rem; line-height: 1; border-radius: 50%; }
+.q-qty button:hover { color: var(--gold-hi); }
+.q-qty input { width: 2.4rem; text-align: center; background: transparent; border: 0; font-weight: 700; font-variant-numeric: tabular-nums; padding: 0; }
+.q-qty input:focus { outline: none; color: var(--gold-hi); }
+.q-val { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.q-val small { display: block; color: var(--faint); font-weight: 500; font-size: var(--text-xs); }
+.q-total { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3); padding-top: var(--s3); font-weight: 600; }
+.q-total .val { color: var(--gold-hi); font-size: var(--text-lg); font-weight: 700; font-variant-numeric: tabular-nums; }
+.q-stale { margin-top: var(--s4); }
+.q-archive { margin-top: var(--s6); }
+.q-archive h2 { font-size: var(--text-xl); margin-bottom: var(--s4); }
+.q-archive .client-row.current { border-color: rgba(217,180,106,.5); }
+#print-sheet { display: none; }
+@media (max-width: 980px) { .quote-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) {
+  .q-item { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .q-main { grid-column: 1 / -1; }
+}
+
+/* Stampa del preventivo: solo il foglio, in bianco e nero */
+@media print {
+  @page { margin: 16mm 14mm; }
+  body.print-quote { background: #fff !important; color: #111; }
+  body.print-quote::before, body.print-quote::after { display: none !important; }
+  body.print-quote > *:not(#print-sheet) { display: none !important; }
+  body.print-quote #print-sheet { display: block; font-family: var(--font-body); font-size: 10.5pt; line-height: 1.45; color: #111; }
+  #print-sheet .ps-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12mm; padding-bottom: 5mm; border-bottom: 1.5pt solid #111; }
+  #print-sheet h1 { font-family: var(--font-display); font-size: 24pt; font-weight: 600; }
+  #print-sheet .ps-shop { font-size: 9pt; color: #555; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; margin-bottom: 1mm; }
+  #print-sheet .ps-meta { text-align: right; font-size: 9.5pt; color: #333; }
+  #print-sheet .ps-client { margin: 6mm 0 4mm; font-size: 11pt; }
+  #print-sheet table { width: 100%; border-collapse: collapse; }
+  #print-sheet th { text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: .1em; color: #555; border-bottom: .75pt solid #999; padding: 2mm 1.5mm; }
+  #print-sheet td { padding: 2.5mm 1.5mm; border-bottom: .5pt solid #ddd; vertical-align: top; }
+  #print-sheet td small { display: block; color: #666; font-size: 8.5pt; }
+  #print-sheet .r { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  #print-sheet tfoot td { border-bottom: 0; border-top: 1.5pt solid #111; font-weight: 700; font-size: 12pt; padding-top: 3mm; }
+  #print-sheet .ps-note { margin-top: 6mm; white-space: pre-wrap; font-size: 9.5pt; color: #333; }
+  #print-sheet tr { break-inside: avoid; }
+}
+
 /* ═══ TOAST ═════════════════════════════════════════════════════════════ */
 .toast {
   position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 200;
@@ -667,6 +730,8 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
   .topbar .wrap { gap: 6px; }
   .nav { gap: 0; }
   .nav a { padding: .4rem .5rem; font-size: .74rem; }
+  .nav a[data-route="home"], .nav .nq-full { display: none; }
+  .nav .nq-short { display: inline; }
   .status-pill { display: none; }
   .client-mode .client-pill { display: inline-flex; max-width: 96px; }
   .lang button { padding: .28rem .4rem; }
@@ -691,6 +756,7 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
       <a href="#/stima" data-route="stima" data-i18n-html="nav_stima">Stima<span class="long"> certificato</span></a>
       <a href="#/tariffe" data-route="tariffe" data-i18n="nav_rates" class="company-only">Tariffe</a>
       <a href="#/clienti" data-route="clienti" data-i18n="nav_clients" class="company-only">Clienti</a>
+      <a href="#/preventivo" data-route="preventivo" class="company-only"><span class="nq-full" data-i18n="nav_quote">Preventivo</span><span class="nq-short" data-i18n="nav_quote_s">Prev.</span><span class="nav-count" id="nav-quote-count" hidden></span></a>
     </nav>
     <span class="status-pill ok client-pill" id="client-pill" hidden data-i18n-attr="title:client_pill_title"><span class="dot"></span><span class="txt"></span></span>
     <a class="status-pill company-only" id="status-pill" href="#/tariffe" title="Stato tariffe">
@@ -961,6 +1027,25 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
       <div style="height:var(--s7)"></div>
     </div>
   </section>
+  <!-- ═════════════════════════════════ PREVENTIVO ═════════════════════════════════ -->
+  <section class="view" id="view-preventivo" aria-labelledby="preventivo-title">
+    <div class="wrap">
+      <div class="page-head">
+        <div>
+          <span class="eyebrow" data-i18n="quote_eyebrow">Preventivo</span>
+          <h1 id="preventivo-title" data-i18n-html="quote_h1">Il tuo <em>preventivo</em></h1>
+          <p data-i18n="quote_intro">Calcola i pezzi in «Stima certificato» e aggiungili con «+ Aggiungi al preventivo».</p>
+        </div>
+        <div class="rates-toolbar">
+          <a class="btn btn-gold" href="#/stima" data-i18n="btn_add_piece">+ Aggiungi pezzo</a>
+          <button class="btn" type="button" id="btn-new-quote" data-i18n="btn_new_quote">Nuovo preventivo</button>
+        </div>
+      </div>
+      <div id="quote-root"></div>
+      <div style="height:var(--s7)"></div>
+    </div>
+  </section>
+
   <!-- ═════════════════════════════════ INSTALLA ═════════════════════════════════ -->
   <section class="view" id="view-installa" aria-labelledby="installa-title">
     <div class="wrap">
@@ -1025,6 +1110,7 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
   <span class="mb-v" id="mb-v"></span>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="print-sheet"></div>
 
 <script>
 /* QR Code Generator for JavaScript — qrcode-generator 1.4.4
@@ -1068,6 +1154,7 @@ function defaultRates() {
     tennis: zeroBands([0.99, 1.49, 1.99, 2.49, 2.99, 3.49, 3.99, 4.49, 4.99, null]).map(b => ({ ...b, perCt: false })),
     clients: [],
     shop: { name: '', phone: '' },
+    quotes: [],
   };
 }
 
@@ -1385,6 +1472,72 @@ const I18N = {
     client_phone: 'Telefono WhatsApp',
     wa_send: 'Invia su WhatsApp',
     wa_link_msg: 'Ciao {name}, ecco il tuo listino certificati personale. Aprilo da questo telefono per attivarlo:\n{url}',
+    nav_quote: 'Preventivo',
+    nav_quote_s: 'Prev.',
+    title_quote: 'Preventivo · Gem Cert Pricer',
+    quote_eyebrow: 'Preventivo',
+    quote_h1: 'Il tuo <em>preventivo</em>',
+    quote_intro: 'Calcola i pezzi in «Stima certificato» e aggiungili con «+ Aggiungi al preventivo»: qui trovi l\'elenco, il totale e l\'archivio dei preventivi salvati.',
+    btn_add_piece: '+ Aggiungi pezzo',
+    btn_new_quote: 'Nuovo preventivo',
+    add_to_quote: '+ Aggiungi al preventivo',
+    open_quote: 'Preventivo ({n}) →',
+    toast_added: 'Aggiunto al preventivo · {n}',
+    toast_qty_up: 'Stesso pezzo: quantità aumentata · {n}',
+    n_pieces: '{n} pezzi',
+    n_piece: '1 pezzo',
+    quote_empty_h: 'Il preventivo è vuoto',
+    quote_empty: 'Vai su «Stima certificato», calcola un pezzo e premi «+ Aggiungi al preventivo». Pietre sciolte, montati e tennis possono stare nello stesso preventivo.',
+    quote_go_stima: 'Vai alla stima →',
+    quote_data: 'Dati del preventivo',
+    quote_client: 'Cliente',
+    quote_client_ph: 'Nome del cliente (facoltativo)',
+    quote_note: 'Note',
+    quote_note_hint: 'compaiono nel preventivo',
+    quote_tier: 'Tier del preventivo',
+    quote_wa_to: 'WhatsApp: {name} · +{phone}',
+    quote_wa_any: 'WhatsApp: scegli il contatto al momento dell\'invio',
+    quote_kicker: 'Preventivo certificati',
+    quote_draft: 'Bozza non salvata',
+    quote_saved: 'Preventivo <b>N. {n}</b> del {date}',
+    quote_unsaved: ' · modifiche non salvate',
+    each: '{price} cad.',
+    ref_ph: 'Riferimento (facoltativo)',
+    qty_aria: 'Quantità',
+    remove_item: 'Togli dal preventivo',
+    quote_total: 'Totale preventivo',
+    quote_save: 'Salva nell\'archivio',
+    quote_update: 'Salva modifiche',
+    quote_copy: 'Copia testo',
+    quote_print: 'Stampa / PDF',
+    quote_stale: 'Le tariffe sono cambiate dopo l\'inserimento di alcuni pezzi.',
+    quote_refresh: 'Aggiorna prezzi',
+    toast_q_refreshed: 'Prezzi aggiornati alle tariffe attuali',
+    toast_q_saved: 'Preventivo N. {n} salvato',
+    toast_q_copied: 'Testo del preventivo copiato',
+    toast_q_copy_fail: 'Copia non riuscita',
+    toast_q_empty: 'Il preventivo è vuoto',
+    toast_q_new: 'Nuovo preventivo',
+    confirm_q_replace: 'Il preventivo aperto ha modifiche non salvate. Vuoi sostituirlo?',
+    confirm_q_delete: 'Eliminare il preventivo N. {n}?',
+    toast_q_deleted: 'Preventivo eliminato',
+    quote_archive: 'Archivio preventivi',
+    quote_archive_empty: 'Nessun preventivo salvato. Con «Salva nell\'archivio» lo ritrovi qui e nel file .gcp.json esportato.',
+    q_open: 'Apri',
+    q_delete: 'Elimina',
+    q_current: 'aperto',
+    q_no_client: 'Senza nome',
+    q_title: 'Preventivo certificati',
+    q_n_date: 'N. {n} · {date}',
+    q_client_line: 'Cliente: {name}',
+    q_ref: 'rif. {ref}',
+    q_total_line: 'Totale: {total}',
+    q_note_line: 'Note: {note}',
+    print_desc: 'Descrizione',
+    print_qty: 'Q.tà',
+    print_unit: 'Prezzo',
+    print_amount: 'Importo',
+    print_client: 'Cliente',
   },
   en: {
     skip: 'Skip to content',
@@ -1667,6 +1820,72 @@ const I18N = {
     client_phone: 'WhatsApp phone',
     wa_send: 'Send on WhatsApp',
     wa_link_msg: 'Hi {name}, here is your personal certificate price list. Open it on this phone to activate it:\n{url}',
+    nav_quote: 'Quote',
+    nav_quote_s: 'Quote',
+    title_quote: 'Quote · Gem Cert Pricer',
+    quote_eyebrow: 'Quote',
+    quote_h1: 'Your <em>quote</em>',
+    quote_intro: 'Price each piece in «Certificate estimate» and add it with «+ Add to quote»: here you find the list, the total and the archive of saved quotes.',
+    btn_add_piece: '+ Add piece',
+    btn_new_quote: 'New quote',
+    add_to_quote: '+ Add to quote',
+    open_quote: 'Quote ({n}) →',
+    toast_added: 'Added to the quote · {n}',
+    toast_qty_up: 'Same piece: quantity increased · {n}',
+    n_pieces: '{n} pieces',
+    n_piece: '1 piece',
+    quote_empty_h: 'The quote is empty',
+    quote_empty: 'Go to «Certificate estimate», price a piece and press «+ Add to quote». Loose stones, mounted jewellery and tennis can share the same quote.',
+    quote_go_stima: 'Go to estimate →',
+    quote_data: 'Quote details',
+    quote_client: 'Client',
+    quote_client_ph: 'Client name (optional)',
+    quote_note: 'Notes',
+    quote_note_hint: 'shown on the quote',
+    quote_tier: 'Quote tier',
+    quote_wa_to: 'WhatsApp: {name} · +{phone}',
+    quote_wa_any: 'WhatsApp: pick the contact when sending',
+    quote_kicker: 'Certificate quote',
+    quote_draft: 'Unsaved draft',
+    quote_saved: 'Quote <b>No. {n}</b> of {date}',
+    quote_unsaved: ' · unsaved changes',
+    each: '{price} each',
+    ref_ph: 'Reference (optional)',
+    qty_aria: 'Quantity',
+    remove_item: 'Remove from quote',
+    quote_total: 'Quote total',
+    quote_save: 'Save to archive',
+    quote_update: 'Save changes',
+    quote_copy: 'Copy text',
+    quote_print: 'Print / PDF',
+    quote_stale: 'Rates have changed since some pieces were added.',
+    quote_refresh: 'Update prices',
+    toast_q_refreshed: 'Prices updated to the current rates',
+    toast_q_saved: 'Quote No. {n} saved',
+    toast_q_copied: 'Quote text copied',
+    toast_q_copy_fail: 'Copy failed',
+    toast_q_empty: 'The quote is empty',
+    toast_q_new: 'New quote',
+    confirm_q_replace: 'The open quote has unsaved changes. Replace it?',
+    confirm_q_delete: 'Delete quote No. {n}?',
+    toast_q_deleted: 'Quote deleted',
+    quote_archive: 'Quote archive',
+    quote_archive_empty: 'No saved quotes yet. «Save to archive» keeps them here and in the exported .gcp.json file.',
+    q_open: 'Open',
+    q_delete: 'Delete',
+    q_current: 'open',
+    q_no_client: 'No name',
+    q_title: 'Certificate quote',
+    q_n_date: 'No. {n} · {date}',
+    q_client_line: 'Client: {name}',
+    q_ref: 'ref. {ref}',
+    q_total_line: 'Total: {total}',
+    q_note_line: 'Notes: {note}',
+    print_desc: 'Description',
+    print_qty: 'Qty',
+    print_unit: 'Price',
+    print_amount: 'Amount',
+    print_client: 'Client',
   },
 };
 const LANGS = Object.keys(I18N);
@@ -1782,6 +2001,7 @@ function normRates(d) {
     tennis: Array.isArray(d?.tennis) && d.tennis.length ? normBands(d.tennis) : def.tennis,
     clients: normClients(d?.clients),
     shop: { name: String(d?.shop?.name || '').slice(0, 80), phone: String(d?.shop?.phone || '').slice(0, 20) },
+    quotes: normQuotes(d?.quotes),
   };
   return r;
 }
@@ -1810,6 +2030,7 @@ function loadCompanyRates() {
 function load() {
   RATES = loadCompanyRates();
   HAS_COMPANY = isConfigured();
+  loadQuote();
   try {
     const sh = JSON.parse(localStorage.getItem(STORE_SHOP) || 'null');
     if (sh && sh.w) SHOP_REQ = { n: String(sh.n || '').slice(0, 80), w: normPhone(sh.w) };
@@ -1955,8 +2176,8 @@ function route() {
     location.replace(SHOP_REQ ? '#/richiesta' : '#/');
     return;
   }
-  let view = ['stima', 'tariffe', 'clienti', 'richiesta', 'installa'].includes(parts[0]) ? parts[0] : 'home';
-  if (isPublic() && (view === 'tariffe' || view === 'clienti')) { location.replace('#/stima'); return; }
+  let view = ['stima', 'tariffe', 'clienti', 'preventivo', 'richiesta', 'installa'].includes(parts[0]) ? parts[0] : 'home';
+  if (isPublic() && ['tariffe', 'clienti', 'preventivo'].includes(view)) { location.replace('#/stima'); return; }
   if (view === 'stima' && ['sciolto', 'montato', 'tennis'].includes(parts[1])) {
     UI.mode = parts[1]; saveUI();
   }
@@ -1964,13 +2185,15 @@ function route() {
   $$('.nav a').forEach(a => {
     if (a.dataset.route === view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients', richiesta: 'title_request', installa: 'title_install' }[view]);
+  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients', preventivo: 'title_quote', richiesta: 'title_request', installa: 'title_install' }[view]);
+  document.body.classList.toggle('print-quote', view === 'preventivo');
   if (view !== 'stima') $('#mobile-bar').classList.add('hidden');
   if (view === 'stima') renderCalc();
   if (view === 'tariffe') renderRates();
   if (view === 'richiesta') renderRequest();
   if (view === 'installa') renderInstall();
   if (view === 'clienti') renderClients(parts[1] && decodeURIComponent(parts[1]));
+  if (view === 'preventivo') renderQuote();
   if (view === 'home') renderHome();
   const key = view + '/' + (parts[1] || '');
   if (key !== route.last) window.scrollTo({ top: 0, behavior: 'instant' });
@@ -2027,6 +2250,7 @@ function bindCalc() {
   $('#in-lab-center').addEventListener('change', e => { UI.labCenter = e.target.checked; saveUI(); renderResult(); });
   $('#result').addEventListener('click', e => {
     if (e.target.closest('[data-act="all-bands"]')) { UI.allBands = !UI.allBands; saveUI(); renderResult(); }
+    if (e.target.closest('[data-act="add-quote"]')) addToQuote();
   });
   $$('input[name="tier"]').forEach(r => r.addEventListener('change', () => { UI.tier = Number(r.value); saveUI(); renderCalc(); }));
 
@@ -2116,10 +2340,10 @@ function animatePrice(el, to) {
   animFrame = requestAnimationFrame(tick);
 }
 
-function tierCards(fn) {
+function tierCards(fn, cur = UI.tier) {
   return `<div class="tiers" role="group" aria-label="${t('tiers_aria')}">${TIERS.map((name, k) => {
     const q = fn(k);
-    return `<button type="button" class="tier" data-tier="${k}" aria-pressed="${k === UI.tier}">
+    return `<button type="button" class="tier" data-tier="${k}" aria-pressed="${k === cur}">
       <span class="t">${name}</span><span class="v">${fmtEur(q.total)}</span><span class="d">${esc(q.note)}</span>
     </button>`;
   }).join('')}</div>`;
@@ -2164,6 +2388,7 @@ function renderResult() {
         <div class="price" id="price-out"></div>
         <p class="price-note">${t('band')} <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ` · ${t('fixed_rate')}`}</p>
         ${tierCards(k => { const x = quoteLoose(UI.looseType, ct, k).parts[0]; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : t('fixed') }; })}
+        ${quoteAddHTML()}
       </div>
       ${rulerHTML(RATES.loose[UI.looseType], p.i, tier, `${t('rul_' + UI.looseType)}${tierSfx(tier)}`)}`;
     }
@@ -2183,6 +2408,7 @@ function renderResult() {
         <div class="price" id="price-out"></div>
         <p class="price-note">${t('band')} <b>${esc(p.label)}</b>${p.perCt ? ` · ${fmtEur(p.rate)}/ct × ${fmtCt(ct)} ct` : ` · ${t('fixed_rate')}`}</p>
         ${tierCards(k => { const x = quoteTennis(ct, k).band; return { total: x.value, note: x.perCt ? `${fmtEur(x.rate)}/ct` : t('fixed') }; })}
+        ${quoteAddHTML()}
       </div>
       ${rulerHTML(RATES.tennis, p.i, tier, `${t('rul_tennis')}${tierSfx(tier)}`)}`;
     }
@@ -2206,6 +2432,7 @@ function renderResult() {
           <div class="brow total"><span class="lbl"><b>${t('total')}</b></span><span class="val">${fmtEur(total)}</span></div>
         </div>
         ${tierCards(k => { const x = quoteLab(ct, UI.labCenter, k); return { total: x.total, note: UI.labCenter ? `${fmtEur(x.band.value)} + ${fmtEur(x.fee)}` : t('fixed') }; })}
+        ${quoteAddHTML()}
       </div>
       ${rulerHTML(RATES.mounted.lab, p.i, tier, `${t('rul_lab')}${tierSfx(tier)}`)}`;
     }
@@ -2230,6 +2457,7 @@ function renderResult() {
           <div class="brow total"><span class="lbl"><b>${t('total')}</b></span><span class="val">${fmtEur(total)}</span></div>
         </div>
         ${tierCards(k => { const x = quoteMounted(cct, hct, k); return { total: x.total, note: `${fmtEur(x.center.value)} + ${x.halo ? fmtEur(x.halo.value) : '0'}` }; })}
+        ${quoteAddHTML()}
       </div>
       ${matrixHTML(cct, hct, tier, c, h)}`;
     }
@@ -2969,6 +3197,391 @@ function refreshShopQr() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   PREVENTIVO — più pezzi in un solo preventivo (solo versione aziendale)
+   Ogni pezzo si calcola in «Stima» e si aggiunge con «+ Aggiungi al preventivo».
+   Pezzo: { kind: loose|mounted|lab|tennis, type, ct, ct2, center, qty, ref, p }
+     • p → prezzo unitario T1, T2, T3 fissato al momento dell'inserimento:
+           un preventivo salvato non cambia se poi cambiano le tariffe
+   La bozza vive nel localStorage; i preventivi salvati in RATES.quotes,
+   quindi finiscono anche nel file .gcp.json esportato.
+   ═══════════════════════════════════════════════════════════════════════════ */
+const STORE_QUOTE = 'gcp3_quote';
+const QUOTE_KINDS = ['loose', 'mounted', 'lab', 'tennis'];
+let QUOTE = null;
+let quoteDirty = false;
+
+function normItem(it) {
+  const ct = Number(it?.ct);
+  if (!it || !QUOTE_KINDS.includes(it.kind) || !(ct > 0)) return null;
+  return {
+    id: String(it.id || newId()),
+    kind: it.kind,
+    type: it.type === 'color' ? 'color' : 'diam',
+    ct,
+    ct2: Math.max(0, Number(it.ct2) || 0),
+    center: it.center !== false,
+    qty: Math.min(999, Math.max(1, Math.round(Number(it.qty) || 1))),
+    ref: String(it.ref || '').slice(0, 80),
+    p: [0, 1, 2].map(k => round2(Number(it.p?.[k]) || 0)),
+  };
+}
+
+function normQuote(q) {
+  return {
+    id: q?.id ? String(q.id) : null,
+    n: Number.isInteger(q?.n) && q.n > 0 ? q.n : null,
+    date: String(q?.date || '').slice(0, 10),
+    client: String(q?.client || '').slice(0, 80),
+    note: String(q?.note || '').slice(0, 500),
+    tier: [0, 1, 2].includes(Number(q?.tier)) ? Number(q.tier) : 0,
+    items: (Array.isArray(q?.items) ? q.items : []).map(normItem).filter(Boolean).slice(0, 200),
+  };
+}
+function normQuotes(arr) {
+  return Array.isArray(arr) ? arr.map(normQuote).filter(q => q.id && q.n && q.items.length) : [];
+}
+
+const emptyQuote = () => normQuote({ tier: UI.tier });
+const pieces = q => q.items.reduce((n, it) => n + it.qty, 0);
+const quoteTotal = (q, tier) => round2(q.items.reduce((s, it) => s + it.p[tier] * it.qty, 0));
+const nPieces = n => (n === 1 ? t('n_piece') : t('n_pieces', { n }));
+const fmtDate = d => (d ? new Date(d + 'T12:00:00').toLocaleDateString(locale()) : '');
+const today = () => new Date().toISOString().slice(0, 10);
+
+function loadQuote() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORE_QUOTE) || 'null');
+    QUOTE = d && d.q ? normQuote(d.q) : emptyQuote();
+    quoteDirty = !!(d && d.dirty);
+  } catch (e) { QUOTE = emptyQuote(); quoteDirty = false; }
+}
+function saveQuote(dirty = true) {
+  quoteDirty = dirty;
+  try { localStorage.setItem(STORE_QUOTE, JSON.stringify({ q: QUOTE, dirty })); } catch (e) { /* noop */ }
+  updateQuoteCount();
+}
+
+// Prezzo unitario del pezzo con le tariffe attuali, per i tre tier
+function itemPrices(it) {
+  return [0, 1, 2].map(k => {
+    if (it.kind === 'loose') return quoteLoose(it.type, it.ct, k)?.total || 0;
+    if (it.kind === 'mounted') return quoteMounted(it.ct, it.ct2, k).total;
+    if (it.kind === 'lab') return quoteLab(it.ct, it.center, k).total;
+    return quoteTennis(it.ct, k).total;
+  }).map(round2);
+}
+
+// Il pezzo attualmente impostato in «Stima»
+function itemFromUI() {
+  let it;
+  if (UI.mode === 'sciolto') it = { kind: 'loose', type: UI.looseType, ct: parseNum(UI.looseCt) };
+  else if (UI.mode === 'tennis') it = { kind: 'tennis', ct: parseNum(UI.tennisCt) };
+  else if (UI.mountedType === 'lab') it = { kind: 'lab', ct: parseNum(UI.labCt), center: UI.labCenter };
+  else {
+    const h = parseNum(UI.haloCt);
+    if (!(h >= 0)) return null;
+    it = { kind: 'mounted', ct: parseNum(UI.centerCt), ct2: h };
+  }
+  it = normItem(it);
+  if (it) it.p = itemPrices(it);
+  return it;
+}
+
+const itemTitle = it => t({ loose: 'k_loose', mounted: 'k_mounted', lab: 'k_lab', tennis: 'k_tennis' }[it.kind]);
+function itemDetail(it) {
+  if (it.kind === 'loose') return `${t(it.type)} · ${fmtCt(it.ct)} ct`;
+  if (it.kind === 'mounted') return t('sub_mounted', { c: fmtCt(it.ct), h: it.ct2 > 0 ? fmtCt(it.ct2) + ' ct' : t('halo_absent') });
+  if (it.kind === 'lab') return t(it.center ? 'sub_lab_with' : 'sub_lab_without', { ct: fmtCt(it.ct) });
+  return t('sub_tennis', { ct: fmtCt(it.ct) });
+}
+const sameSpec = (a, b) => a.kind === b.kind && a.type === b.type && a.ct === b.ct && a.ct2 === b.ct2
+  && a.center === b.center && a.p.every((v, k) => v === b.p[k]) && !b.ref;
+
+function updateQuoteCount() {
+  const el = $('#nav-quote-count');
+  if (!el) return;
+  const n = QUOTE ? pieces(QUOTE) : 0;
+  el.hidden = !n;
+  el.textContent = n;
+}
+
+function quoteAddHTML() {
+  if (isPublic()) return '';
+  const n = pieces(QUOTE);
+  return `<div class="quote-add">
+    <button type="button" class="btn btn-gold btn-sm" data-act="add-quote">${t('add_to_quote')}</button>
+    ${n ? `<a class="btn btn-sm" href="#/preventivo">${t('open_quote', { n })}</a>` : ''}
+  </div>`;
+}
+
+function addToQuote() {
+  const it = itemFromUI();
+  if (!it) return;
+  if (!QUOTE.items.length && !QUOTE.id) QUOTE.tier = UI.tier;
+  const same = QUOTE.items.find(x => sameSpec(it, x));
+  if (same) same.qty = Math.min(999, same.qty + 1); else QUOTE.items.push(it);
+  saveQuote();
+  renderResult();
+  toast(t(same ? 'toast_qty_up' : 'toast_added', { n: nPieces(pieces(QUOTE)) }));
+}
+
+// Cliente del database con lo stesso nome (per il numero WhatsApp)
+const quoteClient = () => {
+  const name = QUOTE.client.trim().toLowerCase();
+  return name ? RATES.clients.find(c => c.name.trim().toLowerCase() === name) : null;
+};
+function waTargetHTML() {
+  const c = quoteClient();
+  return c && normPhone(c.phone) ? t('quote_wa_to', { name: esc(c.name), phone: normPhone(c.phone) }) : t('quote_wa_any');
+}
+
+function quoteStateHTML() {
+  if (!QUOTE.id) return t('quote_draft');
+  return t('quote_saved', { n: QUOTE.n, date: esc(fmtDate(QUOTE.date)) }) + (quoteDirty ? t('quote_unsaved') : '');
+}
+
+const qValHTML = (it, tier) => fmtEur(it.p[tier] * it.qty) + (it.qty > 1 ? `<small>${esc(t('each', { price: fmtEur(it.p[tier]) }))}</small>` : '');
+const qTierCards = q => tierCards(k => ({ total: quoteTotal(q, k), note: nPieces(pieces(q)) }), q.tier);
+const qSubject = q => `${q.client.trim() || t('q_no_client')} · ${nPieces(pieces(q))}`;
+
+function renderQuote() {
+  const box = $('#quote-root');
+  // preventivo non più in archivio (eliminato o sostituito da un import): torna bozza
+  if (QUOTE.id && !RATES.quotes.some(x => x.id === QUOTE.id)) { QUOTE.id = null; QUOTE.n = null; saveQuote(); }
+  const q = QUOTE, tier = q.tier;
+  const archive = quoteArchiveHTML();
+  if (!q.items.length) {
+    box.innerHTML = `<div class="panel empty-state">
+        <div class="gem-mini" data-gem></div>
+        <h2>${t('quote_empty_h')}</h2>
+        <p>${t('quote_empty')}</p>
+        <p style="margin-top:var(--s5)"><a class="btn btn-gold" href="#/stima">${t('quote_go_stima')}</a></p>
+        ${q.id ? `<p class="q-state">${quoteStateHTML()}</p>` : ''}
+      </div>${archive}`;
+    $$('[data-gem]', box).forEach(el => { el.innerHTML = gemSVG(); });
+    fillPrintSheet();
+    return;
+  }
+  const total = quoteTotal(q, tier);
+  const stale = q.items.some(it => itemPrices(it).some((v, k) => v !== it.p[k]));
+  const rows = q.items.map((it, i) => `<div class="q-item" data-id="${esc(it.id)}">
+      <div class="q-main"><b>${i + 1}. ${esc(itemTitle(it))}</b><small>${esc(itemDetail(it))}</small>
+        <input class="q-ref" data-qf="ref" value="${esc(it.ref)}" maxlength="80" placeholder="${esc(t('ref_ph'))}" aria-label="${esc(t('ref_ph'))}"></div>
+      <div class="q-qty" role="group" aria-label="${esc(t('qty_aria'))}">
+        <button type="button" data-qact="dec" aria-label="${esc(t('step_down'))}">−</button>
+        <input data-qf="qty" value="${it.qty}" inputmode="numeric" aria-label="${esc(t('qty_aria'))}">
+        <button type="button" data-qact="inc" aria-label="${esc(t('step_up'))}">+</button>
+      </div>
+      <div class="q-val">${qValHTML(it, tier)}</div>
+      <button type="button" class="del-btn" data-qact="del" aria-label="${esc(t('remove_item'))}" title="${esc(t('remove_item'))}">×</button>
+    </div>`).join('');
+  const clients = RATES.clients.map(c => `<option value="${esc(c.name)}"></option>`).join('');
+  box.innerHTML = `<div class="quote-grid">
+      <div>
+        <div class="panel">
+          <div class="panel-title">${t('quote_data')}</div>
+          <div class="field"><label class="field-label" for="q-client"><span>${t('quote_client')}</span></label>
+            <input class="text-in" id="q-client" data-qf="client" list="q-clients" value="${esc(q.client)}" maxlength="80" autocomplete="off" placeholder="${esc(t('quote_client_ph'))}">
+            <datalist id="q-clients">${clients}</datalist>
+            <p class="hint" id="q-wa-target">${waTargetHTML()}</p></div>
+          <div class="field"><label class="field-label" for="q-note"><span>${t('quote_note')}</span><span>${t('quote_note_hint')}</span></label>
+            <textarea class="text-in" id="q-note" data-qf="note" rows="2" maxlength="500">${esc(q.note)}</textarea></div>
+          <div class="field"><div class="field-label"><span>${t('quote_tier')}</span></div>
+            <div class="seg seg-block" role="radiogroup" aria-label="${esc(t('quote_tier'))}">
+              ${TIERS.map((name, k) => `<input type="radio" name="q-tier" id="q-tier-${k}" value="${k}"${k === tier ? ' checked' : ''}><label for="q-tier-${k}">${name}</label>`).join('')}
+            </div></div>
+          <div class="card-actions">
+            <a class="btn btn-gold btn-sm" id="q-wa" href="#" target="_blank" rel="noopener">${t('wa_send')}</a>
+            <button type="button" class="btn btn-sm" data-qact="copy">${t('quote_copy')}</button>
+            <button type="button" class="btn btn-sm" data-qact="print">${t('quote_print')}</button>
+            <button type="button" class="btn btn-sm" data-qact="save">${t(q.id ? 'quote_update' : 'quote_save')}</button>
+          </div>
+          <p class="q-state" id="q-state">${quoteStateHTML()}</p>
+        </div>
+      </div>
+      <div>
+        <div class="ticket">
+          <div class="ticket-top">
+            <div><div class="ticket-kicker">${t('quote_kicker')}</div><div class="ticket-subject" id="q-subject">${esc(qSubject(q))}</div></div>
+            <span class="tier-badge">${TIERS[tier]}</span>
+          </div>
+          <div class="price" id="q-price">${fmtEur(total)}</div>
+          <div class="q-list">${rows}</div>
+          <div class="q-total"><span>${t('quote_total')}</span><span class="val" id="q-total">${fmtEur(total)}</span></div>
+          ${qTierCards(q)}
+        </div>
+        ${stale ? `<div class="notice q-stale"><p>${t('quote_stale')}</p><div class="actions"><button type="button" class="btn btn-sm" data-qact="refresh">${t('quote_refresh')}</button></div></div>` : ''}
+      </div>
+    </div>${archive}`;
+  updateQuoteWa();
+  fillPrintSheet();
+}
+
+function quoteArchiveHTML() {
+  const list = RATES.quotes.slice().sort((a, b) => b.n - a.n);
+  const rows = list.map(q => `<div class="client-row${q.id === QUOTE.id ? ' current' : ''}" data-qid="${esc(q.id)}">
+      <div class="cr-main">
+        <span class="cr-name">${esc(q.client || t('q_no_client'))}</span>
+        <span class="cr-meta"><span class="tier-chip">${TIERS[q.tier]}</span><span>${esc(t('q_n_date', { n: q.n, date: fmtDate(q.date) }))}</span><span>${esc(nPieces(pieces(q)))}</span><b style="color:var(--gold-hi)">${fmtEur(quoteTotal(q, q.tier))}</b>${q.id === QUOTE.id ? `<span class="custom-chip">${t('q_current')}</span>` : ''}</span>
+      </div>
+      <div class="cr-actions">
+        <button type="button" class="btn btn-sm" data-aact="open">${t('q_open')}</button>
+        <button type="button" class="btn btn-sm btn-ghost-danger" data-aact="delete">${t('q_delete')}</button>
+      </div>
+    </div>`).join('');
+  return `<section class="q-archive" aria-labelledby="q-archive-title">
+      <h2 id="q-archive-title">${t('quote_archive')}</h2>
+      ${rows ? `<div class="client-list">${rows}</div>` : `<p class="clients-empty">${t('quote_archive_empty')}</p>`}
+    </section>`;
+}
+
+// Aggiorna importi e totali senza ridisegnare la pagina (il campo in modifica resta attivo)
+function paintQuoteTotals() {
+  const q = QUOTE, root = $('#quote-root');
+  $$('.q-item', root).forEach(row => {
+    const it = q.items.find(x => x.id === row.dataset.id);
+    if (it) $('.q-val', row).innerHTML = qValHTML(it, q.tier);
+  });
+  const total = fmtEur(quoteTotal(q, q.tier));
+  $('#q-price').textContent = total;
+  $('#q-total').textContent = total;
+  $('#q-subject').textContent = qSubject(q);
+  $('.tiers', root).outerHTML = qTierCards(q);
+  $('#q-state').innerHTML = quoteStateHTML();
+  updateQuoteWa();
+  fillPrintSheet();
+}
+
+// Testo per WhatsApp / appunti: senza tier, solo i prezzi del preventivo
+function quoteText() {
+  const q = QUOTE, tier = q.tier, shop = RATES.shop?.name;
+  const lines = [`*${t('q_title')}*${shop ? ' — ' + shop : ''}`];
+  lines.push(q.id ? t('q_n_date', { n: q.n, date: fmtDate(q.date) }) : fmtDate(today()));
+  if (q.client) lines.push(t('q_client_line', { name: q.client }));
+  lines.push('');
+  q.items.forEach((it, i) => {
+    lines.push(`${i + 1}. ${itemTitle(it)} — ${itemDetail(it)}${it.ref ? ` (${t('q_ref', { ref: it.ref })})` : ''}`);
+    lines.push(it.qty > 1 ? `   ${it.qty} × ${fmtEur(it.p[tier])} = ${fmtEur(it.p[tier] * it.qty)}` : `   ${fmtEur(it.p[tier])}`);
+  });
+  lines.push('', `*${t('q_total_line', { total: fmtEur(quoteTotal(q, tier)) })}*`);
+  if (q.note.trim()) lines.push('', t('q_note_line', { note: q.note.trim() }));
+  return lines.join('\n');
+}
+
+function updateQuoteWa() {
+  const a = $('#q-wa');
+  if (!a) return;
+  const c = quoteClient();
+  a.href = waLink(c ? c.phone : '', quoteText());
+  const hint = $('#q-wa-target');
+  if (hint) hint.innerHTML = waTargetHTML();
+}
+
+// Foglio stampabile (visibile solo in stampa, dalla pagina Preventivo)
+function fillPrintSheet() {
+  const q = QUOTE, tier = q.tier, shop = RATES.shop?.name;
+  const sheet = $('#print-sheet');
+  if (!q.items.length) { sheet.innerHTML = ''; return; }
+  const rows = q.items.map((it, i) => `<tr>
+      <td>${i + 1}</td>
+      <td>${esc(itemTitle(it))}<small>${esc(itemDetail(it))}${it.ref ? ' · ' + esc(t('q_ref', { ref: it.ref })) : ''}</small></td>
+      <td class="r">${it.qty}</td>
+      <td class="r">${fmtEur(it.p[tier])}</td>
+      <td class="r">${fmtEur(it.p[tier] * it.qty)}</td>
+    </tr>`).join('');
+  sheet.innerHTML = `<div class="ps-head">
+      <div>${shop ? `<div class="ps-shop">${esc(shop)}</div>` : ''}<h1>${t('q_title')}</h1></div>
+      <div class="ps-meta">${esc(q.id ? t('q_n_date', { n: q.n, date: fmtDate(q.date) }) : fmtDate(today()))}</div>
+    </div>
+    ${q.client ? `<p class="ps-client">${t('print_client')}: <b>${esc(q.client)}</b></p>` : '<div style="height:6mm"></div>'}
+    <table>
+      <thead><tr><th>#</th><th>${t('print_desc')}</th><th class="r">${t('print_qty')}</th><th class="r">${t('print_unit')}</th><th class="r">${t('print_amount')}</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr><td></td><td>${t('quote_total')}</td><td class="r">${pieces(q)}</td><td></td><td class="r">${fmtEur(quoteTotal(q, tier))}</td></tr></tfoot>
+    </table>
+    ${q.note.trim() ? `<p class="ps-note">${esc(q.note.trim())}</p>` : ''}`;
+}
+
+function saveToArchive() {
+  if (!QUOTE.items.length) { toast(t('toast_q_empty'), true); return; }
+  const at = QUOTE.id ? RATES.quotes.findIndex(x => x.id === QUOTE.id) : -1;
+  if (at < 0) {
+    QUOTE.id = newId();
+    QUOTE.n = RATES.quotes.reduce((m, x) => Math.max(m, x.n), 0) + 1;
+  }
+  QUOTE.date = today();
+  const copy = normQuote(JSON.parse(JSON.stringify(QUOTE)));
+  if (at < 0) RATES.quotes.push(copy); else RATES.quotes[at] = copy;
+  saveRates();
+  saveQuote(false);
+  renderQuote();
+  toast(t('toast_q_saved', { n: QUOTE.n }));
+}
+
+// Chiede conferma prima di perdere una bozza con modifiche non salvate
+const canReplaceQuote = () => !QUOTE.items.length || !quoteDirty || confirm(t('confirm_q_replace'));
+
+function bindQuote() {
+  const root = $('#quote-root');
+  $('#btn-new-quote').addEventListener('click', () => {
+    if (!canReplaceQuote()) return;
+    QUOTE = emptyQuote(); saveQuote(false); renderQuote(); toast(t('toast_q_new'));
+  });
+  const itemOf = el => QUOTE.items.find(x => x.id === el.closest('[data-id]')?.dataset.id);
+  root.addEventListener('input', e => {
+    const el = e.target, f = el.dataset.qf;
+    if (f === 'client' || f === 'note') QUOTE[f] = el.value;
+    else if (f === 'ref') { const it = itemOf(el); if (it) it.ref = el.value.slice(0, 80); }
+    else if (f === 'qty') {
+      const it = itemOf(el), v = Math.round(parseNum(el.value));
+      if (!it || !(v > 0)) return;
+      it.qty = Math.min(999, v);
+    } else return;
+    saveQuote();
+    paintQuoteTotals();
+  });
+  root.addEventListener('change', e => {
+    if (e.target.name === 'q-tier') { QUOTE.tier = Number(e.target.value); saveQuote(); renderQuote(); return; }
+    if (e.target.dataset.qf === 'qty') { const it = itemOf(e.target); if (it) e.target.value = it.qty; }
+  });
+  root.addEventListener('click', e => {
+    const tierBtn = e.target.closest('.tier');
+    if (tierBtn) { QUOTE.tier = Number(tierBtn.dataset.tier); saveQuote(); renderQuote(); return; }
+    const arch = e.target.closest('[data-aact]');
+    if (arch) {
+      const q = RATES.quotes.find(x => x.id === arch.closest('[data-qid]').dataset.qid);
+      if (!q) return;
+      if (arch.dataset.aact === 'open') {
+        if (q.id !== QUOTE.id && !canReplaceQuote()) return;
+        QUOTE = normQuote(JSON.parse(JSON.stringify(q))); saveQuote(false); renderQuote();
+        window.scrollTo({ top: 0, behavior: reduceMotion ? 'instant' : 'smooth' });
+      } else if (confirm(t('confirm_q_delete', { n: q.n }))) {
+        RATES.quotes = RATES.quotes.filter(x => x.id !== q.id); saveRates();
+        if (QUOTE.id === q.id) { QUOTE.id = null; QUOTE.n = null; saveQuote(); }
+        renderQuote(); toast(t('toast_q_deleted'));
+      }
+      return;
+    }
+    const btn = e.target.closest('[data-qact]');
+    if (!btn) return;
+    const it = itemOf(btn);
+    switch (btn.dataset.qact) {
+      case 'inc': it.qty = Math.min(999, it.qty + 1); break;
+      case 'dec': if (it.qty > 1) it.qty--; else return; break;
+      case 'del': QUOTE.items = QUOTE.items.filter(x => x !== it); break;
+      case 'refresh': QUOTE.items.forEach(x => { x.p = itemPrices(x); }); toast(t('toast_q_refreshed')); break;
+      case 'save': saveToArchive(); return;
+      case 'print': fillPrintSheet(); window.print(); return;
+      case 'copy':
+        navigator.clipboard.writeText(quoteText()).then(() => toast(t('toast_q_copied')), () => toast(t('toast_q_copy_fail'), true));
+        return;
+      default: return;
+    }
+    saveQuote(); renderQuote();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    INSTALLAZIONE (PWA)
    Chrome ed Edge segnalano l'app installabile con «beforeinstallprompt»:
    il pulsante «Installa» compare solo allora; altrove si mostrano le istruzioni.
@@ -3013,6 +3626,7 @@ function renderAll() {
   applyLang();
   applyMode();
   updateStatus();
+  updateQuoteCount();
   route();
 }
 
@@ -3029,6 +3643,7 @@ function init() {
   bindCalc();
   bindRates();
   bindClients();
+  bindQuote();
   $('#client-exit').addEventListener('click', exitClient);
 
   const fileInput = $('#file-input');

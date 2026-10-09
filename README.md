@@ -29,12 +29,29 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 | **Home** | Pagina iniziale con i tre percorsi di stima |
 | **Stima certificato** | Pietra sciolta · Montato (gemma di colore o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
 | **Tariffe** | Editor delle tabelle di prezzo, import/export `.gcp.json` |
+| **Preventivo** | Più pezzi in un solo preventivo: quantità, riferimenti, totale T1/T2/T3, invio su WhatsApp, stampa/PDF e archivio |
 | **Clienti** | Database clienti: tier di riferimento e per categoria, prezzi su misura, link personale da inviare su WhatsApp; QR del negozio e richieste via WhatsApp |
 
 ### Versione aziendale e versione pubblica
 
 - **Aziendale** — chi importa il tariffario completo vede i tre tier, le tariffe e la pagina **Clienti**. A ogni cliente si assegna un **tier di riferimento**, se serve un **tier diverso per categoria** (es. T1 sui diamanti e T3 sulle gemme di colore) e, sopra a questi, eventuali **prezzi su misura** per singola fascia (o per il supplemento della pietra centrale).
 - **Pubblica (cliente)** — dalla scheda di un cliente si invia su WhatsApp (o si copia) il suo **link personale**. Chi lo apre vede solo i propri prezzi, in un'unica colonna: niente tier, niente tariffe aziendali, niente altri clienti. Il listino resta salvato sul suo dispositivo finché non riceve un link aggiornato.
+
+### Preventivo con più pezzi
+
+Solo nella versione aziendale. Ogni pezzo si calcola in **Stima certificato** e si aggiunge con **+ Aggiungi al preventivo**: pietre sciolte, montati (gemma di colore o lab-grown) e tennis possono stare nello stesso preventivo.
+
+```
+1. Stima → calcola il pezzo → «+ Aggiungi al preventivo»   (lo stesso pezzo aggiunto due volte aumenta la quantità)
+2. Preventivo → quantità, riferimento per pezzo, cliente, note e tier del preventivo
+3. «Invia su WhatsApp» · «Copia testo» · «Stampa / PDF»
+4. «Salva nell'archivio» → numero progressivo e data; riaprilo quando vuoi dall'archivio
+```
+
+- **Un tier per tutto il preventivo**, con il totale confrontato su T1 · T2 · T3. Il tier non compare nel testo WhatsApp né nella stampa.
+- **Prezzi fissati all'inserimento**: un preventivo salvato non cambia se poi modifichi le tariffe; se sono cambiate, il pulsante *Aggiorna prezzi* ricalcola i pezzi con le tariffe attuali.
+- **WhatsApp**: se il nome del cliente corrisponde a un cliente del database con numero, il messaggio va direttamente a lui; altrimenti scegli il contatto al momento dell'invio.
+- **Archivio**: i preventivi salvati sono nel file `.gcp.json` esportato insieme a tariffe e clienti.
 
 ### QR del negozio: richiesta del listino via WhatsApp
 
@@ -77,6 +94,16 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
 
 ![Stima montato con gemma di colore](docs/screenshots/montato.webp)
 
+### Preventivo con più pezzi
+
+**Preventivo** — pezzi di tipo diverso nello stesso preventivo, con quantità, riferimenti, tier del preventivo, totale T1 · T2 · T3 e archivio:
+
+![Pagina Preventivo](docs/screenshots/preventivo.webp)
+
+**Stampa / PDF** — foglio pulito da consegnare al cliente, senza tier:
+
+![Preventivo stampato](docs/screenshots/stampa.webp)
+
 ### Clienti e versione pubblica
 
 <table>
@@ -99,14 +126,16 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
   </tr>
 </table>
 
-**Da smartphone** — home, stima con totale sempre visibile e vista del cliente:
+**Da smartphone** — home, stima con totale sempre visibile, preventivo e vista del cliente:
 
 <p align="center">
-  <img src="docs/screenshots/m-home.webp" alt="Home da smartphone" width="250">
+  <img src="docs/screenshots/m-home.webp" alt="Home da smartphone" width="200">
   &nbsp;
-  <img src="docs/screenshots/m-montato.webp" alt="Stima montato da smartphone" width="250">
+  <img src="docs/screenshots/m-montato.webp" alt="Stima montato da smartphone" width="200">
   &nbsp;
-  <img src="docs/screenshots/m-pubblica.webp" alt="Vista cliente da smartphone" width="250">
+  <img src="docs/screenshots/m-preventivo.webp" alt="Preventivo da smartphone" width="200">
+  &nbsp;
+  <img src="docs/screenshots/m-pubblica.webp" alt="Vista cliente da smartphone" width="200">
 </p>
 
 ---
@@ -131,6 +160,9 @@ PREZZO CLIENTE (versione pubblica)
                    (tier per categoria, se impostato, altrimenti tier di riferimento)
   categorie: diamanti sciolti · gemme di colore sciolte · montato gemma di colore
              (centrale + contorno) · montato lab-grown (+ supplemento) · tennis
+
+PREVENTIVO (più pezzi)
+  Totale = Σ prezzo pezzo[tier del preventivo] × quantità
 
 MONTATO LAB-GROWN
   Cert = tariffa_lab[fascia peso totale diamanti][tier]
@@ -175,7 +207,12 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
        "note": "", "phone": "393331234567",
        "overrides": {"loose.diam": {"0.49": 35}, "mounted.labCenter": 9}}
     ],
-    "shop": {"name": "Il mio negozio", "phone": "39 333 1234567"}
+    "shop": {"name": "Il mio negozio", "phone": "39 333 1234567"},
+    "quotes": [
+      {"id": "…", "n": 1, "date": "2026-10-09", "client": "Rossi Gioielli", "note": "", "tier": 1,
+       "items": [{"kind": "loose", "type": "diam", "ct": 0.5, "qty": 2, "ref": "", "p": [45, 40, 35]},
+                 {"kind": "mounted", "ct": 1, "ct2": 0.3, "qty": 1, "ref": "Anello 12", "p": [120, 110, 100]}]}
+    ]
   }
 }
 ```
@@ -186,6 +223,7 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
 - `labCenter` — supplemento fisso per la pietra centrale nel montato lab-grown (T1, T2, T3)
 - `clients` — database clienti: `tier` di riferimento (0 = T1, 1 = T2, 2 = T3), `tiers` per categoria (`diam`, `color`, `mounted`, `lab`, `tennis`; facoltativo), `phone` WhatsApp e `overrides`, prezzi su misura indicizzati per tabella e limite della fascia (`"open"` per l'ultima fascia aperta)
 - `shop` — nome e numero WhatsApp del negozio usati dal QR da esporre
+- `quotes` — archivio dei preventivi: numero `n`, `date`, `client`, `note`, `tier` del preventivo e `items`; ogni pezzo ha `kind` (`loose`, `mounted`, `lab`, `tennis`), `type` (`diam`/`color`, pietra sciolta), `ct`, `ct2` (contorno del montato), `center` (pietra centrale del lab-grown), `qty`, `ref` e `p`, il prezzo unitario T1, T2, T3 fissato al momento dell'inserimento
 
 I file del formato precedente (`gcp-pricing-v1`) non sono più compatibili.
 
