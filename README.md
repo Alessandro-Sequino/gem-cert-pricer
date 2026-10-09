@@ -5,7 +5,7 @@
 **Stima istantanea del costo dei certificati gemmologici**
 
 Strumento per gemologi e operatori del distretto orafo **Tarì** (Marcianise, Campania).
-Pietre sciolte, gioielli montati (gemma di colore o lab-grown) e bracciali tennis.
+Pietre sciolte (diamanti, gemme di colore, semipreziosi), gioielli montati (gemma di colore, semiprezioso o lab-grown) e bracciali tennis.
 Inserisci la caratura e confronta subito il prezzo del certificato sui tre tier T1 · T2 · T3.
 
 [**▶ Apri l'app**](https://alessandro-sequino.github.io/gem-cert-pricer/)
@@ -27,7 +27,7 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 | Schermata | Descrizione |
 |---|---|
 | **Home** | Pagina iniziale con i tre percorsi di stima |
-| **Stima certificato** | Pietra sciolta · Montato (gemma di colore o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
+| **Stima certificato** | Pietra sciolta (diamante, gemma di colore, semiprezioso) · Montato (gemma di colore, semiprezioso o lab-grown) · Tennis, con confronto T1/T2/T3 e fasce evidenziate |
 | **Tariffe** | Editor delle tabelle di prezzo, import/export `.gcp.json` |
 | **Preventivo** | Più pezzi in un solo preventivo: quantità, riferimenti, totale T1/T2/T3, invio su WhatsApp, stampa/PDF e archivio |
 | **Clienti** | Database clienti: tier di riferimento e per categoria, prezzi su misura, link personale da inviare su WhatsApp; QR del negozio e richieste via WhatsApp |
@@ -39,7 +39,7 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 
 ### Preventivo con più pezzi
 
-Solo nella versione aziendale. Ogni pezzo si calcola in **Stima certificato** e si aggiunge con **+ Aggiungi al preventivo**: pietre sciolte, montati (gemma di colore o lab-grown) e tennis possono stare nello stesso preventivo.
+Solo nella versione aziendale. Ogni pezzo si calcola in **Stima certificato** e si aggiunge con **+ Aggiungi al preventivo**: pietre sciolte, montati (gemma di colore, semiprezioso o lab-grown) e tennis possono stare nello stesso preventivo.
 
 ```
 1. Stima → calcola il pezzo → «+ Aggiungi al preventivo»   (lo stesso pezzo aggiunto due volte aumenta la quantità)
@@ -81,7 +81,7 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
 
 <table>
   <tr>
-    <td width="50%"><b>Pietra sciolta</b> — fascia di caratura evidenziata e confronto T1 · T2 · T3<br><br><img src="docs/screenshots/sciolto.webp" alt="Stima pietra sciolta"></td>
+    <td width="50%"><b>Pietra sciolta</b> — diamante, gemma di colore o semiprezioso: fascia di caratura evidenziata e confronto T1 · T2 · T3<br><br><img src="docs/screenshots/sciolto.webp" alt="Stima pietra sciolta"></td>
     <td width="50%"><b>Montato lab-grown</b> — peso totale dei diamanti + supplemento pietra centrale<br><br><img src="docs/screenshots/lab.webp" alt="Stima montato lab-grown"></td>
   </tr>
   <tr>
@@ -146,11 +146,11 @@ Ogni tabella è un elenco di **fasce di caratura** con limite superiore incluso 
 
 ```
 PIETRA SCIOLTA
-  Cert = tariffa[diamante | gemma di colore][fascia caratura][tier]
+  Cert = tariffa[diamante | gemma di colore | semiprezioso][fascia caratura][tier]
          (ultima fascia: €/ct × caratura)
 
-MONTATO — gemma di colore centrale + contorno in diamanti
-  Cert = tariffa_centrale[fascia caratura centrale][tier]
+MONTATO — gemma di colore o semiprezioso centrale + contorno in diamanti
+  Cert = tariffa_centrale[gemma di colore | semiprezioso][fascia caratura centrale][tier]
        + supplemento_contorno[fascia caratura totale contorno][tier]
          (contorno = 0 ct → nessun supplemento)
 
@@ -158,8 +158,9 @@ PREZZO CLIENTE (versione pubblica)
   per ogni fascia: prezzo su misura del cliente, se presente,
                    altrimenti il prezzo del tier della categoria
                    (tier per categoria, se impostato, altrimenti tier di riferimento)
-  categorie: diamanti sciolti · gemme di colore sciolte · montato gemma di colore
-             (centrale + contorno) · montato lab-grown (+ supplemento) · tennis
+  categorie: diamanti sciolti · gemme di colore sciolte · semipreziosi (sciolti e
+             centrale del montato) · montato gemma di colore (centrale + contorno)
+             · montato lab-grown (+ supplemento) · tennis
 
 PREVENTIVO (più pezzi)
   Totale = Σ prezzo pezzo[tier del preventivo] × quantità
@@ -193,10 +194,12 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
   "data": {
     "loose": {
       "diam":  [ {"max": 0.14, "t": [0, 0, 0]}, …, {"max": null, "t": [0, 0, 0], "perCt": true} ],
-      "color": [ … ]
+      "color": [ … ],
+      "semi":  [ … ]
     },
     "mounted": {
       "center":    [ … ],
+      "semi":      [ … ],
       "halo":      [ … ],
       "lab":       [ … ],
       "labCenter": [0, 0, 0]
@@ -220,10 +223,11 @@ L'app è pubblicata **senza prezzi**: ogni operatore importa il proprio tariffar
 - `max` — limite superiore della fascia in ct (incluso); `null` = fascia aperta
 - `t` — prezzi per T1, T2, T3
 - `perCt` — `true` se il prezzo è in €/ct e va moltiplicato per la caratura
+- `loose.semi` / `mounted.semi` — semipreziosi sciolti e semiprezioso centrale del montato (il contorno usa `mounted.halo`); un file senza queste tabelle si importa con i semipreziosi a zero
 - `labCenter` — supplemento fisso per la pietra centrale nel montato lab-grown (T1, T2, T3)
-- `clients` — database clienti: `tier` di riferimento (0 = T1, 1 = T2, 2 = T3), `tiers` per categoria (`diam`, `color`, `mounted`, `lab`, `tennis`; facoltativo), `phone` WhatsApp e `overrides`, prezzi su misura indicizzati per tabella e limite della fascia (`"open"` per l'ultima fascia aperta)
+- `clients` — database clienti: `tier` di riferimento (0 = T1, 1 = T2, 2 = T3), `tiers` per categoria (`diam`, `color`, `semi`, `mounted`, `lab`, `tennis`; facoltativo), `phone` WhatsApp e `overrides`, prezzi su misura indicizzati per tabella e limite della fascia (`"open"` per l'ultima fascia aperta)
 - `shop` — nome e numero WhatsApp del negozio usati dal QR da esporre
-- `quotes` — archivio dei preventivi: numero `n`, `date`, `client`, `note`, `tier` del preventivo e `items`; ogni pezzo ha `kind` (`loose`, `mounted`, `lab`, `tennis`), `type` (`diam`/`color`, pietra sciolta), `ct`, `ct2` (contorno del montato), `center` (pietra centrale del lab-grown), `qty`, `ref` e `p`, il prezzo unitario T1, T2, T3 fissato al momento dell'inserimento
+- `quotes` — archivio dei preventivi: numero `n`, `date`, `client`, `note`, `tier` del preventivo e `items`; ogni pezzo ha `kind` (`loose`, `mounted`, `lab`, `tennis`), `type` (`diam`/`color`/`semi` per la pietra sciolta, `color`/`semi` per la centrale del montato), `ct`, `ct2` (contorno del montato), `center` (pietra centrale del lab-grown), `qty`, `ref` e `p`, il prezzo unitario T1, T2, T3 fissato al momento dell'inserimento
 
 I file del formato precedente (`gcp-pricing-v1`) non sono più compatibili.
 
