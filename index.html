@@ -588,6 +588,8 @@ table.rt { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 .inst-card p { color: var(--muted); font-size: var(--text-sm); }
 .foot-link { color: var(--gold); text-decoration: none; font-weight: 600; }
 .foot-link:hover { color: var(--gold-hi); }
+.foot .locked-only { display: none; }
+.public-locked .foot .locked-only { display: inline; }
 .request-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s5); align-items: start; }
 .req-steps ol { margin: 0; padding-left: 1.2rem; display: grid; gap: var(--s3); color: var(--muted); }
 .req-steps li::marker { color: var(--gold); font-weight: 700; }
@@ -1101,6 +1103,7 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
   <div class="wrap">
     <span>Gem Cert Pricer · Alessandro Sequino</span>
     <span data-i18n="foot_privacy">Le tariffe restano solo su questo dispositivo · nessun dato inviato</span>
+    <a href="#/azienda" class="foot-link locked-only" data-i18n="company_link">Sei il negozio? Versione aziendale</a>
     <a href="#/installa" class="foot-link" data-i18n="install_link">Installa l'app</a>
   </div>
 </footer>
@@ -1412,6 +1415,12 @@ const I18N = {
     title_install: 'Installa l\'app · Gem Cert Pricer',
     install_btn: '⤓ Installa l\'app',
     install_link: 'Installa l\'app',
+    company_link: 'Sei il negozio? Versione aziendale',
+    confirm_company: 'Passare alla versione aziendale su questo dispositivo? Poi importa il tuo tariffario .gcp.json dalla pagina «Tariffe».',
+    confirm_company_client: 'Passare alla versione aziendale? Il listino di {name} verrà tolto da questo dispositivo.',
+    company_on: 'Versione aziendale attiva: importa il tuo tariffario .gcp.json',
+    paste_clip: '📋 Incolla e crea',
+    paste_clip_fail: 'Non riesco a leggere gli appunti: tieni premuto nel riquadro e scegli «Incolla»',
     inst_eyebrow: 'App',
     inst_h1: 'Installa <em>Gem Cert Pricer</em>',
     inst_intro: 'L\'app si installa dal browser, senza store: si apre in una finestra sua, con l\'icona tra le applicazioni.',
@@ -1760,6 +1769,12 @@ const I18N = {
     title_install: 'Install the app · Gem Cert Pricer',
     install_btn: '⤓ Install the app',
     install_link: 'Install the app',
+    company_link: 'Are you the shop? Company version',
+    confirm_company: 'Switch to the company version on this device? Then import your .gcp.json price file from the «Rates» page.',
+    confirm_company_client: 'Switch to the company version? {name}\'s price list will be removed from this device.',
+    company_on: 'Company version on: import your .gcp.json price file',
+    paste_clip: '📋 Paste and create',
+    paste_clip_fail: 'Cannot read the clipboard: long-press the box and choose «Paste»',
     inst_eyebrow: 'App',
     inst_h1: 'Install <em>Gem Cert Pricer</em>',
     inst_intro: 'The app installs from the browser, no store needed: it opens in its own window, with an icon among your applications.',
@@ -2176,6 +2191,20 @@ function route() {
     location.replace(SHOP_REQ ? '#/richiesta' : '#/');
     return;
   }
+  // Uscita dalla vista pubblica: chi ha aperto il QR del negozio o un link cliente
+  // su un dispositivo senza tariffario torna alla versione aziendale
+  if (parts[0] === 'azienda') {
+    if (isPublic() && !HAS_COMPANY && confirm(CLIENT ? t('confirm_company_client', { name: CLIENT.name }) : t('confirm_company'))) {
+      CLIENT = null; SHOP_REQ = null;
+      try { localStorage.removeItem(STORE_CLIENT); localStorage.removeItem(STORE_SHOP); } catch (e) { /* noop */ }
+      RATES = loadCompanyRates();
+      HAS_COMPANY = isConfigured();
+      applyLang(); applyMode(); updateStatus(); updateQuoteCount();
+      toast(t('company_on'));
+      location.replace('#/tariffe');
+    } else location.replace('#/');
+    return;
+  }
   let view = ['stima', 'tariffe', 'clienti', 'preventivo', 'richiesta', 'installa'].includes(parts[0]) ? parts[0] : 'home';
   if (isPublic() && ['tariffe', 'clienti', 'preventivo'].includes(view)) { location.replace('#/stima'); return; }
   if (view === 'stima' && ['sciolto', 'montato', 'tennis'].includes(parts[1])) {
@@ -2212,7 +2241,7 @@ function noticeHTML() {
   if (isPublic() && !CLIENT) {
     return `<div class="notice client-notice" style="margin-bottom:var(--s5)">
       <p>${t('req_notice', { shop: esc(SHOP_REQ.n || t('req_shop_fallback')) })}</p>
-      <div class="actions"><a class="btn btn-gold btn-sm" href="#/richiesta">${t('req_cta')}</a></div>
+      <div class="actions"><a class="btn btn-gold btn-sm" href="#/richiesta">${t('req_cta')}</a>${HAS_COMPANY ? '' : `<a class="btn btn-sm" href="#/azienda">${t('company_link')}</a>`}</div>
     </div>`;
   }
   return `<div class="notice" style="margin-bottom:var(--s5)">
@@ -2824,6 +2853,7 @@ function previewClient(c) {
 // Banner e classi della vista cliente
 function applyMode() {
   document.body.classList.toggle('client-mode', isPublic());
+  document.body.classList.toggle('public-locked', isPublic() && !HAS_COMPANY);
   const bar = $('#client-bar');
   if (CLIENT && (CLIENT.preview || HAS_COMPANY)) {
     bar.hidden = false;
@@ -3020,6 +3050,11 @@ function bindClients() {
     if (sbtn) {
       if (sbtn.dataset.sact === 'download') downloadQrPng(shopLink(), RATES.shop.name || 'Gem Cert Pricer', t('shop_qr_caption'), 'negozio');
       if (sbtn.dataset.sact === 'create') createFromRequest($('#req-paste').value);
+      if (sbtn.dataset.sact === 'paste') {
+        navigator.clipboard.readText()
+          .then(txt => { $('#req-paste').value = txt; if (parseRequest(txt)) createFromRequest(txt); else toast(t('req_parse_fail'), true); })
+          .catch(() => { $('#req-paste').focus(); toast(t('paste_clip_fail'), true); });
+      }
       return;
     }
     const wa = e.target.closest('#cl-wa');
@@ -3183,7 +3218,7 @@ function pastePanelHTML() {
     <div class="panel-title">${t('paste_title')}</div>
     <p class="hint" style="margin:0 0 var(--s3)">${t('paste_hint')}</p>
     <textarea class="text-in" id="req-paste" rows="6" placeholder="${esc(t('paste_placeholder'))}"></textarea>
-    <div class="card-actions"><button type="button" class="btn btn-gold btn-sm" data-sact="create">${t('paste_create')}</button></div>
+    <div class="card-actions"><button type="button" class="btn btn-gold btn-sm" data-sact="create">${t('paste_create')}</button>${navigator.clipboard?.readText ? `<button type="button" class="btn btn-sm" data-sact="paste">${t('paste_clip')}</button>` : ''}</div>
   </div>`;
 }
 
