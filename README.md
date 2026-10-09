@@ -94,6 +94,16 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
 
 ![Stima montato con gemma di colore](docs/screenshots/montato.webp)
 
+### Preventivo con più pezzi
+
+**Preventivo** — pezzi di tipo diverso nello stesso preventivo, con quantità, riferimenti, tier del preventivo, totale T1 · T2 · T3 e archivio:
+
+![Pagina Preventivo](docs/screenshots/preventivo.webp)
+
+**Stampa / PDF** — foglio pulito da consegnare al cliente, senza tier:
+
+![Preventivo stampato](docs/screenshots/stampa.webp)
+
 ### Clienti e versione pubblica
 
 <table>
@@ -116,14 +126,16 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
   </tr>
 </table>
 
-**Da smartphone** — home, stima con totale sempre visibile e vista del cliente:
+**Da smartphone** — home, stima con totale sempre visibile, preventivo e vista del cliente:
 
 <p align="center">
-  <img src="docs/screenshots/m-home.webp" alt="Home da smartphone" width="250">
+  <img src="docs/screenshots/m-home.webp" alt="Home da smartphone" width="200">
   &nbsp;
-  <img src="docs/screenshots/m-montato.webp" alt="Stima montato da smartphone" width="250">
+  <img src="docs/screenshots/m-montato.webp" alt="Stima montato da smartphone" width="200">
   &nbsp;
-  <img src="docs/screenshots/m-pubblica.webp" alt="Vista cliente da smartphone" width="250">
+  <img src="docs/screenshots/m-preventivo.webp" alt="Preventivo da smartphone" width="200">
+  &nbsp;
+  <img src="docs/screenshots/m-pubblica.webp" alt="Vista cliente da smartphone" width="200">
 </p>
 
 ---
