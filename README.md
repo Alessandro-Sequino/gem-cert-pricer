@@ -35,7 +35,7 @@ Funziona interamente nel browser: **nessun server, nessun account, nessun dato c
 ### Versione aziendale e versione pubblica
 
 - **Aziendale** — chi importa il tariffario completo vede i tre tier, le tariffe e la pagina **Clienti**. A ogni cliente si assegna un **tier di riferimento**, se serve un **tier diverso per categoria** (es. T1 sui diamanti e T3 sulle gemme di colore) e, sopra a questi, eventuali **prezzi su misura** per singola fascia (o per il supplemento della pietra centrale).
-- **Pubblica (cliente)** — dalla scheda di un cliente si invia su WhatsApp (o si copia) il suo **link personale**. Chi lo apre vede solo i propri prezzi, in un'unica colonna: niente tier, niente tariffe aziendali, niente altri clienti. Il listino resta salvato sul suo dispositivo finché non riceve un link aggiornato.
+- **Pubblica (cliente)** — dalla scheda di un cliente si invia su WhatsApp (o si copia) il suo **link personale**. Chi lo apre trova una pagina intestata a suo nome («Il listino di …», anche nel titolo della scheda del browser) e vede solo i propri prezzi, in un'unica colonna: niente tier, niente tariffe aziendali, niente altri clienti. Il listino resta salvato sul suo dispositivo finché non riceve un link aggiornato.
 
 ### Preventivo con più pezzi
 
