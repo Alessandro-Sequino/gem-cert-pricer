@@ -203,6 +203,8 @@ button { cursor: pointer; }
   animation: goldSheen 7s ease-in-out infinite;
 }
 @keyframes goldSheen { 0%,100% { background-position: 0% 0; } 50% { background-position: 100% 0; } }
+.client-named .hero h1 { font-size: clamp(2.4rem, 1.7rem + 3.4vw, 4.8rem); overflow-wrap: anywhere; }
+.client-named .hero h1 em { padding-right: .08em; }
 .hero .lead { font-size: var(--text-lg); color: var(--muted); max-width: 34ch; line-height: 1.5; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s6); }
 .hero-text > * { animation: rise 900ms var(--ease-out) both; }
@@ -781,8 +783,8 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
     <div class="hero">
       <div class="wrap">
         <div class="hero-text">
-          <span class="eyebrow" data-i18n="home_eyebrow">Certificazione gemmologica · Distretto Tarì</span>
-          <h1 id="home-title" data-i18n-html="home_h1">Il costo del certificato, <em>in un istante.</em></h1>
+          <span class="eyebrow" data-i18n="home_eyebrow" data-i18n-named="home_eyebrow_named">Certificazione gemmologica · Distretto Tarì</span>
+          <h1 id="home-title" data-i18n-html="home_h1" data-i18n-named="home_h1_named">Il costo del certificato, <em>in un istante.</em></h1>
           <p class="lead" data-i18n="home_lead" data-i18n-client="home_lead_client">Pietre sciolte, gioielli montati e tennis: inserisci la caratura e confronta subito le tre fasce di prezzo.</p>
           <div class="hero-cta">
             <a class="btn btn-gold btn-lg" href="#/stima" data-i18n-html="home_cta">Inizia la stima <span class="arrow">→</span></a>
@@ -867,7 +869,7 @@ table.rt.ov input::placeholder, .fee-row input::placeholder { color: var(--faint
     <div class="wrap">
       <div class="page-head">
         <div>
-          <span class="eyebrow" data-i18n="stima_eyebrow">Stima certificato</span>
+          <span class="eyebrow" data-i18n="stima_eyebrow" data-i18n-named="stima_eyebrow_named">Stima certificato</span>
           <h1 id="stima-title" data-i18n-html="stima_h1">Quanto costa <em>certificarlo?</em></h1>
         </div>
         <div class="seg" role="radiogroup" aria-label="Tipologia" data-i18n-attr="aria-label:mode_aria">
@@ -1422,7 +1424,10 @@ const I18N = {
     client_deleted: 'Cliente eliminato',
     preview_bar: 'Vista cliente: {name}',
     back_company: '← Torna alla versione aziendale',
-    client_welcome: 'Listino riservato a <strong>{name}</strong>{date}.',
+    client_welcome: 'I prezzi mostrati sono quelli del tuo listino personale{date}.',
+    home_eyebrow_named: 'Listino riservato',
+    home_h1_named: 'Il listino di <em>{name}</em>',
+    stima_eyebrow_named: 'Stima certificato · {name}',
     client_date: ' · aggiornato al {date}',
     home_lead_client: 'Pietre sciolte, gioielli montati e tennis: inserisci la caratura e ottieni subito il costo del certificato.',
     paths_sub_client: 'Scegli la tipologia: ogni percorso usa le proprie fasce di caratura.',
@@ -1785,7 +1790,10 @@ const I18N = {
     client_deleted: 'Client deleted',
     preview_bar: 'Client view: {name}',
     back_company: '← Back to company version',
-    client_welcome: 'Price list reserved for <strong>{name}</strong>{date}.',
+    client_welcome: 'The prices shown are from your personal price list{date}.',
+    home_eyebrow_named: 'Private price list',
+    home_h1_named: 'Price list for <em>{name}</em>',
+    stima_eyebrow_named: 'Certificate estimate · {name}',
     client_date: ' · updated {date}',
     home_lead_client: 'Loose stones, mounted jewellery and tennis bracelets: enter the carat weight and get the certificate cost instantly.',
     paths_sub_client: 'Pick a category: each one has its own carat bands.',
@@ -1949,6 +1957,8 @@ function applyLang() {
     const [attr, key] = pair.split(':');
     el.setAttribute(attr, t(key));
   }));
+  // Vista cliente: titoli personalizzati con il nome del cliente
+  if (CLIENT) $$('[data-i18n-named]').forEach(el => { el.innerHTML = t(el.dataset.i18nNamed, { name: esc(CLIENT.name) }); });
   $$('[data-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === UI.lang)));
 }
 
@@ -2243,7 +2253,8 @@ function route() {
   $$('.nav a').forEach(a => {
     if (a.dataset.route === view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
-  document.title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients', preventivo: 'title_quote', richiesta: 'title_request', installa: 'title_install' }[view]);
+  const title = t({ home: 'title_home', stima: 'title_stima', tariffe: 'title_rates', clienti: 'title_clients', preventivo: 'title_quote', richiesta: 'title_request', installa: 'title_install' }[view]);
+  document.title = CLIENT ? `${CLIENT.name} · ${title}` : title;
   document.body.classList.toggle('print-quote', view === 'preventivo');
   if (view !== 'stima') $('#mobile-bar').classList.add('hidden');
   if (view === 'stima') renderCalc();
@@ -2285,7 +2296,7 @@ function noticeHTML() {
 function renderHome() {
   if (CLIENT) {
     const date = CLIENT.date ? t('client_date', { date: new Date(CLIENT.date).toLocaleDateString(locale()) }) : '';
-    $('#home-notice-wrap').innerHTML = `<div class="notice client-notice"><p>${t('client_welcome', { name: esc(CLIENT.name), date: esc(date) })}</p></div>`;
+    $('#home-notice-wrap').innerHTML = `<div class="notice client-notice"><p>${t('client_welcome', { date: esc(date) })}</p></div>`;
     return;
   }
   $('#home-notice-wrap').innerHTML = isConfigured() && !(isPublic() && !CLIENT) ? '' : noticeHTML();
@@ -2894,6 +2905,7 @@ function previewClient(c) {
 function applyMode() {
   document.body.classList.toggle('client-mode', isPublic());
   document.body.classList.toggle('public-locked', isPublic() && !HAS_COMPANY);
+  document.body.classList.toggle('client-named', !!CLIENT);
   const bar = $('#client-bar');
   if (CLIENT && (CLIENT.preview || HAS_COMPANY)) {
     bar.hidden = false;
