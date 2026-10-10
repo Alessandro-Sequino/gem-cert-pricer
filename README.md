@@ -112,7 +112,7 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
     <td width="50%"><b>Scheda cliente</b> — tier per categoria, prezzi su misura fascia per fascia e invio del link su WhatsApp<br><br><img src="docs/screenshots/cliente.webp" alt="Scheda cliente con prezzi su misura"></td>
   </tr>
   <tr>
-    <td width="50%"><b>Vista del cliente</b> — aperta dal link personale: un solo prezzo, senza tier né tariffe<br><br><img src="docs/screenshots/pubblica.webp" alt="Versione pubblica vista dal cliente"></td>
+    <td width="50%"><b>Vista del cliente</b> — aperta dal link personale: intestata con il suo nome, un solo prezzo, senza tier né tariffe<br><br><img src="docs/screenshots/pubblica.webp" alt="Versione pubblica vista dal cliente"></td>
     <td width="50%"><b>English</b> — interfaccia bilingue con selettore IT/EN<br><br><img src="docs/screenshots/english.webp" alt="Interfaccia in inglese"></td>
   </tr>
 </table>
@@ -126,7 +126,7 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
   </tr>
 </table>
 
-**Da smartphone** — home, stima con totale sempre visibile, preventivo e vista del cliente:
+**Da smartphone** — home, stima con totale sempre visibile, preventivo e home del cliente intestata a suo nome:
 
 <p align="center">
   <img src="docs/screenshots/m-home.webp" alt="Home da smartphone" width="200">
@@ -135,7 +135,7 @@ Il link contiene solo i prezzi effettivi di quel cliente, compressi, e li traspo
   &nbsp;
   <img src="docs/screenshots/m-preventivo.webp" alt="Preventivo da smartphone" width="200">
   &nbsp;
-  <img src="docs/screenshots/m-pubblica.webp" alt="Vista cliente da smartphone" width="200">
+  <img src="docs/screenshots/m-pubblica.webp" alt="Home del cliente da smartphone, intestata con il suo nome" width="200">
 </p>
 
 ---
